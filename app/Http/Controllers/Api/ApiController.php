@@ -51,7 +51,6 @@ class ApiController extends Controller
             'order_by'   =>  'nullable|string|min:2|max:20',
             'direction'  =>  ['nullable', 'string', new OrderBy],
         ]);
-        $this->middleware('auth:api');
         $this->per_page = $this->getPerPageAttribute();
         $this->order_by = $this->getOrderByAttribute();
         $this->direction = $this->getDirectionAttribute();
