@@ -1,5 +1,5 @@
 <script>
-const pageOptions = {
+let pageOptions = {
   pageSidebarMinified: false,
   pageContentFullWidth: false,
   pageContentInverseMode: false,

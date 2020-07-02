@@ -1,17 +1,16 @@
 import Vue from 'vue'
 import VueX from 'vuex'
 import routes from './config/PageRoutes'
+import Axios from 'axios'
 
 // plugins
 import VueRouter from 'vue-router'
 import VueBootstrap from 'bootstrap-vue'
-import VueNVD3 from 'vue-nvd3'
 import VueInsProgressBar from 'vue-ins-progress-bar'
 import VueEventCalendar from 'vue-event-calendar'
 import VueSparkline from 'vue-sparklines'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import Vueditor from '@agametov/vueditor'
-import VueHljs from 'vue-hljs'
 import VueSweetalert2 from 'vue-sweetalert2'
 import VueNotification from 'vue-notification'
 import VuePanel from './plugins/panel/'
@@ -24,13 +23,10 @@ import VueSlider from 'vue-slider-component'
 import VueGoodTable from 'vue-good-table'
 import VueFullCalendar from 'vue-full-calendar'
 import VueCountdown from '@chenfengyuan/vue-countdown'
-import VueColorpicker from 'vue-pop-colorpicker'
 import VueCustomScrollbar from 'vue-custom-scrollbar'
-import VueApexCharts from 'vue-apexcharts'
 
 // plugins css
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'nvd3/build/nv.d3.min.css'
 import 'vue-event-calendar/dist/style.css'
 import 'vue-hljs/dist/vue-hljs.min.css'
 import '@agametov/vueditor/dist/style/vueditor.min.css'
@@ -44,30 +40,29 @@ import 'vue-select/dist/vue-select.css'
 import 'vue-slider-component/theme/antd.css'
 
 // color admin css
-import './assets/css/default/app.min.css'
+import './assets/css/material/app.min.css'
 import './scss/vue.scss'
 import 'bootstrap-social/bootstrap-social.css'
 
 import App from './App.vue'
 import store from './store'
 
+
 Vue.config.productionTip = false
+Vue.config.devtools = true
 
 Vue.use(VueX)
 Vue.use(VueRouter)
 Vue.use(VueBootstrap)
-Vue.use(VueNVD3)
-Vue.use(VueEventCalendar, {locale: 'en'})
+Vue.use(VueEventCalendar, { locale: 'en' })
 Vue.use(VueSparkline)
 Vue.use(Vueditor)
-Vue.use(VueHljs)
 Vue.use(VueSweetalert2)
 Vue.use(VueNotification)
 Vue.use(VuePanel)
 Vue.use(VueDateTimePicker)
 Vue.use(VueGoodTable)
 Vue.use(VueFullCalendar)
-Vue.use(VueColorpicker)
 Vue.use(VueGoogleMaps, {
   load: {
     key: '',
@@ -85,11 +80,20 @@ Vue.component('masked-input', VueMaskedInput)
 Vue.component('input-tag', VueInputTag)
 Vue.component('vue-slider', VueSlider)
 Vue.component('vue-custom-scrollbar', VueCustomScrollbar)
-Vue.component('apexchart', VueApexCharts)
 Vue.component(VueCountdown.name, VueCountdown);
 
+Vue.prototype.$http = Axios;
+Axios.defaults.baseURL = "http://venki.tk";
+Axios.defaults.headers.common['Content-Type'] = 'application/json';
+Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+String.prototype.capitalize = function (lower) {
+  return (lower ? this.toLowerCase() : this).replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+};
+
 const router = new VueRouter({
-	routes
+  routes,
+  mode: "history"
 })
 
 new Vue({
