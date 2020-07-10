@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Category;
 
+use App\Category;
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
-use App\Http\Resources\UserResource;
-use App\User;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 
-class UserController extends ApiController
+class CategoryController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class UserController extends ApiController
      */
     public function index()
     {
-        return $this->collectionResponse(UserResource::collection($this->getModel(new User, ['roles'])));
+        return $this->collectionResponse(CategoryResource::collection($this->getModel(new Category, [])));
     }
 
     /**
@@ -28,7 +28,6 @@ class UserController extends ApiController
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -37,13 +36,14 @@ class UserController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $user = new User;
-        $user->fill($request->all());
-        $user->saveOrFail();
+        $category = new Category;
+        $category->fill($request->all());
+        $category->saveOrFail();
+
         return $this->api_success([
-            'data' => new UserResource($user),
+            'data' => new CategoryResource($category),
             'message' => __('pages.responses.created'),
             'code' => 201
         ], 201);
@@ -52,21 +52,22 @@ class UserController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Category $category)
     {
-        return $this->singleResponse(new UserResource($user));
+        return $this->singleResponse(new CategoryResource($category));
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Category $category)
     {
         //
     }
@@ -75,55 +76,48 @@ class UserController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         if ($request->has("name")) {
-            $user->name = $request->name;
+            $category->name = $request->name;
         }
-        if ($request->has("email")) {
-            $user->email = $request->email;
+        if ($request->has("description")) {
+            $category->description = $request->description;
         }
-        if ($request->has("lastname")) {
-            $user->lastname = $request->lastname;
-        }
-        if ($request->has("address")) {
-            $user->address = $request->address;
-        }
-        if ($request->has("birthday")) {
-            $user->birthday = $request->birthday;
-        }
-        if ($request->has("phone")) {
-            $user->phone = $request->phone;
+        if ($request->has("photo")) {
+            $category->photo = $request->photo;
         }
 
-        if (!$user->isDirty()) {
+
+        if (!$category->isDirty()) {
             return $this->errorResponse(
                 'Se debe especificar al menos un valor diferente para actualizar',
                 422
             );
         }
 
-        $user->saveOrFail();
+        $category->saveOrFail();
 
         return $this->api_success([
-            'data'      =>  new UserResource($user),
+            'data'      =>  new CategoryResource($category),
             'message'   => __('pages.responses.updated'),
             'code'      =>  201
         ], 201);
+        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Category $category)
     {
-        $user->delete();
-        return $this->singleResponse(new UserResource($user), 200);
+        $category->delete();
+        return $this->singleResponse(new CategoryResource($category), 200);
     }
 }

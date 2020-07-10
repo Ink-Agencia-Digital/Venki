@@ -21,7 +21,8 @@ class UserResource extends JsonResource
             "lastname" => isset($this->lastname) ? $this->lastname : null,
             "address" => isset($this->address) ? $this->address : null,
             "birthday" => isset($this->birthday) ? $this->birthday : null,
-            "phone" => isset($this->phone) ? $this->phone : null
+            "phone" => isset($this->phone) ? $this->phone : null,
+            "roles" => RoleResource::collection($this->whenLoaded('roles'))
         ];
     }
 }
