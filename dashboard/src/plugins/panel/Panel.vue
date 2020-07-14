@@ -7,9 +7,7 @@
 			</h4>
 			<div class="panel-heading-btn" v-if="!noButton">
 				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" v-on:click="panelExpand"><i class="fa fa-expand"></i></a>
-				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" v-on:click="panelReload"><i class="fa fa-redo"></i></a>
 				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" v-on:click="panelCollapse"><i class="fa fa-minus"></i></a>
-				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" v-on:click="panelRemove"><i class="fa fa-times"></i></a>
 			</div>
 		</div>
 		<slot name="beforeBody"></slot>

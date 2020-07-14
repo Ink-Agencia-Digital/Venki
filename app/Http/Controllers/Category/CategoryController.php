@@ -40,6 +40,10 @@ class CategoryController extends ApiController
     {
         $category = new Category;
         $category->fill($request->all());
+
+        if ($request->hasFile('photo')) {
+            $category->photo = $request->photo->store('categories');
+        }
         $category->saveOrFail();
 
         return $this->api_success([
@@ -58,7 +62,6 @@ class CategoryController extends ApiController
     public function show(Category $category)
     {
         return $this->singleResponse(new CategoryResource($category));
-        
     }
 
     /**
@@ -106,7 +109,6 @@ class CategoryController extends ApiController
             'message'   => __('pages.responses.updated'),
             'code'      =>  201
         ], 201);
-        
     }
 
     /**

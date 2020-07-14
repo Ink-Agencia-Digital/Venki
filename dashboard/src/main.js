@@ -24,6 +24,7 @@ import VueGoodTable from 'vue-good-table'
 import VueFullCalendar from 'vue-full-calendar'
 import VueCountdown from '@chenfengyuan/vue-countdown'
 import VueCustomScrollbar from 'vue-custom-scrollbar'
+import Loading from 'vue-loading-overlay';
 
 // plugins css
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -38,6 +39,7 @@ import 'vue-good-table/dist/vue-good-table.css'
 import 'fullcalendar/dist/fullcalendar.css'
 import 'vue-select/dist/vue-select.css'
 import 'vue-slider-component/theme/antd.css'
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 // color admin css
 import './assets/css/material/app.min.css'
@@ -74,6 +76,7 @@ Vue.use(VueInsProgressBar, {
   show: true,
   height: '3px'
 })
+Vue.use(Loading);
 Vue.component('v-select', VueSelect);
 Vue.component('datepicker', VueDatepicker)
 Vue.component('masked-input', VueMaskedInput)
@@ -83,7 +86,7 @@ Vue.component('vue-custom-scrollbar', VueCustomScrollbar)
 Vue.component(VueCountdown.name, VueCountdown);
 
 Vue.prototype.$http = Axios;
-Axios.defaults.baseURL = "http://venki.tk";
+Axios.defaults.baseURL = "http://localhost:8000";
 Axios.defaults.headers.common['Content-Type'] = 'application/json';
 Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

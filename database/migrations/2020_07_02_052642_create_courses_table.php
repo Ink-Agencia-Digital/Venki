@@ -19,6 +19,7 @@ class CreateCoursesTable extends Migration
             $table->text('description');
             $table->string('trailer');
             $table->string('photo');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
