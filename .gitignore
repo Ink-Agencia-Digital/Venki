@@ -9,8 +9,7 @@ app/storage/
 
 # Laravel 5 & Lumen specific
 public/storage
-public/courses
-public/categories
+public/images
 public/hot
 public/dashboard
 

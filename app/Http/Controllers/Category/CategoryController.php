@@ -43,7 +43,7 @@ class CategoryController extends ApiController
         $category->fill($request->all());
 
         if ($request->hasFile('photo')) {
-            $category->photo = $request->photo->store('storage/categories');
+            $category->photo = $request->photo->store('images');
         }
         $category->saveOrFail();
 
@@ -93,7 +93,7 @@ class CategoryController extends ApiController
         }
         if ($request->has("photo")) {
             Storage::delete($category->photo);
-            $category->photo = $request->photo->store('storage/categories');
+            $category->photo = $request->photo->store('images');
         }
 
 
