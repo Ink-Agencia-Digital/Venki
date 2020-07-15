@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Http\Resources\CourseResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends ApiController
 {
@@ -44,9 +45,6 @@ class CourseController extends ApiController
 
         if ($request->hasFile('photo')) {
             $course->photo = $request->photo->store('courses');
-        }
-        if ($request->hasFile('trailer')) {
-            $course->trailer = $request->trailer->store('courses');
         }
 
         $course->saveOrFail();
@@ -101,6 +99,10 @@ class CourseController extends ApiController
         }
         if ($request->has("trailer")) {
             $course->trailer = $request->trailer;
+        }
+        if ($request->has("photo")) {
+            Storage::delete($course->photo);
+            $course->photo = $request->photo->store('courses');
         }
         if ($request->has('categories')) {
             $course->categories()->detach();
