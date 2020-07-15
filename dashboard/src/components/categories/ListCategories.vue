@@ -30,11 +30,7 @@
               </span>
               <span v-else-if="props.column.field == 'photo'">
                 <div class="text-center" @click="selectPhoto(props.row.photo)">
-                  <img
-                    class="img-category"
-                    loading="lazy"
-                    :src="'http://localhost:8000/'+ props.row.photo"
-                  />
+                  <img class="img-category" loading="lazy" :src="'/'+ props.row.photo" />
                 </div>
               </span>
               <span v-else>{{props.formattedRow[props.column.field]}}</span>
@@ -45,12 +41,7 @@
     </Panel>
     <div id="modal-foto" :style="{display: isOpen}" class="modal" @click="closeModalImage">
       <!-- Modal Content (The Image) -->
-      <img
-        class="modal-content"
-        loading="lazy"
-        :src="'http://localhost:8000/'+ selectedPhoto"
-        id="image"
-      />
+      <img class="modal-content" loading="lazy" :src="'/'+ selectedPhoto" id="image" />
     </div>
   </div>
 </template>

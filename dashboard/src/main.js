@@ -86,7 +86,6 @@ Vue.component('vue-custom-scrollbar', VueCustomScrollbar)
 Vue.component(VueCountdown.name, VueCountdown);
 
 Vue.prototype.$http = Axios;
-Axios.defaults.baseURL = "http://localhost:8000";
 Axios.defaults.headers.common['Content-Type'] = 'application/json';
 Axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

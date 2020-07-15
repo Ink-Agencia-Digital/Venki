@@ -63,7 +63,7 @@ export default {
       busy: false,
       newCategory: {},
       dropzoneOptions: {
-        url: "http://localhost:8000/api/categories",
+        url: "/api/categories",
         thumbnailWidth: 150,
         acceptedFiles: "image/*",
         addRemoveLinks: true,

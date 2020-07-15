@@ -24,7 +24,7 @@
               <img
                 class="img-category"
                 loading="lazy"
-                :src="'http://localhost:8000/'+ category.photo"
+                :src="'/'+ category.photo"
               />
             </div>
           </b-form-group>
@@ -75,7 +75,7 @@ export default {
     return {
       category: { ...this.initialCategory },
       dropzoneOptions: {
-        url: "http://localhost:8000/api/categories/" + this.initialCategory.id,
+        url: "/api/categories/" + this.initialCategory.id,
         thumbnailWidth: 150,
         acceptedFiles: "image/*",
         addRemoveLinks: true,

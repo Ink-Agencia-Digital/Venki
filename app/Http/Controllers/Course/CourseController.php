@@ -44,7 +44,7 @@ class CourseController extends ApiController
         $course->fill($request->all());
 
         if ($request->hasFile('photo')) {
-            $course->photo = $request->photo->store('courses');
+            $course->photo = $request->photo->store('storage/courses');
         }
 
         $course->saveOrFail();
@@ -68,7 +68,8 @@ class CourseController extends ApiController
      */
     public function show(Course $course)
     {
-        //
+        dd($course);
+        return $this->singleResponse(new CourseResource($course));
     }
 
     /**
@@ -102,7 +103,7 @@ class CourseController extends ApiController
         }
         if ($request->has("photo")) {
             Storage::delete($course->photo);
-            $course->photo = $request->photo->store('courses');
+            $course->photo = $request->photo->store('storage/courses');
         }
         if ($request->has('categories')) {
             $course->categories()->detach();

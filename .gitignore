@@ -12,6 +12,7 @@ public/storage
 public/courses
 public/categories
 public/hot
+public/dashboard
 
 # Laravel 5 & Lumen specific with changed public path
 public_html/storage
@@ -26,3 +27,4 @@ Homestead.json
 composer.lock
 .rnd
 dashboard/package-lock.json
+resources/views/dashboard.blade.php
