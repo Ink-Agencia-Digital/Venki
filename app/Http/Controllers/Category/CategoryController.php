@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends ApiController
 {
@@ -91,7 +92,8 @@ class CategoryController extends ApiController
             $category->description = $request->description;
         }
         if ($request->has("photo")) {
-            $category->photo = $request->photo;
+            Storage::delete($category->photo);
+            $category->photo = $request->photo->store('categories');
         }
 
 

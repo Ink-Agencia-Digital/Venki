@@ -1,6 +1,6 @@
 <script>
 let pageOptions = {
-  pageSidebarMinified: false,
+  pageSidebarMinified: true,
   pageContentFullWidth: false,
   pageContentInverseMode: false,
   pageContentFullHeight: false,

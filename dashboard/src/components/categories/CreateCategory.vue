@@ -27,7 +27,13 @@
               @vdropzone-success="sendSuccess"
               @vdropzone-error="sendError"
               @vdropzone-sending="sendingEvent"
-            />
+              :useCustomSlot="true"
+            >
+              <div class="dropzone-custom-content">
+                <h3 class="dropzone-custom-title">Arrastra y suelta para subir contenido!</h3>
+                <div class="subtitle">...o da click para seleccionar un arricho de tu computadora</div>
+              </div>
+            </vue-dropzone>
           </b-form-group>
         </b-col>
       </b-row>
@@ -57,14 +63,15 @@ export default {
       busy: false,
       newCategory: {},
       dropzoneOptions: {
-        url: "localhost:8000/api/categories",
+        url: "http://localhost:8000/api/categories",
         thumbnailWidth: 150,
         acceptedFiles: "image/*",
         addRemoveLinks: true,
         autoProcessQueue: false,
         paramName: "photo",
         maxFiles: 1
-      }
+      },
+      loading: null
     };
   },
   components: {
@@ -80,25 +87,41 @@ export default {
       this.$refs.dropzone_picture.removeFile(file);
     },
     sendSuccess() {
-      this.resetRegister();
+      this.registrationSuccessful();
       this.$swal.fire("Exito!", "Registro exitoso", "success");
     },
     createCategory() {
       this.$refs.dropzone_picture.processQueue();
-      // this.$emit("registrationSuccessful");
     },
     sendError() {
       this.$swal.fire("Error!", "Registro fallido", "error");
     },
     resetRegister() {
-      // this.$emit("resetRegister");
+      this.$emit("resetRegister");
     },
     registrationSuccessful() {
-      // this.$emit("registrationSuccessful");
+      this.$emit("registrationSuccessful");
+      this.resetRegister();
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
+.dropzone-custom-content {
+  position: inherit;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+}
+
+.dropzone-custom-title {
+  margin-top: 0;
+  color: #00b782;
+}
+
+.subtitle {
+  color: #314b5f;
+  font-size: medium;
+}
 </style>
