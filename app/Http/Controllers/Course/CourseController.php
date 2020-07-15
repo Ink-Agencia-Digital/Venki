@@ -68,7 +68,6 @@ class CourseController extends ApiController
      */
     public function show(Course $course)
     {
-        dd($course);
         return $this->singleResponse(new CourseResource($course));
     }
 
