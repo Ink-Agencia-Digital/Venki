@@ -50,7 +50,8 @@ class CourseController extends ApiController
         $course->saveOrFail();
 
         if ($request->has('categories')) {
-            $course->categories()->attach($request->categories);
+            $categories = explode(',', $request->categories);
+            $course->categories()->attach($categories);
         }
 
         return $this->api_success([
@@ -106,7 +107,12 @@ class CourseController extends ApiController
         }
         if ($request->has('categories')) {
             $course->categories()->detach();
-            $course->categories()->attach($request->categories);
+            if (is_string($request->categories)) {
+                $categories = explode(',', $request->categories);
+                $course->categories()->attach($categories);
+            } else {
+                $course->categories()->attach($request->categories);
+            }
         }
 
         if (!$course->isDirty() && !$request->has('categories')) {
@@ -115,6 +121,14 @@ class CourseController extends ApiController
                 422
             );
         }
+
+        $course->saveOrFail();
+
+        return $this->api_success([
+            'data'      =>  new CourseResource($course),
+            'message'   => __('pages.responses.updated'),
+            'code'      =>  201
+        ], 201);
     }
 
     /**

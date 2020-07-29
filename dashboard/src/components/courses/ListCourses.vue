@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Panel ref="panelList" title="Tabla de categorias">
+    <Panel ref="panelList" title="Tabla de cursos">
       <b-container>
         <div class="table-responsive">
           <vue-good-table
             mode="remote"
-            :rows="categories"
+            :rows="courses"
             :columns="columns"
             :sort-options="sort"
             :pagination-options="pagination_options"
@@ -19,7 +19,7 @@
               <span v-if="props.column.field == 'actions'">
                 <span>
                   <div class="text-center">
-                    <a class="btn btn-grey" @click="selectCategory(props.row)">
+                    <a class="btn btn-grey" @click="selectCourse(props.row)">
                       <i class="fas fa-edit fa-fw"></i>
                     </a>
                     <a class="btn btn-danger" @click="confirmDelete(props.row.id)">
@@ -53,7 +53,7 @@ export default {
       page: 1,
       perPage: 10,
       totalRecords: 0,
-      categories: [],
+      courses: [],
       columns: [
         {
           label: "ID",
@@ -66,6 +66,10 @@ export default {
         {
           label: "Descripcion",
           field: "description"
+        },
+        {
+          label: "Trailer",
+          field: "trailer"
         },
         {
           label: "Foto",
@@ -96,7 +100,7 @@ export default {
     };
   },
   methods: {
-    confirmDelete(category_id) {
+    confirmDelete(course_id) {
       this.$swal({
         title: "Está seguro?",
         text: "Estos cambios no podran ser revertidos",
@@ -107,14 +111,14 @@ export default {
           let loader = this.$loading.show();
           this.$http({
             method: "DELETE",
-            url: "/api/categories/" + category_id
+            url: "/api/courses/" + course_id
           })
             .then(() => {
               this.$swal({
                 title: "Hecho!",
                 icon: "success"
               }).then(() => {
-                this.loadCategories();
+                this.loadCourses();
                 loader.hide();
               });
             })
@@ -130,8 +134,8 @@ export default {
         }
       });
     },
-    selectCategory(category) {
-      this.$emit("selectCategory", category);
+    selectCourse(course) {
+      this.$emit("selectCourse", course);
     },
     selectPhoto(photo) {
       this.selectedPhoto = photo;
@@ -140,14 +144,14 @@ export default {
     closeModalImage() {
       this.isOpen = "none";
     },
-    loadCategories() {
+    loadCourses() {
       let loader = this.$loading.show();
       this.$http({
         method: "GET",
-        url: "/api/categories?per_page=" + this.perPage + "&page=" + this.page
+        url: "/api/courses?per_page=" + this.perPage + "&page=" + this.page
       })
         .then(response => {
-          this.categories = response.data.data;
+          this.courses = response.data.data;
           this.totalRecords = response.data.meta.total;
           loader.hide();
         })
@@ -162,15 +166,15 @@ export default {
     },
     onPageChange(params) {
       this.page = params.currentPage;
-      this.loadCategories();
+      this.loadCourses();
     },
     onPerPageChange(params) {
       this.perPage = params.currentPerPage;
-      this.loadCategories();
+      this.loadCourses();
     }
   },
   created() {
-    this.loadCategories();
+    this.loadCourses();
   }
 };
 </script>

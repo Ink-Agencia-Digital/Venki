@@ -135,15 +135,15 @@ class ApiController extends Controller
         } else {
             $query = explode('|', $this->query);
             $column = isset($query[0]) ? $query[0] : 'id';
-            $value = isset($query[1]) ? $query[1] : '';
+            $operator = isset($query[1]) ? $query[1] : '=';
+            $value = isset($query[2]) ? $query[2] : '';
             $builder = ($this->modelHasColumn($column, $model->getFillable()))
-                ? $builder->where($column, 'LIKE', '%' . $value . '%')
+                ? $builder->where($column, $operator, $value)
                 : $builder;
         }
         if (count($relations) > 0) {
             $builder = $builder->with($relations);
         }
-
         $collection = $builder->paginate($this->per_page);
 
         return $collection;

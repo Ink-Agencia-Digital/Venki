@@ -21,5 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
 
 Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]);
+Route::resource('users.courses', 'User\UserCourseController', ['except' => ['create', 'edit']]);
 Route::resource('courses', 'Course\CourseController', ['except' => ['create', 'edit']]);
 Route::resource('categories', 'Category\CategoryController', ['except' => ['create', 'edit']]);

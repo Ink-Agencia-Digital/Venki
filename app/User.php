@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Notifications\UserRegistration;
+use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens, SoftDeletes, HasRoles;
+    use Notifiable, HasApiTokens, SoftDeletes, HasRoles, MustVerifyEmail;
 
     /**
      * The attributes that are mass assignable.
@@ -45,8 +47,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    /** Mutators */
+
     public function setPasswordAttribute($value)
     {
         $this->attributes["password"] = Hash::make($value);
+    }
+
+
+    /** Relationships */
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'users_courses');
+    }
+
+
+    /** Overrided Functions */
+
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new UserRegistration);
     }
 }
