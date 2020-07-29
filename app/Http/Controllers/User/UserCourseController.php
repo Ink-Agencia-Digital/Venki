@@ -96,7 +96,7 @@ class UserCourseController extends ApiController
      */
     public function destroy(User $user, Course $course)
     {
-        $user->courses()->attach($course);
+        $user->courses()->detach($course);
 
         return $this->api_success([
             'data' => [
