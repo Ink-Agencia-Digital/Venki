@@ -80,7 +80,30 @@ class LessonController extends ApiController
      */
     public function update(Request $request, Lesson $lesson)
     {
-        //
+        if ($request->has('course_id')) {
+            $lesson->course_id = $request->course_id;
+        }
+        if ($request->has('name')) {
+            $lesson->name = $request->name;
+        }
+        if ($request->has('description')) {
+            $lesson->description = $request->description;
+        }
+
+        if (!$lesson->isDirty()) {
+            return $this->errorResponse(
+                'Se debe especificar al menos un valor diferente para actualizar',
+                422
+            );
+        }
+
+        $lesson->saveOrFail();
+
+        return $this->api_success([
+            'data'      =>  new LessonResource($lesson),
+            'message'   => __('pages.responses.updated'),
+            'code'      =>  201
+        ], 201);
     }
 
     /**
