@@ -22,4 +22,9 @@ class Course extends Model
     {
         return $this->belongsToMany(Category::class, 'courses_categories');
     }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
 }

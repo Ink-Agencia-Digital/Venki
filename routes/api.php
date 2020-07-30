@@ -23,4 +23,5 @@ Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenContro
 Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]);
 Route::resource('users.courses', 'User\UserCourseController', ['except' => ['create', 'edit']]);
 Route::resource('courses', 'Course\CourseController', ['except' => ['create', 'edit']]);
+Route::resource('courses.lessons', 'Course\CourseController', ['except' => ['create', 'edit']]);
 Route::resource('categories', 'Category\CategoryController', ['except' => ['create', 'edit']]);

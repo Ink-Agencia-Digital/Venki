@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class, 'users_courses');
+        return $this->belongsToMany(Course::class, 'users_courses')->withPivot(['progress', 'complete']);
     }
 
 
