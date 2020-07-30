@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Lesson;
 
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLessonRequest;
+use App\Http\Resources\LessonResource;
 use App\Lesson;
 use Illuminate\Http\Request;
 
-class LessonController extends Controller
+class LessonController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -34,9 +37,16 @@ class LessonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLessonRequest $request)
     {
-        //
+        $lesson = new Lesson;
+        $lesson->fill($request->all());
+        $lesson->saveOrFail();
+        return $this->api_success([
+            'data' => new LessonResource($lesson),
+            'message' => __('pages.responses.created'),
+            'code' => 201
+        ], 201);
     }
 
     /**
@@ -47,7 +57,7 @@ class LessonController extends Controller
      */
     public function show(Lesson $lesson)
     {
-        //
+        return $this->singleResponse(new LessonResource($lesson));
     }
 
     /**
@@ -81,6 +91,12 @@ class LessonController extends Controller
      */
     public function destroy(Lesson $lesson)
     {
-        //
+        $lesson->resources()->delete();
+        $lesson->delete();
+        return $this->api_success([
+            'data'      =>  new LessonResource($lesson),
+            'message'   => __('pages.responses.deleted'),
+            'code'      =>  201
+        ], 201);
     }
 }
