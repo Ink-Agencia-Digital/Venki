@@ -2,20 +2,24 @@
 
 namespace App\Http\Controllers\Lesson;
 
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ResourceResource;
 use App\Lesson;
+use App\Resource;
 use Illuminate\Http\Request;
 
-class LessonResourceController extends Controller
+class LessonResourceController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Lesson $lesson)
     {
-        //
+        $resources = $lesson->resources();
+        return $this->collectionResponse(ResourceResource::collection($this->getModel(new Resource, [], $resources)));
     }
 
     /**

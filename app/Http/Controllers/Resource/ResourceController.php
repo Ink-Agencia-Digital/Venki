@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Resource;
 
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreResourceRequest;
+use App\Http\Resources\ResourceResource;
 use App\Resource;
 use Illuminate\Http\Request;
 
-class ResourceController extends Controller
+class ResourceController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -34,9 +37,26 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreResourceRequest $request)
     {
-        //
+        $resource = new Resource;
+        $resource->fillable($request->all());
+
+        if ($request->has('audio')) {
+            $resource->audio = $request->audio->store('resources');
+        }
+
+        if ($request->has('document')) {
+            $resource->document = $request->document->store('resources');
+        }
+
+        $resource->saveOrFail();
+
+        return $this->api_success([
+            'data' => new ResourceResource($resource),
+            'message' => __('pages.responses.created'),
+            'code' => 201
+        ], 201);
     }
 
     /**
@@ -81,6 +101,11 @@ class ResourceController extends Controller
      */
     public function destroy(Resource $resource)
     {
-        //
+        $resource->delete();
+        return $this->api_success([
+            'data' => new ResourceResource($resource),
+            'message' => __('pages.responses.deleted'),
+            'code' => 201
+        ], 201);
     }
 }
