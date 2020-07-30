@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Lesson;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLessonRequest;
+use App\Http\Requests\UpdateLessonRequest;
 use App\Http\Resources\LessonResource;
 use App\Lesson;
 use Illuminate\Http\Request;
@@ -78,7 +79,7 @@ class LessonController extends ApiController
      * @param  \App\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Lesson $lesson)
+    public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
         if ($request->has('course_id')) {
             $lesson->course_id = $request->course_id;

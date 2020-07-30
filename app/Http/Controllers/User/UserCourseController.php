@@ -20,7 +20,7 @@ class UserCourseController extends ApiController
     public function index(User $user)
     {
         $courses = $user->courses();
-        return $this->collectionResponse(CourseResource::collection($this->getModel(new Course, [], $courses)));
+        return $this->collectionResponse(CourseResource::collection($this->getModel(new Course, ['lessons'], $courses)));
     }
 
     /**
@@ -91,9 +91,15 @@ class UserCourseController extends ApiController
         if ($request->has('progress')) {
             $user->courses()->sync([$course->id => ['progress' => $request->progress]]);
         }
-        return $user->with(['courses' => function ($query) use ($course) {
+        $user->with(['courses' => function ($query) use ($course) {
             return $query->where('courses.id', $course->id);
         }])->first();
+
+        return $this->api_success([
+            'data'      =>  new UserResource($user),
+            'message'   => __('pages.responses.updated'),
+            'code'      =>  201
+        ], 201);
     }
 
     /**
