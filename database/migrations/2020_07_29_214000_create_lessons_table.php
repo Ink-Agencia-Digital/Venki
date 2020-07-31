@@ -18,6 +18,7 @@ class CreateLessonsTable extends Migration
             $table->unsignedBigInteger('course_id');
             $table->string('name');
             $table->string('description');
+            $table->integer('duration');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('course_id')

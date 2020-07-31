@@ -90,6 +90,9 @@ class LessonController extends ApiController
         if ($request->has('description')) {
             $lesson->description = $request->description;
         }
+        if ($request->has('duration')) {
+            $lesson->description = $request->description;
+        }
 
         if (!$lesson->isDirty()) {
             return $this->errorResponse(
