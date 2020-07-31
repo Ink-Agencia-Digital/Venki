@@ -20,11 +20,32 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
 
+/** 
+ * Users
+ */
 Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]);
 Route::resource('users.courses', 'User\UserCourseController', ['except' => ['create', 'edit']]);
+Route::resource('users.scores', 'User\UserScoreController', ['except' => ['create', 'edit']]);
+/** 
+ * Courses
+ */
 Route::resource('courses', 'Course\CourseController', ['except' => ['create', 'edit']]);
 Route::resource('courses.lessons', 'Course\CourseLessonController', ['except' => ['create', 'edit']]);
+Route::resource('courses.scores', 'Course\CourseScoreController', ['except' => ['create', 'edit']]);
+/** 
+ * Lessons
+ */
 Route::resource('lessons', 'Lesson\LessonController', ['except' => ['create', 'edit']]);
 Route::resource('lessons.resources', 'Lesson\LessonResourceController', ['except' => ['create', 'edit']]);
+/** 
+ * Resources
+ */
 Route::resource('resources', 'Resource\ResourceController', ['except' => ['create', 'edit']]);
+/** 
+ * Categories
+ */
 Route::resource('categories', 'Category\CategoryController', ['except' => ['create', 'edit']]);
+/**
+ * Scores
+ */
+Route::resource('scores', 'Score\ScoreController', ['except' => ['create', 'edit']]);

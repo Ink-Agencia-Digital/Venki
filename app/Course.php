@@ -27,4 +27,9 @@ class Course extends Model
     {
         return $this->hasMany(Lesson::class);
     }
+
+    public function scores()
+    {
+        return $this->hasMany(Score::class);
+    }
 }

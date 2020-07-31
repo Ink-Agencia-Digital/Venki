@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Course::class, 'users_courses')->withPivot(['progress', 'complete']);
     }
 
+    public function scores()
+    {
+        return $this->hasMany(Score::class);
+    }
+
 
     /** Overrided Functions */
 

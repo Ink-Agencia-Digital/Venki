@@ -20,7 +20,6 @@
               v-model="newCourse.trailer"
               placeholder="Link vimeo"
               required
-              :spellcheck="true"
             ></b-form-input>
           </b-form-group>
           <b-form-group class="row" label="Imagen" label-cols-md="3" label-for="picture">
@@ -87,18 +86,18 @@ export default {
         addRemoveLinks: true,
         autoProcessQueue: false,
         paramName: "photo",
-        maxFiles: 1
+        maxFiles: 1,
       },
       loading: null,
-      categories: []
+      categories: [],
     };
   },
   components: {
-    vueDropzone: vue2Dropzone
+    vueDropzone: vue2Dropzone,
   },
   methods: {
     sendingEvent(file, xhr, formData) {
-      Object.keys(this.newCourse).forEach(key => {
+      Object.keys(this.newCourse).forEach((key) => {
         formData.append(key, this.newCourse[key]);
       });
     },
@@ -130,26 +129,26 @@ export default {
       searchTimer = setTimeout(() => {
         this.$http({
           method: "GET",
-          url: "/api/categories?query=name|LIKE|%" + value + "%"
+          url: "/api/categories?query=name|LIKE|%" + value + "%",
         })
-          .then(response => {
+          .then((response) => {
             loading(false);
             this.categories = response.data.data;
           })
           .catch(() => {
             this.$swal({
               icon: "error",
-              title: "Error!"
+              title: "Error!",
             });
           });
       }, 300);
     },
     selectCategory(categories) {
-      this.newCourse.categories = categories.map(category => {
+      this.newCourse.categories = categories.map((category) => {
         return category.id;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
