@@ -26,5 +26,5 @@ Route::resource('courses', 'Course\CourseController', ['except' => ['create', 'e
 Route::resource('courses.lessons', 'Course\CourseLessonController', ['except' => ['create', 'edit']]);
 Route::resource('lessons', 'Lesson\LessonController', ['except' => ['create', 'edit']]);
 Route::resource('lessons.resources', 'Lesson\LessonResourceController', ['except' => ['create', 'edit']]);
-Route::resource('resources', 'Lesson\LessonResourceController', ['except' => ['create', 'edit']]);
+Route::resource('resources', 'Resource\ResourceResourceController', ['except' => ['create', 'edit']]);
 Route::resource('categories', 'Category\CategoryController', ['except' => ['create', 'edit']]);
