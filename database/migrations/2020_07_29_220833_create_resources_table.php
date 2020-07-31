@@ -16,7 +16,6 @@ class CreateResourcesTable extends Migration
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('lesson_id');
-            $table->unsignedBigInteger('type_resource_id');
             $table->string('audio')->nullable();
             $table->string('video')->nullable();
             $table->string('document')->nullable();
@@ -24,10 +23,6 @@ class CreateResourcesTable extends Migration
             $table->foreign('lesson_id')
                 ->references('id')
                 ->on('lessons')
-                ->onDelete('cascade');
-            $table->foreign('type_resource_id')
-                ->references('id')
-                ->on('type_resources')
                 ->onDelete('cascade');
         });
     }
