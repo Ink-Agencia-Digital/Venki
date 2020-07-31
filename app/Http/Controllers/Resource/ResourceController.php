@@ -40,7 +40,7 @@ class ResourceController extends ApiController
     public function store(StoreResourceRequest $request)
     {
         $resource = new Resource;
-        $resource->fillable($request->all());
+        $resource->fill($request->all());
 
         if ($request->has('audio')) {
             $resource->audio = $request->audio->store('resources');
