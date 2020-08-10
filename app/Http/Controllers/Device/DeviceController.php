@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDeviceRequest;
 use App\Http\Resources\DeviceResource;
+use App\User;
 use Illuminate\Http\Request;
 
 class DeviceController extends ApiController
@@ -39,8 +40,12 @@ class DeviceController extends ApiController
      */
     public function store(StoreDeviceRequest $request)
     {
+        $user = User::findOrFail($request->user_id);
+        $user->devices()->delete();
+
+
         $device = new Device;
-        $device->fill($request->all);
+        $device->fill($request->all());
         $device->saveOrFail();
         return $this->api_success([
             'data' => new DeviceResource($device),
@@ -91,7 +96,7 @@ class DeviceController extends ApiController
      */
     public function destroy(Device $device)
     {
-       $device->delete();
+        $device->delete();
         return $this->api_success([
             'data' => new DeviceResource($device),
             'message' => __('pages.responses.deleted'),
