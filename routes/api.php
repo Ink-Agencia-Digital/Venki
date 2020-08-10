@@ -26,6 +26,7 @@ Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenContro
 Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]);
 Route::resource('users.courses', 'User\UserCourseController', ['except' => ['create', 'edit']]);
 Route::resource('users.scores', 'User\UserScoreController', ['except' => ['create', 'edit']]);
+Route::resource('users.devices', 'User\UserScoreController', ['except' => ['create', 'edit']]);
 /** 
  * Courses
  */
@@ -49,3 +50,7 @@ Route::resource('categories', 'Category\CategoryController', ['except' => ['crea
  * Scores
  */
 Route::resource('scores', 'Score\ScoreController', ['except' => ['create', 'edit']]);
+/**
+ * Devices
+ */
+Route::resource('devices', 'Device\DeviceController', ['except' => ['create', 'edit']]);

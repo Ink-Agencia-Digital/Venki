@@ -68,6 +68,11 @@ class User extends Authenticatable
         return $this->hasMany(Score::class);
     }
 
+    public function devices()
+    {
+        return $this->hasMany(Device::class);
+    }
+
 
     /** Overrided Functions */
 

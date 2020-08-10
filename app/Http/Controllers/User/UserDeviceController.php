@@ -1,26 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Course;
+namespace App\Http\Controllers\User;
 
-use App\Course;
+use App\Device;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\LessonResource;
-use App\Lesson;
+use App\Http\Resources\DeviceResource;
+use App\User;
 use Illuminate\Http\Request;
 
-class CourseLessonController extends ApiController
+class UserDeviceController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Course $course)
+    public function index(User $user)
     {
-        $lessons = $course->lessons();
-
-        return $this->collectionResponse(LessonResource::collection($this->getModel(new Lesson, ['course'], $lessons)));
+        return $this->collectionResponse(DeviceResource::collection($this->getModel(new Device, [], $user->devices())));
     }
 
     /**
@@ -47,10 +45,10 @@ class CourseLessonController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show(User $user)
     {
         //
     }
@@ -58,10 +56,10 @@ class CourseLessonController extends ApiController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit(User $user)
     {
         //
     }
@@ -70,10 +68,10 @@ class CourseLessonController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Course  $course
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -81,10 +79,10 @@ class CourseLessonController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Course  $course
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(User $user)
     {
         //
     }

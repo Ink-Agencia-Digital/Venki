@@ -1,26 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Course;
+namespace App\Http\Controllers\Device;
 
-use App\Course;
+use App\Device;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\LessonResource;
-use App\Lesson;
+use App\Http\Requests\StoreDeviceRequest;
+use App\Http\Resources\DeviceResource;
 use Illuminate\Http\Request;
 
-class CourseLessonController extends ApiController
+class DeviceController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Course $course)
+    public function index()
     {
-        $lessons = $course->lessons();
-
-        return $this->collectionResponse(LessonResource::collection($this->getModel(new Lesson, ['course'], $lessons)));
+        //
     }
 
     /**
@@ -39,18 +37,25 @@ class CourseLessonController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDeviceRequest $request)
     {
-        //
+        $device = new Device;
+        $device->fill($request->all);
+        $device->saveOrFail();
+        return $this->api_success([
+            'data' => new DeviceResource($device),
+            'message' => __('pages.responses.created'),
+            'code' => 201
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show(Device $device)
     {
         //
     }
@@ -58,10 +63,10 @@ class CourseLessonController extends ApiController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit(Device $device)
     {
         //
     }
@@ -70,10 +75,10 @@ class CourseLessonController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Course  $course
+     * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, Device $device)
     {
         //
     }
@@ -81,11 +86,16 @@ class CourseLessonController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(Device $device)
     {
-        //
+       $device->delete();
+        return $this->api_success([
+            'data' => new DeviceResource($device),
+            'message' => __('pages.responses.deleted'),
+            'code' => 201
+        ], 201);
     }
 }

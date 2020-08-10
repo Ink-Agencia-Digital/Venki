@@ -2,38 +2,58 @@
 const routes = [
   {
     path: "/",
-    component: resolve =>
+    component: (resolve) =>
       import(/* webpackChunkName: "pages" */ "@/pages/Login.vue").then(
-        Login => {
+        (Login) => {
           resolve(Login.default);
         }
-      )
+      ),
   },
   {
     path: "/home",
-    component: resolve =>
-      import(/* webpackChunkName: "pages" */ "@/pages/Home.vue").then(Home => {
-        resolve(Home.default);
-      })
+    component: (resolve) =>
+      import(/* webpackChunkName: "pages" */ "@/pages/Home.vue").then(
+        (Home) => {
+          resolve(Home.default);
+        }
+      ),
   },
   {
     path: "/categories",
-    component: resolve =>
+    component: (resolve) =>
       import(/* webpackChunkName: "pages" */ "@/pages/Category.vue").then(
-        Category => {
+        (Category) => {
           resolve(Category.default);
         }
-      )
+      ),
   },
   {
     path: "/courses",
-    component: resolve =>
+    component: (resolve) =>
       import(/* webpackChunkName: "pages" */ "@/pages/Course.vue").then(
-        Course => {
+        (Course) => {
           resolve(Course.default);
         }
-      )
-  }
+      ),
+  },
+  {
+    path: "/lessons",
+    component: (resolve) =>
+      import(/* webpackChunkName: "pages" */ "@/pages/Lesson.vue").then(
+        (Course) => {
+          resolve(Course.default);
+        }
+      ),
+  },
+   {
+    path: "/resources",
+    component: (resolve) =>
+      import(/* webpackChunkName: "pages" */ "@/pages/Resource.vue").then(
+        (Resource) => {
+          resolve(Resource.default);
+        }
+      ),
+  },
 ];
 
 export default routes;
