@@ -26,7 +26,8 @@ Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenContro
 Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]);
 Route::resource('users.courses', 'User\UserCourseController', ['except' => ['create', 'edit']]);
 Route::resource('users.scores', 'User\UserScoreController', ['except' => ['create', 'edit']]);
-Route::resource('users.devices', 'User\UserScoreController', ['except' => ['create', 'edit']]);
+Route::resource('users.devices', 'User\UserDeviceController', ['except' => ['create', 'edit']]);
+Route::resource('users.chats', 'User\UserChatController', ['except' => ['create', 'edit']]);
 /** 
  * Courses
  */
@@ -54,3 +55,11 @@ Route::resource('scores', 'Score\ScoreController', ['except' => ['create', 'edit
  * Devices
  */
 Route::resource('devices', 'Device\DeviceController', ['except' => ['create', 'edit']]);
+/**
+ * Chat
+ */
+Route::resource('chats', 'Chat\ChatController', ['except' => ['create', 'edit']]);
+/**
+ * Message
+ */
+Route::resource('messages', 'Message\MessageController', ['except' => ['create', 'edit']]);

@@ -73,6 +73,10 @@ class User extends Authenticatable
         return $this->hasMany(Device::class);
     }
 
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
 
     /** Overrided Functions */
 
