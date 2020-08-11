@@ -38,9 +38,18 @@ class ChatController extends ApiController
      */
     public function store(Request $request)
     {
-        $chat = new Chat;
-        $chat->fill($request->all());
-        $chat->saveOrFail();
+        $chat = Chat::where([
+            ['receiver_id', '=', $request->receiver_id],
+            ['transmitter_id', '=', $request->transmitter_id]
+        ])->orWhere([
+            ['receiver_id', '=', $request->transmitter_id],
+            ['transmitter_id', '=', $request->receiver_id]
+        ])->first();
+        if (!$chat) {
+            $chat = new Chat;
+            $chat->fill($request->all());
+            $chat->saveOrFail();
+        }
         return $this->api_success([
             'data' => new ChatResource($chat),
             'message' => __('pages.responses.created'),
