@@ -56,7 +56,7 @@ class ChatController extends ApiController
      */
     public function show(Chat $chat)
     {
-        //
+        return $this->singleResponse(new ChatResource($chat));
     }
 
     /**
