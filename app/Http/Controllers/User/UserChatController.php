@@ -21,7 +21,7 @@ class UserChatController extends ApiController
         $chats = $user->chats();
 
         return $this->collectionResponse(ChatResource::collection($this->getModel(new Chat, [
-            "reciever",
+            "receiver",
             "transmitter",
             "messages"
         ], $chats)));
