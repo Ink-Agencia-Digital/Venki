@@ -75,7 +75,7 @@ class User extends Authenticatable
 
     public function chats()
     {
-        return $this->hasMany(Chat::class,'receiver_id')->orWhere('chats.transmitter_id', 'users.id');
+        return $this->hasMany(Chat::class, 'receiver_id')->orWhere('chats.transmitter_id', $this->id);
     }
 
     /** Overrided Functions */
