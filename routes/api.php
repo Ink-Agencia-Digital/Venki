@@ -59,6 +59,7 @@ Route::resource('devices', 'Device\DeviceController', ['except' => ['create', 'e
  * Chat
  */
 Route::resource('chats', 'Chat\ChatController', ['except' => ['create', 'edit']]);
+Route::resource('chats.messages', 'Chat\ChatMessageController', ['except' => ['create', 'edit']]);
 /**
  * Message
  */

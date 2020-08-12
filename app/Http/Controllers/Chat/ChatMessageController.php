@@ -3,19 +3,22 @@
 namespace App\Http\Controllers\Chat;
 
 use App\Chat;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MessageResource;
+use App\Message;
 use Illuminate\Http\Request;
 
-class ChatMessageController extends Controller
+class ChatMessageController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Chat $chat)
     {
-        //
+        return $this->collectionResponse(MessageResource::collection($this->getModel(new Message, [], $chat->messages())));
     }
 
     /**
