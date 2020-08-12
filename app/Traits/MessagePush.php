@@ -17,7 +17,7 @@ trait MessagePush
 {
     protected function sendPush($message, $deviceToken)
     {
-
+        $messaging = app('firebase.messaging');
         $title = 'Nuevo Mensaje';
         $body = $message;
 
@@ -25,5 +25,7 @@ trait MessagePush
         $message = CloudMessage::withTarget('token', $deviceToken)
             ->withNotification($notification) // optional
             ->withData(["message" => $message]);
+
+        $messaging->send($message);
     }
 }
