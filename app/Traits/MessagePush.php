@@ -22,10 +22,8 @@ trait MessagePush
         $body = $message;
 
         $notification = Notification::create($title, $body);
-
         $message = CloudMessage::withTarget('token', $deviceToken)
             ->withNotification($notification) // optional
-            ->withData(["message" => $message]) // optional
-        ;
+            ->withData(["message" => $message]);
     }
 }
