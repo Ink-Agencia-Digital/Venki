@@ -47,9 +47,9 @@ class MessageController extends ApiController
         $token = null;
 
         if ($message->chat->receiver_id == $message->user_id) {
-            $token = $message->chat->receiver->devices()->lastest()->first()->token;
+            $token = $message->chat->receiver->devices()->latest()->first()->token;
         } else {
-            $token = $message->chat->transmitter->devices()->lastest()->first()->token;
+            $token = $message->chat->transmitter->devices()->latest()->first()->token;
         }
 
         $this->sendPush($message->message, $token);
