@@ -42,7 +42,7 @@ class MessageController extends ApiController
         $message->fill($request->all());
         $message->saveOrFail();
 
-        return $this->api_success([$message => $request->message]);
+        return $this->api_success(["message" => $request->message]);
     }
 
     /**
