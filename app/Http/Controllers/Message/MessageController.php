@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Message;
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\MessageResource;
 use App\Message;
+use App\Traits\MessagePush;
 use Illuminate\Http\Request;
 
 class MessageController extends ApiController
 {
+
+    use MessagePush;
     /**
      * Display a listing of the resource.
      *
@@ -41,6 +43,16 @@ class MessageController extends ApiController
         $message = new Message;
         $message->fill($request->all());
         $message->saveOrFail();
+
+        $token = null;
+
+        if ($message->chat->receiver_id == $message->user_id) {
+            $token = $message->chat->receiver->devices()->first()->token;
+        } else {
+            $token = $message->chat->transmitter->devices()->first()->token;
+        }
+
+        $this->sendPush($message->message, $token);
 
         return $this->api_success(["message" => $request->message]);
     }
