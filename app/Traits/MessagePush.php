@@ -17,17 +17,20 @@ use Kreait\Firebase\Messaging\Notification;
 
 trait MessagePush
 {
-    protected function sendPush($message, $deviceToken)
+    protected function sendPush($message, $deviceToken, $name = "Usuario")
     {
         try {
             $messaging = app('firebase.messaging');
-            $title = 'Nuevo Mensaje';
+            $title = $name . " dice: ";
             $body = $message;
 
-            $notification = Notification::create($title, $body);
+            $notification = Notification::fromArray([
+                'title' => $title,
+                'body' => $body,
+            ]);
             $message = CloudMessage::withTarget('token', $deviceToken)
-                ->withNotification($notification) // optional
-                ->withData(["message" => $message]);
+                ->withNotification($notification)
+                ->withData(["id" => "mensaje"]);
 
             $messaging->send($message);
         } catch (NotFound $th) {

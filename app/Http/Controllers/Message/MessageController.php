@@ -45,14 +45,17 @@ class MessageController extends ApiController
         $message->saveOrFail();
 
         $token = null;
+        $name = "Usuario";
 
         if ($message->chat->receiver_id == $message->user_id) {
             $token = $message->chat->transmitter->devices()->latest()->first()->code;
+            $name = $message->chat->transmitter->name;
         } else {
             $token = $message->chat->receiver->devices()->latest()->first()->code;
+            $name = $message->chat->receiver->name;
         }
 
-        $this->sendPush($message->message, $token);
+        $this->sendPush($message->message, $token, $name);
 
         return $this->api_success([
             'data' => new MessageResource($message),
