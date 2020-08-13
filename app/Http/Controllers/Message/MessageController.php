@@ -54,7 +54,7 @@ class MessageController extends ApiController
 
         $this->sendPush($message->message, $token);
 
-        return $this->api_success(["message" => $request->message]);
+        return $this->singleResponse(new MessageResource($message));
     }
 
     /**
