@@ -37,4 +37,9 @@ class ChatEvent
     {
         return new Channel('chat.' . $this->message->chat_id);
     }
+
+    public function broadcastAs()
+    {
+      return 'ChatEvent';
+    }
 }
