@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ChatEvent
+class ChatEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -35,11 +35,11 @@ class ChatEvent
      */
     public function broadcastOn()
     {
-        return new Channel('chat.' . $this->message->chat_id);
+        return ['chat.' . $this->message->chat_id];
     }
 
     public function broadcastAs()
     {
-      return 'ChatEvent';
+        return 'chat_event';
     }
 }

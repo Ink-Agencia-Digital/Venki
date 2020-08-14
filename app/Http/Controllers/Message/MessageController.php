@@ -8,7 +8,6 @@ use App\Http\Resources\MessageResource;
 use App\Message;
 use App\Traits\MessagePush;
 use Illuminate\Http\Request;
-use Pusher\Pusher;
 
 class MessageController extends ApiController
 {
@@ -42,7 +41,6 @@ class MessageController extends ApiController
      */
     public function store(Request $request)
     {
-        $pusher = new Pusher(env("PUSHER_APP_KEY"), env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'));
         $message = new Message;
         $message->fill($request->all());
         $message->saveOrFail();
@@ -59,7 +57,7 @@ class MessageController extends ApiController
         }
 
         $this->sendPush($message->message, $token, $name);
-        $pusher->trigger('chat' . $message->chat_id, 'ChatEvent', $message);
+        event(new ChatEvent($message));
         return $this->api_success([
             'data' => new MessageResource($message),
             'message' => __('pages.responses.created'),
