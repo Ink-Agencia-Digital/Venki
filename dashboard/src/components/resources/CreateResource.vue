@@ -15,34 +15,73 @@
               @search="searchCourse"
             ></v-select>
           </b-form-group>
-          <b-form-group class="row" label="Curso" label-cols-md="3" label-for="courses">
+          <b-form-group
+            class="row"
+            v-if="selectedCourse"
+            label="Leccion"
+            label-cols-md="3"
+            label-for="lessons"
+          >
             <v-select
               label="name"
-              :options="courses"
-              :placeholder="'Digite nombre del curso'"
-              id="courses"
+              :options="lessons"
+              :placeholder="'Digite nombre de la leccion'"
+              id="lessons"
               :clear-search-on-select="true"
               :filterable="false"
-              @input="selectCourse"
-              @search="searchCourse"
+              @input="selectLesson"
+              @search="searchLesson"
             ></v-select>
-          </b-form-group>
-          <b-form-group class="row" label="Nombre" label-cols-md="3" label-for="lesson-name">
-            <b-form-input id="lesson-name" v-model="newLesson.name" required></b-form-input>
           </b-form-group>
           <b-form-group
             class="row"
-            label="Descripcion"
+            label="Tipo recurso"
             label-cols-md="3"
-            label-for="lesson-description"
+            label-for="resource-type"
           >
-            <b-form-textarea id="lesson-description" type="text" v-model="newLesson.description"></b-form-textarea>
+            <v-select
+              id="resource-type"
+              :options="['audio', 'video', 'document', ]"
+              :value="selectedType"
+              @input="selectType"
+              :clearable="false"
+            ></v-select>
           </b-form-group>
-          <b-form-group class="row" label="Duracion" label-cols-md="3" label-for="lesson-duration">
+          <b-form-group
+            class="row"
+            label="Recurso"
+            label-cols-md="3"
+            label-for="resource"
+            v-if="selectedType != 'video'"
+          >
+            <vue-dropzone
+              id="resource"
+              ref="dropzone_picture"
+              :options="dropzoneOptions"
+              @vdropzone-max-files-exceeded="deleteResource"
+              @vdropzone-success="sendSuccess"
+              @vdropzone-error="sendError"
+              @vdropzone-sending="sendingEvent"
+              :useCustomSlot="true"
+              :key="keyDrop"
+            >
+              <div class="dropzone-custom-content">
+                <h3 class="dropzone-custom-title">Arrastra y suelta para subir contenido!</h3>
+                <div class="subtitle">...o da click para seleccionar un archivo de tu computadora</div>
+              </div>
+            </vue-dropzone>
+          </b-form-group>
+          <b-form-group
+            class="row"
+            label="Video"
+            label-cols-md="3"
+            v-if="selectedType == 'video'"
+            label-for="resource-video"
+          >
             <b-form-input
-              id="lesson-duration"
-              v-model="newLesson.duration"
-              placeholder="Duracion en días"
+              id="resource-video"
+              v-model="newResource.video"
+              placeholder="Link vimeo"
               required
             ></b-form-input>
           </b-form-group>
@@ -55,7 +94,7 @@
               <b-button variant="outline-primary" @click="resetRegister">Limpiar</b-button>
             </b-col>
             <b-col col sm="6" md="4" offset-md="1">
-              <b-button variant="warning" @click="createLesson">Registrar</b-button>
+              <b-button variant="warning" @click="createResource">Registrar</b-button>
             </b-col>
           </b-row>
         </b-col>
@@ -65,37 +104,44 @@
 </template>
 
 <script>
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
 let searchTimer = null;
 export default {
   data() {
     return {
-      newLesson: {},
+      newResource: {},
       loading: null,
       courses: [],
+      lessons: [],
+      selectedCourse: null,
+      keyDrop: 0,
+      selectedType: "audio",
+      dropzoneOptions: {
+        url: "/api/resources",
+        thumbnailWidth: 150,
+        addRemoveLinks: true,
+        autoProcessQueue: false,
+        acceptedFiles: "audio/*",
+        paramName: "audio",
+        maxFiles: 1,
+      },
     };
   },
+  components: {
+    vueDropzone: vue2Dropzone,
+  },
   methods: {
-    createLesson() {
-      let loader = this.$loading.show();
-      this.$http({
-        method: "POST",
-        url: "/api/lessons",
-        data: this.newLesson,
-      })
-        .then(() => {
-          this.registrationSuccessful();
-          loader.hide();
-          this.$swal.fire("Exito!", "Registro exitoso", "success");
-        })
-        .catch((error) => {
-          console.log(error);
-          loader.hide();
-          this.$swal
-            .fire("Error!", "Error durante el registro", "error")
-            .then(() => {
-              this.resetRegister();
-            });
-        });
+    selectType(type) {
+      this.selectedType = type;
+      if (type == "audio") {
+        this.dropzoneOptions.acceptedFiles = "audio/*";
+      } else if (type == "document") {
+        this.dropzoneOptions.acceptedFiles = ".doc,.docx,.pdf";
+      }
+      this.dropzoneOptions.paramName = type;
+      delete this.newResource.video;
+      this.resetDropzone();
     },
     resetRegister() {
       this.$emit("resetRegister");
@@ -125,7 +171,74 @@ export default {
       }, 300);
     },
     selectCourse(course) {
-      this.newLesson.course_id = course.id;
+      this.selectedCourse = course.id;
+    },
+    searchLesson(value, loading) {
+      loading(true);
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        this.$http({
+          method: "GET",
+          url:
+            "/api/courses/" +
+            this.selectedCourse +
+            "/lessons?query=name|LIKE|%" +
+            value +
+            "%",
+        })
+          .then((response) => {
+            loading(false);
+            this.lessons = response.data.data;
+          })
+          .catch(() => {
+            this.$swal({
+              icon: "error",
+              title: "Error!",
+            });
+          });
+      }, 300);
+    },
+    selectLesson(lesson) {
+      this.newResource.lesson_id = lesson.id;
+    },
+    deleteResource(file) {
+      this.$refs.dropzone_picture.removeFile(file);
+    },
+    sendSuccess() {
+      this.registrationSuccessful();
+      this.$swal.fire("Exito!", "Registro exitoso", "success");
+    },
+    createResource() {
+      if (this.selectedType == "video") {
+        this.$http({
+          method: "POST",
+          url: "/api/resources",
+          data: this.newResource,
+        })
+          .then(() => {
+            this.$swal.fire("Exito", "Recurso creado", "success");
+            this.registrationSuccessful();
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$swal.fire("Error", "Error creando recurso", "error");
+          });
+      } else {
+        this.$refs.dropzone_picture.processQueue();
+      }
+    },
+    sendError() {
+      this.$swal.fire("Error!", "Registro fallido", "error").then(() => {
+        this.resetRegister();
+      });
+    },
+    sendingEvent(file, xhr, formData) {
+      Object.keys(this.newResource).forEach((key) => {
+        formData.append(key, this.newResource[key]);
+      });
+    },
+    resetDropzone() {
+      this.keyDrop++;
     },
   },
 };

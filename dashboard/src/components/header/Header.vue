@@ -22,24 +22,11 @@
 
       <!-- begin header-nav -->
       <ul class="navbar-nav navbar-right">
-        <b-nav-item-dropdown
-          menu-class="media-list dropdown-menu-right"
-          toggle-class="f-s-14"
-          no-caret
-        >
-          <template slot="button-content">
-            <i class="fa fa-bell"></i>
-            <span class="label">0</span>
-          </template>
-          <b-dropdown-header>NOTIFICATIONS (0)</b-dropdown-header>
-          <b-dropdown-item href="javascript:;" class="text-center width-300">No notification found</b-dropdown-item>
-        </b-nav-item-dropdown>
         <b-nav-item-dropdown menu-class="dropdown-menu-right" class="dropdown navbar-user" no-caret>
           <template slot="button-content">
             <div class="image image-icon bg-black text-grey-darker">
               <i class="fa fa-user"></i>
             </div>
-            <span class="d-none d-md-inline">Adam Schwartz</span>
             <b class="caret"></b>
           </template>
           <b-dropdown-item href="javascript:;">Edit Profile</b-dropdown-item>
@@ -65,7 +52,7 @@ export default {
   name: "Header",
   data() {
     return {
-      pageOptions: PageOptions
+      pageOptions: PageOptions,
     };
   },
   methods: {
@@ -92,10 +79,10 @@ export default {
       this.pageOptions.pageRightSidebarCollapsed = !this.pageOptions
         .pageRightSidebarCollapsed;
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       e.preventDefault();
       this.$router.push({ path: "/extra/search" });
-    }
-  }
+    },
+  },
 };
 </script>

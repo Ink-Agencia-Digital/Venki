@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Message;
 
+use App\Events\ChatEvent;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\MessageResource;
 use App\Message;
@@ -56,7 +57,7 @@ class MessageController extends ApiController
         }
 
         $this->sendPush($message->message, $token, $name);
-
+        event(new ChatEvent($message));
         return $this->api_success([
             'data' => new MessageResource($message),
             'message' => __('pages.responses.created'),

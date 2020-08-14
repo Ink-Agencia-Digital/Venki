@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Panel ref="panelList" title="Tabla de cursos">
+    <Panel ref="panelList" title="Tabla de recursos">
       <b-container>
         <b-row class="m-t-10 m-b-10">
           <b-col md="10" offset-md="1">
@@ -16,12 +16,30 @@
                 @search="searchCourse"
               ></v-select>
             </b-form-group>
+            <b-form-group
+              class="row"
+              v-if="selectedCourse"
+              label="Leccion"
+              label-cols-md="3"
+              label-for="list-lessons"
+            >
+              <v-select
+                label="name"
+                :options="lessons"
+                :placeholder="'Digite nombre de la leccion'"
+                id="lessons"
+                :clear-search-on-select="true"
+                :filterable="false"
+                @input="selectLesson"
+                @search="searchLesson"
+              ></v-select>
+            </b-form-group>
           </b-col>
         </b-row>
-        <div class="table-responsive" v-if="selectedCourse">
+        <div class="table-responsive" v-if="selectedLesson">
           <vue-good-table
             mode="remote"
-            :rows="lessons"
+            :rows="resources"
             :columns="columns"
             :sort-options="sort"
             :pagination-options="pagination_options"
@@ -32,12 +50,20 @@
           >
             <div slot="emptystate">No hay informacion disponible</div>
             <template slot="table-row" slot-scope="props">
+              <span v-if="props.column.field == 'resource'">
+                <span v-if="props.row.document">
+                  <a :href="'/'+props.row.document" target="_blank">Link documento</a>
+                </span>
+                <span v-else-if="props.row.audio">
+                  <a :href="'/'+props.row.audio" target="_blank">Link Audio</a>
+                </span>
+                <span v-else-if="props.row.video">
+                  <a :href="props.row.video" target="_blank">Link Vimeo</a>
+                </span>
+              </span>
               <span v-if="props.column.field == 'actions'">
                 <span>
                   <div class="text-center">
-                    <a class="btn btn-grey" @click="selectLesson(props.row)">
-                      <i class="fas fa-edit fa-fw"></i>
-                    </a>
                     <a class="btn btn-danger" @click="confirmDelete(props.row.id)">
                       <i class="fas fa-trash-alt fa-fw"></i>
                     </a>
@@ -61,23 +87,14 @@ export default {
       page: 1,
       perPage: 10,
       totalRecords: 0,
-      lessons: [],
       columns: [
         {
           label: "ID",
           field: "id",
         },
         {
-          label: "Nombre",
-          field: "name",
-        },
-        {
-          label: "Descripcion",
-          field: "description",
-        },
-        {
-          label: "Curso",
-          field: "course.name",
+          label: "Recurso",
+          field: "resource",
         },
         {
           label: "Acciones",
@@ -100,11 +117,14 @@ export default {
         dropdownAllowAll: false,
       },
       courses: [],
+      resources: [],
+      lessons: [],
       selectedCourse: null,
+      selectedLesson: null,
     };
   },
   methods: {
-    confirmDelete(lesson_id) {
+    confirmDelete(resource_id) {
       this.$swal({
         title: "Está seguro?",
         text: "Estos cambios no podran ser revertidos",
@@ -115,7 +135,7 @@ export default {
           let loader = this.$loading.show();
           this.$http({
             method: "DELETE",
-            url: "/api/lessons/" + lesson_id,
+            url: "/api/resources/" + resource_id,
           })
             .then(() => {
               this.$swal({
@@ -138,24 +158,21 @@ export default {
         }
       });
     },
-    selectLesson(lesson) {
-      this.$emit("selectLesson", lesson);
-    },
-    loadLessons() {
-      if (this.selectedCourse) {
+    loadResources() {
+      if (this.selectedLesson) {
         let loader = this.$loading.show();
         this.$http({
           method: "GET",
           url:
-            "/api/courses/" +
-            this.selectedCourse +
-            "/lessons?per_page=" +
+            "/api/lessons/" +
+            this.selectedLesson +
+            "/resources?per_page=" +
             this.perPage +
             "&page=" +
             this.page,
         })
           .then((response) => {
-            this.lessons = response.data.data;
+            this.resources = response.data.data;
             this.totalRecords = response.data.meta.total;
             loader.hide();
           })
@@ -199,12 +216,40 @@ export default {
     },
     selectCourse(course) {
       this.selectedCourse = course.id;
-      this.loadLessons();
+    },
+    searchLesson(value, loading) {
+      loading(true);
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        this.$http({
+          method: "GET",
+          url:
+            "/api/courses/" +
+            this.selectedCourse +
+            "/lessons?query=name|LIKE|%" +
+            value +
+            "%",
+        })
+          .then((response) => {
+            loading(false);
+            this.lessons = response.data.data;
+          })
+          .catch(() => {
+            this.$swal({
+              icon: "error",
+              title: "Error!",
+            });
+          });
+      }, 300);
+    },
+    selectLesson(lesson) {
+      this.selectedLesson = lesson.id;
+      this.loadResources();
     },
   },
   created() {
-    if (this.selectedCourse) {
-      this.loadLessons();
+    if (this.selectedLesson) {
+      this.loadResources();
     }
   },
 };

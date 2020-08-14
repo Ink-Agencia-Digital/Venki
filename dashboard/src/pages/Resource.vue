@@ -25,23 +25,7 @@
           </transition>
         </b-col>
         <b-col md="12">
-          <ListResources ref="resources-list" @selectResource="selectResource" />
-        </b-col>
-        <b-col md="12">
-          <transition
-            name="my-swing"
-            enter-active-class="bounce-in-top"
-            leave-active-class="bounce-out-bck"
-            mode="out-in"
-          >
-            <UpdateResource
-              v-if="selectedResource"
-              :initialResource="selectedResource"
-              :key="updateKey"
-              @resetUpdate="resetUpdate"
-              @updateSuccess="updateSuccess"
-            />
-          </transition>
+          <ListResources ref="resources-list" />
         </b-col>
       </b-row>
     </b-container>
@@ -65,39 +49,20 @@ export default {
         resolve(ListResources.default);
       });
     },
-    UpdateResource: (resolve) => {
-      import(
-        /* webpackChunkName: "components" */ "@/components/resources/UpdateResource.vue"
-      ).then((UpdateResource) => {
-        resolve(UpdateResource.default);
-      });
-    },
   },
   data() {
     return {
       selectedResource: null,
       registerKey: 1,
       listKey: 1,
-      updateKey: 1,
     };
   },
   methods: {
-    selectResource(resource) {
-      this.updateKey++;
-      this.selectedResource = { ...resource };
-    },
     resetRegister() {
       this.registerKey++;
     },
-    resetUpdate() {
-      this.selectedResource = null;
-      this.updateKey++;
-    },
     registrationSuccessful() {
       this.resetRegister();
-      this.$refs["resources-list"].loadResources();
-    },
-    updateSuccess() {
       this.$refs["resources-list"].loadResources();
     },
   },
