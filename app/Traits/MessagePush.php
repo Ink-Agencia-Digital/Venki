@@ -37,4 +37,22 @@ trait MessagePush
             Log::error($th);
         }
     }
+
+    protected function notificationPush($message, $title, $tokens)
+    {
+        try {
+            $messaging = app('firebase.messaging');
+            $title = $title;
+            $body = $message;
+
+            $notification = Notification::fromArray([
+                'title' => $title,
+                'body' => $body,
+            ]);
+            $message = CloudMessage::new()->withNotification($notification);
+            $messaging->sendMulticast($message, $tokens);
+        } catch (NotFound $th) {
+            Log::error($th);
+        }
+    }
 }

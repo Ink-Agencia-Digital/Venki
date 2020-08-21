@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends ApiController
 {
@@ -41,6 +42,11 @@ class UserController extends ApiController
     {
         $user = new User;
         $user->fill($request->all());
+
+        if ($request->hasFile('photo')) {
+            $user->photo = $request->photo->store('images');
+        }
+
         $user->saveOrFail();
         return $this->api_success([
             'data' => new UserResource($user),
@@ -97,6 +103,12 @@ class UserController extends ApiController
         }
         if ($request->has("phone")) {
             $user->phone = $request->phone;
+        }
+
+        if ($request->has("photo")) {
+            if ($user->photo)
+                Storage::delete($user->photo);
+            $user->photo = $request->photo->store('images');
         }
 
         if (!$user->isDirty()) {

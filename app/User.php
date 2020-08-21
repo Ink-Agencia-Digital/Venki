@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $this->hasMany(Chat::class, 'receiver_id')->orWhere('chats.transmitter_id', $this->id);
     }
 
+    public function linkedSocialAccounts()
+    {
+        return $this->hasMany(LinkedSocialAccount::class);
+    }
+
     /** Overrided Functions */
 
 

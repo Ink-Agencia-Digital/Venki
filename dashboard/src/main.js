@@ -10,7 +10,6 @@ import VueInsProgressBar from 'vue-ins-progress-bar'
 import VueEventCalendar from 'vue-event-calendar'
 import VueSparkline from 'vue-sparklines'
 import * as VueGoogleMaps from 'vue2-google-maps'
-import Vueditor from '@agametov/vueditor'
 import VueSweetalert2 from 'vue-sweetalert2'
 import VueNotification from 'vue-notification'
 import VuePanel from './plugins/panel/'
@@ -30,7 +29,6 @@ import Loading from 'vue-loading-overlay';
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-event-calendar/dist/style.css'
 import 'vue-hljs/dist/vue-hljs.min.css'
-import '@agametov/vueditor/dist/style/vueditor.min.css'
 import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
 import 'simple-line-icons/css/simple-line-icons.css'
 import 'flag-icon-css/css/flag-icon.min.css'
@@ -58,7 +56,6 @@ Vue.use(VueRouter)
 Vue.use(VueBootstrap)
 Vue.use(VueEventCalendar, { locale: 'en' })
 Vue.use(VueSparkline)
-Vue.use(Vueditor)
 Vue.use(VueSweetalert2)
 Vue.use(VueNotification)
 Vue.use(VuePanel)

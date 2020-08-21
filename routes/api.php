@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
+Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -64,3 +67,6 @@ Route::resource('chats.messages', 'Chat\ChatMessageController', ['except' => ['c
  * Message
  */
 Route::resource('messages', 'Message\MessageController', ['except' => ['create', 'edit']]);
+/** Push */
+
+Route::post('push', 'Push\PushController@sendPush');
