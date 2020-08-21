@@ -159,7 +159,7 @@
                     </b-card>
                 </b-col>
             </b-row>
-            <infinite-loading @infinite="loadScores">
+            <infinite-loading @infinite="loadScores" v-if="scores.length > 0">
                 <div slot="no-more">No más resultados</div>
                 <div slot="no-results">No más resultados</div>
             </infinite-loading>
