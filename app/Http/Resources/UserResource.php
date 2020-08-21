@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             "address" => isset($this->address) ? $this->address : null,
             "birthday" => isset($this->birthday) ? $this->birthday : null,
             "phone" => isset($this->phone) ? $this->phone : null,
-            "photo" => isset($this->phone) ? $this->phone : null,
+            "photo" => isset($this->photo) ? $this->photo : null,
             "roles" => RoleResource::collection($this->whenLoaded('roles'))
         ];
     }
