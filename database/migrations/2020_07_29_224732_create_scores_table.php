@@ -17,7 +17,7 @@ class CreateScoresTable extends Migration
             $table->id();
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('comment');
+            $table->string('comment', 300);
             $table->integer('score');
             $table->timestamps();
             $table->softDeletes();

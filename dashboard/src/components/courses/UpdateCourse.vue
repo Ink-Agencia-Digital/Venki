@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelUpdate" title="Modificacion de categorias">
+    <panel ref="panelUpdate" title="Modificacion de curso">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -119,18 +119,63 @@
                     </b-row>
                 </b-col>
             </b-row>
+            <b-row ref="scores" class="m-t-30" v-if="scores.length > 0">
+                <h3>Comentarios:</h3>
+                <b-col md="12"
+                    ><b-card v-for="(score, index) in scores" :key="index">
+                        <b-row no-gutters>
+                            <b-col md="2">
+                                <b-card-img
+                                    :src="
+                                        score.user.photo
+                                            ? '/photos/' + score.user.photo
+                                            : require('@/assets/img/user/user.png')
+                                    "
+                                    alt="Imagen Perfil"
+                                    height="100px"
+                                    width="100px"
+                                ></b-card-img>
+                            </b-col>
+                            <b-col md="9">
+                                <b-card-body
+                                    :title="
+                                        score.user.name +
+                                        ' ' +
+                                        score.user.lastname
+                                    "
+                                >
+                                    <b-card-text>
+                                        {{ score.comment }}
+                                    </b-card-text>
+                                    <b-button
+                                        size="sm"
+                                        variant="danger"
+                                        @click="deleteScore(score.id)"
+                                        >Eliminar</b-button
+                                    >
+                                </b-card-body>
+                            </b-col>
+                        </b-row>
+                    </b-card>
+                </b-col>
+            </b-row>
+            <infinite-loading @infinite="loadScores">
+                <div slot="no-more">No más resultados</div>
+                <div slot="no-results">No más resultados</div>
+            </infinite-loading>
         </b-container>
     </panel>
 </template>
 
 <script>
 import vue2Dropzone from "vue2-dropzone";
+import InfiniteLoading from "vue-infinite-loading";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 let searchTimer = null;
 
 export default {
     props: {
-        initialCourse: Object,
+        initialCourse: { type: Object, default: null },
     },
     data() {
         return {
@@ -147,12 +192,50 @@ export default {
             loading: null,
             categories: [],
             newCategories: [],
+            scores: [],
+            page: 1,
+            total: 0,
         };
     },
     components: {
         vueDropzone: vue2Dropzone,
+        InfiniteLoading: InfiniteLoading,
     },
     methods: {
+        deleteScore(id) {
+            this.$swal
+                .fire({
+                    title: "Está seguro?",
+                    text: "Ésta operacion es irreversible!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, borrar!",
+                })
+                .then((result) => {
+                    if (result.value) {
+                        this.$http({
+                            method: "DELETE",
+                            url: "/api/scores/" + id,
+                        })
+                            .then(() => {
+                                this.$swal.fire(
+                                    "Borrado!",
+                                    "Éste comentario ha sido eliminado.",
+                                    "success"
+                                );
+                                this.scores = this.scores.filter((score) => {
+                                    return score.id !== id;
+                                });
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                this.$swal.fire("Error!", "Error", "error");
+                            });
+                    }
+                });
+        },
         sendingEvent(file, xhr, formData) {
             Object.keys(this.course).forEach((key) => {
                 if (key == "categories" && this.newCategories.length > 0) {
@@ -238,6 +321,34 @@ export default {
                 return category.id;
             });
         },
+        loadScores($state = null) {
+            if (this.total == this.scores.length && $state) $state.complete();
+            else {
+                let loader = this.$loading.show({
+                    container: this.$refs.scores,
+                });
+                this.$http({
+                    method: "GET",
+                    params: {
+                        page: this.page,
+                    },
+                    url: "/api/courses/" + this.course.id + "/scores",
+                }).then((response) => {
+                    this.page++;
+                    this.scores = this.scores.concat(response.data.data);
+                    this.total = response.data.meta.total;
+                    if ($state) {
+                        if (response.data.meta.total == this.scores.length)
+                            $state.complete();
+                        else $state.loaded();
+                    }
+                    loader.hide();
+                });
+            }
+        },
+    },
+    mounted() {
+        this.loadScores();
     },
 };
 </script>

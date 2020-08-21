@@ -26,6 +26,13 @@
         >
             <router-view></router-view>
             <vue-ins-progress-bar></vue-ins-progress-bar>
+            <a
+                href="javascript:;"
+                class="btn btn-sm btn-icon btn-circle btn-success btn-scroll-to-top"
+                @click="scrollTop"
+                v-if="scrollButton"
+                ><i class="fa fa-angle-up"></i
+            ></a>
         </div>
         <Footer v-if="pageOptions.pageWithFooter" />
     </div>
@@ -63,11 +70,21 @@ export default {
     data() {
         return {
             pageOptions: PageOptions,
+            scrollButton: false,
         };
     },
     methods: {
         handleScroll: function () {
             PageOptions.pageBodyScrollTop = window.scrollY;
+            if (window.scrollY > 10) {
+                this.scrollButton = true;
+            } else {
+                this.scrollButton = false;
+            }
+        },
+        scrollTop() {
+            window.scrollTo(0, 0);
+            this.scrollButton = false;
         },
     },
     mounted() {

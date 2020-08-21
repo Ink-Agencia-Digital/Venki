@@ -15,4 +15,11 @@ class Score extends Model
         "comment",
         "score"
     ];
+
+    /** Relationship */
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
