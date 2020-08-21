@@ -31,6 +31,7 @@ Route::resource('users.courses', 'User\UserCourseController', ['except' => ['cre
 Route::resource('users.scores', 'User\UserScoreController', ['except' => ['create', 'edit']]);
 Route::resource('users.devices', 'User\UserDeviceController', ['except' => ['create', 'edit']]);
 Route::resource('users.chats', 'User\UserChatController', ['except' => ['create', 'edit']]);
+Route::resource('users.posts', 'User\UserPostController', ['only' => ['index']]);
 /** 
  * Courses
  */
@@ -68,5 +69,6 @@ Route::resource('chats.messages', 'Chat\ChatMessageController', ['except' => ['c
  */
 Route::resource('messages', 'Message\MessageController', ['except' => ['create', 'edit']]);
 /** Push */
-
 Route::post('push', 'Push\PushController@sendPush');
+/** Post */
+Route::resource('posts', 'Post\PostController', ['except' => ['create', 'edit']]);

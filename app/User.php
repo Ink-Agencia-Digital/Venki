@@ -83,6 +83,11 @@ class User extends Authenticatable
         return $this->hasMany(LinkedSocialAccount::class);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     /** Overrided Functions */
 
 
