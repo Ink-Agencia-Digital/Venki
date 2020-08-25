@@ -72,3 +72,5 @@ Route::resource('messages', 'Message\MessageController', ['except' => ['create',
 Route::post('push', 'Push\PushController@sendPush');
 /** Post */
 Route::resource('posts', 'Post\PostController', ['except' => ['create', 'edit']]);
+/** Profile */
+Route::resource('profiles', 'Profile\ProfileController', ['except' => ['create', 'edit']]);
