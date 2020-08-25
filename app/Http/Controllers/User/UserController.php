@@ -116,6 +116,10 @@ class UserController extends ApiController
             $user->photo =  $imageName;
         }
 
+        if ($request->has("profile_id")) {
+            $user->profile_id = $request->profile_id;
+        }
+
         if (!$user->isDirty()) {
             return $this->errorResponse(
                 'Se debe especificar al menos un valor diferente para actualizar',

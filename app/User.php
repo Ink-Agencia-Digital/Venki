@@ -26,7 +26,8 @@ class User extends Authenticatable
         'lastname',
         'password',
         'birthday',
-        'phone'
+        'phone',
+        'profile_id'
     ];
 
     /**
@@ -86,6 +87,11 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
     }
 
     /** Overrided Functions */
