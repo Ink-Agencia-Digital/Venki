@@ -68,9 +68,19 @@ Route::resource('chats.messages', 'Chat\ChatMessageController', ['except' => ['c
  * Message
  */
 Route::resource('messages', 'Message\MessageController', ['except' => ['create', 'edit']]);
-/** Push */
+/** 
+ * Push
+ */
 Route::post('push', 'Push\PushController@sendPush');
-/** Post */
+/** 
+ * Post
+ */
 Route::resource('posts', 'Post\PostController', ['except' => ['create', 'edit']]);
-/** Profile */
+/** 
+ * Profile 
+ */
 Route::resource('profiles', 'Profile\ProfileController', ['except' => ['create', 'edit']]);
+/**
+ * Survey
+ */
+Route::resource('surveys', 'Survey\SurveyController', ['except' => ['create', 'edit']]);
