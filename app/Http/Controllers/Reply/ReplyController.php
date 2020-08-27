@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reply;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ReplyResource;
 use App\Reply;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,12 @@ class ReplyController extends Controller
         $reply = new Reply;
         $reply->fill($request->all());
         $reply->saveOrFail();
+
+        return $this->api_success([
+            'data' => new ReplyResource($reply),
+            'message' => __('pages.responses.created'),
+            'code' => 201
+        ], 201);
     }
 
     /**

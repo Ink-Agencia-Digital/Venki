@@ -32,6 +32,7 @@ Route::resource('users.scores', 'User\UserScoreController', ['except' => ['creat
 Route::resource('users.devices', 'User\UserDeviceController', ['except' => ['create', 'edit']]);
 Route::resource('users.chats', 'User\UserChatController', ['except' => ['create', 'edit']]);
 Route::resource('users.posts', 'User\UserPostController', ['only' => ['index']]);
+Route::resource('users.replies', 'User\UserReplyController', ['only' => ['index']]);
 /** 
  * Courses
  */

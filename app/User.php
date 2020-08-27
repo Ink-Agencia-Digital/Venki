@@ -94,6 +94,11 @@ class User extends Authenticatable
         return $this->belongsTo(Profile::class);
     }
 
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
     /** Overrided Functions */
 
 
