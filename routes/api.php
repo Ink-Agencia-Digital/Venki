@@ -84,3 +84,7 @@ Route::resource('profiles', 'Profile\ProfileController', ['except' => ['create',
  * Survey
  */
 Route::resource('surveys', 'Survey\SurveyController', ['except' => ['create', 'edit']]);
+/** 
+ * Reply 
+ */
+Route::resource('replies', 'Reply\ReplyController', ['except' => ['create', 'edit']]);
