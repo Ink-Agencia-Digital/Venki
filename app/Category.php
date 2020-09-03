@@ -15,4 +15,11 @@ class Category extends Model
         'photo',
         'description',
     ];
+
+    /** Relationships */
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'courses_categories');
+    }
 }

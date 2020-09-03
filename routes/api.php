@@ -52,6 +52,7 @@ Route::resource('resources', 'Resource\ResourceController', ['except' => ['creat
  * Categories
  */
 Route::resource('categories', 'Category\CategoryController', ['except' => ['create', 'edit']]);
+Route::resource('categories.courses', 'Category\CategoryCourseController', ['only' => ['index']]);
 /**
  * Scores
  */
