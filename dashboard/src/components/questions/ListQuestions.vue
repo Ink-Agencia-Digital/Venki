@@ -43,12 +43,6 @@
                                 <span>
                                     <div class="text-center">
                                         <a
-                                            class="btn btn-grey"
-                                            @click="selectQuestion(props.row)"
-                                        >
-                                            <i class="fas fa-edit fa-fw"></i>
-                                        </a>
-                                        <a
                                             class="btn btn-danger"
                                             @click="confirmDelete(props.row.id)"
                                         >
@@ -131,12 +125,16 @@ export default {
                         url: "/api/questions/" + question_id,
                     })
                         .then(() => {
+                            loader.hide();
                             this.$swal({
                                 title: "Hecho!",
                                 icon: "success",
                             }).then(() => {
-                                this.loadQuestions();
-                                loader.hide();
+                                this.questions = this.questions.filter(
+                                    (question) => {
+                                        return question.id !== question_id;
+                                    }
+                                );
                             });
                         })
                         .catch((error) => {

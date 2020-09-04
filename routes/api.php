@@ -91,3 +91,7 @@ Route::resource('surveys', 'Survey\SurveyController', ['except' => ['create', 'e
  * Reply 
  */
 Route::resource('replies', 'Reply\ReplyController', ['except' => ['create', 'edit']]);
+/**
+ * Question
+ */
+Route::resource('questions', 'Question\QuestionController', ['except' => ['create', 'edit']]);

@@ -19,7 +19,7 @@ class Profile extends Model
         return $this->hasManyThrough(Question::class, Survey::class);
     }
 
-    public function survey()
+    public function surveys()
     {
         return $this->hasMany(Survey::class);
     }
