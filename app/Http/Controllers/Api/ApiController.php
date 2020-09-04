@@ -137,6 +137,9 @@ class ApiController extends Controller
             $column = isset($query[0]) ? $query[0] : 'id';
             $operator = isset($query[1]) ? $query[1] : '=';
             $value = isset($query[2]) ? $query[2] : '';
+            if ("like" === strtolower($operator)) {
+                $value = "%" . $value . "%";
+            }
             $builder = ($this->modelHasColumn($column, $model->getFillable()))
                 ? $builder->where($column, $operator, $value)
                 : $builder;

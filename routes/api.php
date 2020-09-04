@@ -82,6 +82,7 @@ Route::resource('posts', 'Post\PostController', ['except' => ['create', 'edit']]
  * Profile 
  */
 Route::resource('profiles', 'Profile\ProfileController', ['except' => ['create', 'edit']]);
+Route::resource('profiles.questions', 'Profile\ProfileQuestionController', ['only' => ['index']]);
 /**
  * Survey
  */

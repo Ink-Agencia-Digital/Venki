@@ -5,6 +5,9 @@ const sidebarMenu = [
     { path: "/courses", icon: "fa fa-book", title: "Cursos" },
     { path: "/lessons", icon: "fa fa-clipboard", title: "Lecciones" },
     { path: "/resources", icon: "fa fa-box", title: "Recursos" },
+    { path: "/surveys", icon: "fa fa-box", title: "Encuesta" },
+    { path: "/questions", icon: "fa fa-box", title: "Preguntas" },
+    { path: "/Resultados", icon: "fa fa-box", title: "Resultados" },
 ];
 
 export default sidebarMenu;

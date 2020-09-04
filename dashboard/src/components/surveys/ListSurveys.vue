@@ -1,11 +1,11 @@
 <template>
     <div>
-        <Panel ref="panelList" title="Tabla de cursos">
+        <Panel ref="panelList" title="Tabla de encuestas">
             <b-container>
                 <div class="table-responsive">
                     <vue-good-table
                         mode="remote"
-                        :rows="courses"
+                        :rows="surveys"
                         :columns="columns"
                         :sort-options="sort"
                         :pagination-options="pagination_options"
@@ -22,12 +22,6 @@
                                 <span>
                                     <div class="text-center">
                                         <a
-                                            class="btn btn-grey"
-                                            @click="selectCourse(props.row)"
-                                        >
-                                            <i class="fas fa-edit fa-fw"></i>
-                                        </a>
-                                        <a
                                             class="btn btn-danger"
                                             @click="confirmDelete(props.row.id)"
                                         >
@@ -38,18 +32,6 @@
                                     </div>
                                 </span>
                             </span>
-                            <span v-else-if="props.column.field == 'photo'">
-                                <div
-                                    class="text-center"
-                                    @click="selectPhoto(props.row.photo)"
-                                >
-                                    <img
-                                        class="img-category"
-                                        loading="lazy"
-                                        :src="'/' + props.row.photo"
-                                    />
-                                </div>
-                            </span>
                             <span v-else>{{
                                 props.formattedRow[props.column.field]
                             }}</span>
@@ -58,20 +40,6 @@
                 </div>
             </b-container>
         </Panel>
-        <div
-            id="modal-foto"
-            :style="{ display: isOpen }"
-            class="modal"
-            @click="closeModalImage"
-        >
-            <!-- Modal Content (The Image) -->
-            <img
-                class="modal-content"
-                loading="lazy"
-                :src="'/' + selectedPhoto"
-                id="image"
-            />
-        </div>
     </div>
 </template>
 
@@ -82,27 +50,19 @@ export default {
             page: 1,
             perPage: 10,
             totalRecords: 0,
-            courses: [],
+            surveys: [],
             columns: [
                 {
                     label: "ID",
                     field: "id",
                 },
                 {
-                    label: "Nombre",
-                    field: "name",
+                    label: "Perfil",
+                    field: "profile.name",
                 },
                 {
-                    label: "Descripcion",
-                    field: "description",
-                },
-                {
-                    label: "Trailer",
-                    field: "trailer",
-                },
-                {
-                    label: "Foto",
-                    field: "photo",
+                    label: "Creacion",
+                    field: "created_at",
                 },
                 {
                     label: "Acciones",
@@ -124,12 +84,12 @@ export default {
                 perPageDropdown: [10, 30, 50],
                 dropdownAllowAll: false,
             },
-            selectedPhoto: null,
-            isOpen: "none",
+            courses: [],
+            selectedCourse: null,
         };
     },
     methods: {
-        confirmDelete(course_id) {
+        confirmDelete(survey_id) {
             this.$swal({
                 title: "Está seguro?",
                 text: "Estos cambios no podran ser revertidos",
@@ -140,7 +100,7 @@ export default {
                     let loader = this.$loading.show();
                     this.$http({
                         method: "DELETE",
-                        url: "/api/courses/" + course_id,
+                        url: "/api/surveys/" + survey_id,
                     })
                         .then(() => {
                             loader.hide();
@@ -148,7 +108,7 @@ export default {
                                 title: "Hecho!",
                                 icon: "success",
                             }).then(() => {
-                                this.loadCourses();
+                                this.loadSurveys();
                             });
                         })
                         .catch((error) => {
@@ -163,28 +123,21 @@ export default {
                 }
             });
         },
-        selectCourse(course) {
-            this.$emit("selectCourse", course);
+        selectSurvey(survey) {
+            this.$emit("selectSurvey", survey);
         },
-        selectPhoto(photo) {
-            this.selectedPhoto = photo;
-            this.isOpen = "block";
-        },
-        closeModalImage() {
-            this.isOpen = "none";
-        },
-        loadCourses() {
+        loadSurveys() {
             let loader = this.$loading.show();
             this.$http({
                 method: "GET",
                 url:
-                    "/api/courses?per_page=" +
+                    "/api/surveys?per_page=" +
                     this.perPage +
                     "&page=" +
                     this.page,
             })
                 .then((response) => {
-                    this.courses = response.data.data;
+                    this.surveys = response.data.data;
                     this.totalRecords = response.data.meta.total;
                     loader.hide();
                 })
@@ -199,15 +152,15 @@ export default {
         },
         onPageChange(params) {
             this.page = params.currentPage;
-            this.loadCourses();
+            this.loadSurveys();
         },
         onPerPageChange(params) {
             this.perPage = params.currentPerPage;
-            this.loadCourses();
+            this.loadSurveys();
         },
     },
     created() {
-        this.loadCourses();
+        this.loadSurveys();
     },
 };
 </script>

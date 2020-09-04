@@ -2,10 +2,31 @@
     <div>
         <Panel ref="panelList" title="Tabla de cursos">
             <b-container>
-                <div class="table-responsive">
+                <b-row class="m-t-10 m-b-10">
+                    <b-col md="10" offset-md="1">
+                        <b-form-group
+                            class="row"
+                            label="Perfil"
+                            label-cols-md="3"
+                            label-for="profiles-list"
+                        >
+                            <v-select
+                                label="name"
+                                :options="profiles"
+                                :placeholder="'Digite nombre del perfl'"
+                                id="profiles-list"
+                                :clear-search-on-select="false"
+                                :filterable="false"
+                                @input="selectProfile"
+                                @search="seachProfile"
+                            ></v-select>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <div class="table-responsive" v-if="selectedProfile">
                     <vue-good-table
                         mode="remote"
-                        :rows="courses"
+                        :rows="questions"
                         :columns="columns"
                         :sort-options="sort"
                         :pagination-options="pagination_options"
@@ -23,7 +44,7 @@
                                     <div class="text-center">
                                         <a
                                             class="btn btn-grey"
-                                            @click="selectCourse(props.row)"
+                                            @click="selectQuestion(props.row)"
                                         >
                                             <i class="fas fa-edit fa-fw"></i>
                                         </a>
@@ -38,18 +59,6 @@
                                     </div>
                                 </span>
                             </span>
-                            <span v-else-if="props.column.field == 'photo'">
-                                <div
-                                    class="text-center"
-                                    @click="selectPhoto(props.row.photo)"
-                                >
-                                    <img
-                                        class="img-category"
-                                        loading="lazy"
-                                        :src="'/' + props.row.photo"
-                                    />
-                                </div>
-                            </span>
                             <span v-else>{{
                                 props.formattedRow[props.column.field]
                             }}</span>
@@ -58,51 +67,30 @@
                 </div>
             </b-container>
         </Panel>
-        <div
-            id="modal-foto"
-            :style="{ display: isOpen }"
-            class="modal"
-            @click="closeModalImage"
-        >
-            <!-- Modal Content (The Image) -->
-            <img
-                class="modal-content"
-                loading="lazy"
-                :src="'/' + selectedPhoto"
-                id="image"
-            />
-        </div>
     </div>
 </template>
 
 <script>
+let searchTimer = null;
 export default {
     data() {
         return {
             page: 1,
             perPage: 10,
             totalRecords: 0,
-            courses: [],
+            questions: [],
             columns: [
                 {
                     label: "ID",
                     field: "id",
                 },
                 {
-                    label: "Nombre",
-                    field: "name",
+                    label: "Pregunta",
+                    field: "question",
                 },
                 {
-                    label: "Descripcion",
-                    field: "description",
-                },
-                {
-                    label: "Trailer",
-                    field: "trailer",
-                },
-                {
-                    label: "Foto",
-                    field: "photo",
+                    label: "Categoria",
+                    field: "category.name",
                 },
                 {
                     label: "Acciones",
@@ -124,12 +112,12 @@ export default {
                 perPageDropdown: [10, 30, 50],
                 dropdownAllowAll: false,
             },
-            selectedPhoto: null,
-            isOpen: "none",
+            profiles: [],
+            selectedProfile: null,
         };
     },
     methods: {
-        confirmDelete(course_id) {
+        confirmDelete(question_id) {
             this.$swal({
                 title: "Está seguro?",
                 text: "Estos cambios no podran ser revertidos",
@@ -140,15 +128,15 @@ export default {
                     let loader = this.$loading.show();
                     this.$http({
                         method: "DELETE",
-                        url: "/api/courses/" + course_id,
+                        url: "/api/questions/" + question_id,
                     })
                         .then(() => {
-                            loader.hide();
                             this.$swal({
                                 title: "Hecho!",
                                 icon: "success",
                             }).then(() => {
-                                this.loadCourses();
+                                this.loadQuestions();
+                                loader.hide();
                             });
                         })
                         .catch((error) => {
@@ -163,51 +151,79 @@ export default {
                 }
             });
         },
-        selectCourse(course) {
-            this.$emit("selectCourse", course);
+        selectQuestion(question) {
+            this.$emit("selectQuestion", question);
         },
-        selectPhoto(photo) {
-            this.selectedPhoto = photo;
-            this.isOpen = "block";
-        },
-        closeModalImage() {
-            this.isOpen = "none";
-        },
-        loadCourses() {
-            let loader = this.$loading.show();
-            this.$http({
-                method: "GET",
-                url:
-                    "/api/courses?per_page=" +
-                    this.perPage +
-                    "&page=" +
-                    this.page,
-            })
-                .then((response) => {
-                    this.courses = response.data.data;
-                    this.totalRecords = response.data.meta.total;
-                    loader.hide();
+        loadQuestions() {
+            if (this.selectedProfile) {
+                let loader = this.$loading.show();
+                this.$http({
+                    method: "GET",
+                    url: "/api/profiles/" + this.selectedProfile + "/questions",
+                    params: {
+                        per_page: this.perPage,
+                        page: this.page,
+                    },
                 })
-                .catch(() => {
-                    loader.hide();
-                    this.$swal({
-                        title: "Error",
-                        text: "Error cargando los datos",
-                        icon: "error",
+                    .then((response) => {
+                        this.questions = response.data.data;
+                        this.totalRecords = response.data.meta.total;
+                        loader.hide();
+                    })
+                    .catch(() => {
+                        loader.hide();
+                        this.$swal({
+                            title: "Error",
+                            text: "Error cargando los datos",
+                            icon: "error",
+                        });
                     });
-                });
+            }
         },
         onPageChange(params) {
             this.page = params.currentPage;
-            this.loadCourses();
+            this.loadQuestions();
         },
         onPerPageChange(params) {
             this.perPage = params.currentPerPage;
-            this.loadCourses();
+            this.loadQuestions();
+        },
+        seachProfile(value, loading) {
+            loading(true);
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                this.$http({
+                    method: "GET",
+                    url: "/api/profiles",
+                    params: {
+                        ...(value
+                            ? {
+                                  query: "name|like|" + value,
+                              }
+                            : null),
+                    },
+                })
+                    .then((response) => {
+                        loading(false);
+                        this.profiles = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+            }, 300);
+        },
+        selectProfile(profile) {
+            this.selectedProfile = profile.id;
+            this.loadQuestions();
         },
     },
     created() {
-        this.loadCourses();
+        if (this.selectedProfile) {
+            this.loadQuestions();
+        }
     },
 };
 </script>

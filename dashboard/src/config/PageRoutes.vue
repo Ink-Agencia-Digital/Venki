@@ -54,6 +54,24 @@ const routes = [
                 }
             ),
     },
+    {
+        path: "/surveys",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Survey.vue").then(
+                (Survey) => {
+                    resolve(Survey.default);
+                }
+            ),
+    },
+    {
+        path: "/questions",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Question.vue").then(
+                (Question) => {
+                    resolve(Question.default);
+                }
+            ),
+    },
 ];
 
 export default routes;
