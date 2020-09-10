@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Reply;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\ReplyResource;
 use App\Reply;
 use Illuminate\Http\Request;
 
-class ReplyController extends Controller
+class ReplyController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ReplyController extends Controller
      */
     public function index()
     {
-        //
+        return $this->collectionResponse(ReplyResource::collection($this->getModel(new Reply, ['user'])))
     }
 
     /**

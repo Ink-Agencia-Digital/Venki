@@ -78,7 +78,7 @@
                             :options="categories"
                             :placeholder="'Digite nombre de la cagoria'"
                             id="categories"
-                            :clear-search-on-select="true"
+                            :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectCategory"
                             @search="searchCategories"

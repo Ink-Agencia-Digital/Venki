@@ -55,7 +55,7 @@ const routes = [
             ),
     },
     {
-        path: "/resources",
+        path: "/resource",
         component: (resolve) =>
             import(/* webpackChunkName: "pages" */ "@/pages/Resource.vue").then(
                 (Resource) => {

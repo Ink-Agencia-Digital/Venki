@@ -4,11 +4,11 @@ const sidebarMenu = [
     { path: "/categories", icon: "fa fa-folder", title: "Categorias" },
     { path: "/profiles", icon: "fa fa-box", title: "Perfiles" },
     { path: "/courses", icon: "fa fa-book", title: "Cursos" },
-    { path: "/lessons", icon: "fa fa-clipboard", title: "Lecciones" },
-    { path: "/resources", icon: "fa fa-box", title: "Recursos" },
-    { path: "/surveys", icon: "fa fa-box", title: "Encuesta" },
-    { path: "/questions", icon: "fa fa-box", title: "Preguntas" },
-    { path: "/replies", icon: "fa fa-box", title: "Resultados" },
+    { path: "/lessons", icon: "fa fa-clipboard", title: "Lecciones de Cursos" },
+    { path: "/resource", icon: "fa fa-box", title: "Recursos de Lecciones" },
+    { path: "/surveys", icon: "fa fa-box", title: "Encuesta de Diagnostico" },
+    { path: "/questions", icon: "fa fa-box", title: "Preguntas de Encuestas" },
+    { path: "/replies", icon: "fa fa-box", title: "Resul. Diag." },
 ];
 
 export default sidebarMenu;

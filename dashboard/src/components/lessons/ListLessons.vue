@@ -15,7 +15,7 @@
                                 :options="courses"
                                 :placeholder="'Digite nombre del curso'"
                                 id="list-courses"
-                                :clear-search-on-select="true"
+                                :clear-search-on-select="false"
                                 :filterable="false"
                                 @input="selectCourse"
                                 @search="searchCourse"

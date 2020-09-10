@@ -1,5 +1,8 @@
 <template>
     <div>
+        <h1 class="page-header">
+            Respuestas <small>Resultados de diagnosticos</small>
+        </h1>
         <ListReplies />
     </div>
 </template>

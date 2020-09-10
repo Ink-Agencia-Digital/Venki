@@ -15,7 +15,7 @@
                                 :options="courses"
                                 :placeholder="'Digite nombre del curso'"
                                 id="list-courses"
-                                :clear-search-on-select="true"
+                                :clear-search-on-select="false"
                                 :filterable="false"
                                 @input="selectCourse"
                                 @search="searchCourse"
@@ -33,7 +33,7 @@
                                 :options="lessons"
                                 :placeholder="'Digite nombre de la leccion'"
                                 id="lessons"
-                                :clear-search-on-select="true"
+                                :clear-search-on-select="false"
                                 :filterable="false"
                                 @input="selectLesson"
                                 @search="searchLesson"
@@ -119,6 +119,10 @@ export default {
                 {
                     label: "Recurso",
                     field: "resource",
+                },
+                {
+                    label: "Orden",
+                    field: "order",
                 },
                 {
                     label: "Acciones",

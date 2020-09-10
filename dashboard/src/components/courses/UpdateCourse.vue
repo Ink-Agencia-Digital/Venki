@@ -91,7 +91,7 @@
                             :options="categories"
                             :placeholder="'Digite nombre de la cagoria'"
                             id="categories-update"
-                            :clear-search-on-select="true"
+                            :clear-search-on-select="false"
                             :filterable="false"
                             :value="initialCourse.categories"
                             @input="selectCategory"

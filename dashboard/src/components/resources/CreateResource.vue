@@ -14,7 +14,7 @@
                             :options="courses"
                             :placeholder="'Digite nombre del curso'"
                             id="courses"
-                            :clear-search-on-select="true"
+                            :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectCourse"
                             @search="searchCourse"
@@ -32,11 +32,24 @@
                             :options="lessons"
                             :placeholder="'Digite nombre de la leccion'"
                             id="lessons"
-                            :clear-search-on-select="true"
+                            :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectLesson"
                             @search="searchLesson"
                         ></v-select>
+                    </b-form-group>
+                      <b-form-group
+                        class="row"
+                        label="Orden"
+                        label-cols-md="3"
+                        label-for="resource-order"
+                    >
+                        <b-form-input
+                            id="resource-order"
+                            v-model="newResource.order"
+                            type="number"
+                            required
+                        ></b-form-input>
                     </b-form-group>
                     <b-form-group
                         class="row"
