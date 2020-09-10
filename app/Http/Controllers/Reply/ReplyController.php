@@ -16,7 +16,7 @@ class ReplyController extends ApiController
      */
     public function index()
     {
-        return $this->collectionResponse(ReplyResource::collection($this->getModel(new Reply, ['user'])))
+        return $this->collectionResponse(ReplyResource::collection($this->getModel(new Reply, ['user'])));
     }
 
     /**
