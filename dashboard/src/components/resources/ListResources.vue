@@ -130,7 +130,7 @@ export default {
             },
             pagination_options: {
                 enabled: true,
-                mode: "records",
+                mode: "pages",
                 nextLabel: "Sig",
                 prevLabel: "Ant",
                 rowsPerPageLabel: "Registros por pagina",

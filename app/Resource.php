@@ -10,6 +10,7 @@ class Resource extends Model
         'lesson_id',
         'audio',
         'video',
-        'document'
+        'document',
+        'order'
     ];
 }

@@ -1,11 +1,11 @@
 <template>
     <div>
-        <Panel ref="panelList" title="Tabla de encuestas">
+        <Panel ref="panelList" title="Tabla de perfiles">
             <b-container>
                 <div class="table-responsive">
                     <vue-good-table
                         mode="remote"
-                        :rows="surveys"
+                        :rows="profiles"
                         :columns="columns"
                         :sort-options="sort"
                         :pagination-options="pagination_options"
@@ -50,19 +50,15 @@ export default {
             page: 1,
             perPage: 10,
             totalRecords: 0,
-            surveys: [],
+            profiles: [],
             columns: [
                 {
                     label: "ID",
                     field: "id",
                 },
                 {
-                    label: "Perfil",
-                    field: "profile.name",
-                },
-                {
-                    label: "Creacion",
-                    field: "created_at",
+                    label: "Nombre",
+                    field: "name",
                 },
                 {
                     label: "Acciones",
@@ -84,12 +80,10 @@ export default {
                 perPageDropdown: [10, 30, 50],
                 dropdownAllowAll: false,
             },
-            courses: [],
-            selectedCourse: null,
         };
     },
     methods: {
-        confirmDelete(survey_id) {
+        confirmDelete(profile_id) {
             this.$swal({
                 title: "Está seguro?",
                 text: "Estos cambios no podran ser revertidos",
@@ -100,7 +94,7 @@ export default {
                     let loader = this.$loading.show();
                     this.$http({
                         method: "DELETE",
-                        url: "/api/surveys/" + survey_id,
+                        url: "/api/profiles/" + profile_id,
                     })
                         .then(() => {
                             loader.hide();
@@ -108,7 +102,7 @@ export default {
                                 title: "Hecho!",
                                 icon: "success",
                             }).then(() => {
-                                this.loadSurveys();
+                                this.loadProfiles();
                             });
                         })
                         .catch((error) => {
@@ -123,21 +117,21 @@ export default {
                 }
             });
         },
-        selectSurvey(survey) {
-            this.$emit("selectSurvey", survey);
+        selectProfile(profile) {
+            this.$emit("selectProfile", profile);
         },
-        loadSurveys() {
+        loadProfiles() {
             let loader = this.$loading.show();
             this.$http({
                 method: "GET",
-                url:
-                    "/api/surveys?per_page=" +
-                    this.perPage +
-                    "&page=" +
-                    this.page,
+                url: "/api/profiles",
+                params: {
+                    per_page: this.perPage,
+                    page: this.page,
+                },
             })
                 .then((response) => {
-                    this.surveys = response.data.data;
+                    this.profiles = response.data.data;
                     this.totalRecords = response.data.meta.total;
                     loader.hide();
                 })
@@ -152,77 +146,15 @@ export default {
         },
         onPageChange(params) {
             this.page = params.currentPage;
-            this.loadSurveys();
+            this.loadProfiles();
         },
         onPerPageChange(params) {
             this.perPage = params.currentPerPage;
-            this.loadSurveys();
+            this.loadProfiles();
         },
     },
     created() {
-        this.loadSurveys();
+        this.loadProfiles();
     },
 };
 </script>
-
-<style scoped>
-.img-category {
-    max-height: 100px;
-    max-width: 150px;
-    height: auto;
-    width: auto;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.img-category:hover {
-    opacity: 0.7;
-}
-
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
-}
-
-/* Modal Content (Image) */
-.modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    margin-top: 10%;
-}
-
-/* Add Animation - Zoom in the Modal */
-.modal-content,
-#caption {
-    animation-name: zoom;
-    animation-duration: 0.6s;
-}
-
-@keyframes zoom {
-    from {
-        transform: scale(0);
-    }
-    to {
-        transform: scale(1);
-    }
-}
-
-/* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px) {
-    .modal-content {
-        width: 100%;
-    }
-}
-</style>

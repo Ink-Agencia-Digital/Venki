@@ -28,6 +28,15 @@ const routes = [
             ),
     },
     {
+        path: "/profiles",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Profile.vue").then(
+                (Profile) => {
+                    resolve(Profile.default);
+                }
+            ),
+    },
+    {
         path: "/courses",
         component: (resolve) =>
             import(/* webpackChunkName: "pages" */ "@/pages/Course.vue").then(
@@ -69,6 +78,15 @@ const routes = [
             import(/* webpackChunkName: "pages" */ "@/pages/Question.vue").then(
                 (Question) => {
                     resolve(Question.default);
+                }
+            ),
+    },
+    {
+        path: "/replies",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Reply.vue").then(
+                (Reply) => {
+                    resolve(Reply.default);
                 }
             ),
     },

@@ -18,6 +18,7 @@ class CreateRepliesTable extends Migration
             $table->text('reply');
             $table->unsignedBigInteger('survey_id');
             $table->unsignedBigInteger('user_id');
+            $table->boolean('scored')->default(false);
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('survey_id')
