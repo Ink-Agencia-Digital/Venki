@@ -19,8 +19,11 @@ class UserCourseController extends ApiController
      */
     public function index(User $user)
     {
-        $courses = $user->courses();
-        return $this->collectionResponse(CourseResource::collection($this->getModel(new Course, ['lessons.resources'], $courses)));
+        $courses = $user->courses()->with(['lessons.resources'=>function($query){
+            return $query->orderBy('resources.order');
+        }]);
+
+        return $this->collectionResponse(CourseResource::collection($this->getModel(new Course, [], $courses)));
     }
 
     /**
