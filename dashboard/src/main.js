@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueX from "vuex";
 import routes from "./config/PageRoutes";
 import Axios from "axios";
+import moment from "moment";
 
 // plugins
 import VueRouter from "vue-router";
@@ -82,6 +83,10 @@ Vue.component("vue-custom-scrollbar", VueCustomScrollbar);
 Vue.component(VueCountdown.name, VueCountdown);
 
 Vue.prototype.$http = Axios;
+
+window.moment = moment;
+moment.locale("es-us");
+
 Axios.defaults.headers.common["Content-Type"] = "application/json";
 Axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 

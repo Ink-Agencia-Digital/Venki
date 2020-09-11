@@ -19,7 +19,7 @@
     "core-js": "^3.6.2",
     "flag-icon-css": "^3.4.5",
     "ionicons": "^4.6.3",
-    "moment": "^2.24.0",
+    "moment": "^2.27.0",
     "node-sass": "^4.13.0",
     "sass-loader": "^8.0.0",
     "simple-line-icons": "^2.5.5",

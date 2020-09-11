@@ -23,7 +23,7 @@ class UserCourseController extends ApiController
             return $query->orderBy('resources.order');
         }]);
 
-        return $this->collectionResponse(CourseResource::collection($this->getModel(new Course, [], $courses)));
+        return $this->collectionResponse(CourseResource::collection($this->getModel(new Course, ['lessons.exam'], $courses)));
     }
 
     /**

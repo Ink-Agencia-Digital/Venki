@@ -95,3 +95,7 @@ Route::resource('replies', 'Reply\ReplyController', ['except' => ['create', 'edi
  * Question
  */
 Route::resource('questions', 'Question\QuestionController', ['except' => ['create', 'edit']]);
+/**
+ * Examen
+ */
+Route::resource('exams', 'Exam\ExamController', ['except' => ['create', 'edit']]);

@@ -9,7 +9,8 @@ class Reply extends Model
     protected $fillable = [
         "reply",
         "survey_id",
-        "user_id"
+        "user_id",
+        "scored"
     ];
 
     protected $casts = [
@@ -26,5 +27,12 @@ class Reply extends Model
     public function survey()
     {
         return $this->belongsTo(Survey::class);
+    }
+
+    /** accesor */
+
+    public function getReplyAttribute($value)
+    {
+        return json_decode(substr(stripslashes($value), 1, -1));
     }
 }
