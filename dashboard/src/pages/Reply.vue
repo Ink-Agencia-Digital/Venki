@@ -3,12 +3,13 @@
         <h1 class="page-header">
             Respuestas <small>Resultados de diagnosticos</small>
         </h1>
-        <ListReplies @selectReply="selectReply" />
+        <ListReplies ref="replies-list" @selectReply="selectReply" />
         <ViewReply
             v-if="selectedReply"
             :key="viewKey"
             :initialReply="selectedReply"
             @reset-view="resetView"
+            @case-closed="caseClosed"
         />
     </div>
 </template>
@@ -56,6 +57,11 @@ export default {
             this.selectedReply = null;
             this.viewKey++;
         },
+        caseClosed(){
+            this.resetView();
+            this.$refs["replies-list"].loadReplies();
+
+        }
     },
 };
 </script>

@@ -66,7 +66,7 @@ class ReplyController extends ApiController
                 return $carry + $item;
             })) / ($item->count()), 2);
         });
-        $reply = $reply->load(['user.courses','survey.profile'])->toArray();
+        $reply = $reply->load(['user.courses', 'survey.profile'])->toArray();
         $reply["reply"] = $average;
         return $this->singleResponse(new ReplyResource($reply));
     }
@@ -91,7 +91,24 @@ class ReplyController extends ApiController
      */
     public function update(Request $request, Reply $reply)
     {
-        //
+        if ($request->has('scored')) {
+            $reply->scored = $request->scored;
+        }
+
+        if (!$reply->isDirty()) {
+            return $this->errorResponse(
+                'Se debe especificar al menos un valor diferente para actualizar',
+                422
+            );
+        }
+
+        $reply->saveOrFail();
+
+        return $this->api_success([
+            'data'      =>  new ReplyResource($reply),
+            'message'   => __('pages.responses.updated'),
+            'code'      =>  201
+        ], 201);
     }
 
     /**
