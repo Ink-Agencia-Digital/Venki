@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Reply;
 
 use App\Category;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\ReplyResource;
 use App\Reply;
+use App\User;
 use Illuminate\Http\Request;
 
 class ReplyController extends ApiController
@@ -41,6 +44,13 @@ class ReplyController extends ApiController
         $reply = new Reply;
         $reply->fill($request->all());
         $reply->saveOrFail();
+
+        /**Update user surveyed */
+        $userRequest = new UpdateUserRequest;
+        $userRequest->request->add(["surveyed" => 1]);
+        $user = User::find($reply->user_id);
+        $userController = new UserController;
+        $userController->update($userRequest, $user);
 
         return $this->api_success([
             'data' => new ReplyResource($reply),

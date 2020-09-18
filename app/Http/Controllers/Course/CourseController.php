@@ -101,6 +101,9 @@ class CourseController extends ApiController
         if ($request->has("trailer")) {
             $course->trailer = $request->trailer;
         }
+        if ($request->has("price")) {
+            $course->price = $request->price;
+        }
         if ($request->has("photo")) {
             Storage::delete($course->photo);
             $course->photo = $request->photo->store('images');

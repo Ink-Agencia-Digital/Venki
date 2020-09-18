@@ -120,6 +120,14 @@ class UserController extends ApiController
             $user->profile_id = $request->profile_id;
         }
 
+        if ($request->has("surveyed")) {
+            $user->surveyed = $request->surveyed;
+        }
+        if ($request->has("premium")) {
+            $user->premium = $request->premium;
+        }
+
+
         if (!$user->isDirty()) {
             return $this->errorResponse(
                 'Se debe especificar al menos un valor diferente para actualizar',

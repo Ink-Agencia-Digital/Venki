@@ -33,6 +33,7 @@ Route::resource('users.devices', 'User\UserDeviceController', ['except' => ['cre
 Route::resource('users.chats', 'User\UserChatController', ['except' => ['create', 'edit']]);
 Route::resource('users.posts', 'User\UserPostController', ['only' => ['index']]);
 Route::resource('users.replies', 'User\UserReplyController', ['only' => ['index']]);
+Route::resource('users.recomendations', 'User\UserRecomendationController', ['only' => ['index']]);
 /** 
  * Courses
  */
@@ -99,3 +100,7 @@ Route::resource('questions', 'Question\QuestionController', ['except' => ['creat
  * Examen
  */
 Route::resource('exams', 'Exam\ExamController', ['except' => ['create', 'edit']]);
+/**
+ * Recomendation
+ */
+Route::resource('recomendations', 'Recomendation\RecomendationController', ['except' => ['create', 'edit']]);

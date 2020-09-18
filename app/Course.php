@@ -14,7 +14,18 @@ class Course extends Model
         'name',
         'description',
         'trailer',
+        'price'
     ];
+
+    protected $appends = ["duration"];
+
+
+    /** Accessor */
+
+    public function getDurationAttribute()
+    {
+        return $this->lessons()->sum('duration');
+    }
 
     /** RELATIONSHIPS */
 
