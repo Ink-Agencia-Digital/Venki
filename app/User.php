@@ -15,6 +15,12 @@ class User extends Authenticatable
 {
     use Notifiable, HasApiTokens, SoftDeletes, HasRoles, MustVerifyEmail;
 
+    public const SURVEY = [
+        0 => "nuevo",
+        1 => "evaluado",
+        2 => "reevaluar"
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,7 +33,9 @@ class User extends Authenticatable
         'password',
         'birthday',
         'phone',
-        'profile_id'
+        'profile_id',
+        'premium',
+        'surveyed'
     ];
 
     /**
@@ -54,6 +62,14 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes["password"] = Hash::make($value);
+    }
+
+    /** Accesors */
+
+
+    public function getAprovedAttribute()
+    {
+        return self::SURVEY[$this->attributes["surveyed"]];
     }
 
 
