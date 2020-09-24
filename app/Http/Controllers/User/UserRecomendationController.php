@@ -17,7 +17,7 @@ class UserRecomendationController extends ApiController
      */
     public function index(User $user)
     {
-        return $this->collectionResponse(RecomendationResource::collection($this->getModel(new Recomendation, ['courses'], $user->recomendations())));
+        return $this->singleResponse(new RecomendationResource($user->recomendation->load(['courses'])));
     }
 
     /**

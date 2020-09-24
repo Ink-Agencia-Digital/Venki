@@ -120,6 +120,11 @@ class User extends Authenticatable
         return $this->hasMany(Recomendation::class);
     }
 
+    public function recomendation()
+    {
+        return $this->hasOne(Recomendation::class);
+    }
+
     /** Overrided Functions */
 
 
