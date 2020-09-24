@@ -43,7 +43,7 @@ class PostController extends ApiController
         $post = new Post;
         $post->fill($request->all());
         $post->saveOrFail();
-        if ($request->hasFile('medias')) {
+        if ($request->has('medias')) {
             foreach ($request->medias as $file) {
                 $postMedia = new PostMedia;
                 $image = $file;
