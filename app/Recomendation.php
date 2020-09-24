@@ -20,6 +20,6 @@ class Recomendation extends Model
 
     public function courses()
     {
-        return $this->belongsToMany(Recomendation::class, 'courses_recomendations');
+        return $this->belongsToMany(Course::class, 'courses_recomendations');
     }
 }
