@@ -107,7 +107,7 @@ class UserController extends ApiController
 
         if ($request->has("photo")) {
             if ($user->photo)
-                Storage::delete($user->photo);
+            Storage::delete($user->photo);
             $image = $request->photo;
             $image = str_replace('data:image/jpeg;base64,', '', $image);
             $image = str_replace(' ', '+', $image);

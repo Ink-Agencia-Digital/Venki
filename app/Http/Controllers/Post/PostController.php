@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\PostResource;
 use App\Post;
 use App\PostMedia;
@@ -45,7 +46,12 @@ class PostController extends ApiController
         if ($request->hasFile('medias')) {
             foreach ($request->medias as $file) {
                 $postMedia = new PostMedia;
-                $postMedia->media = $file->store('images/media');
+                $image = $file;
+                $image = str_replace('data:image/jpeg;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+                $imageName = Str::random(10) . '.jpeg';
+                Storage::disk('medias')->put($imageName, base64_decode($image));
+                $postMedia->media =  $imageName;
                 $postMedia->post_id = $post->id;
                 $postMedia->save();
             }
