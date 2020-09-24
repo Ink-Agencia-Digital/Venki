@@ -29,6 +29,18 @@
                     </b-form-group>
                     <b-form-group
                         class="row"
+                        label="Precio"
+                        label-cols-md="3"
+                        label-for="update-price"
+                    >
+                        <b-form-input
+                            id="update-price"
+                            v-model="course.price"
+                            required
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
                         label="Trailer"
                         label-cols-md="3"
                         label-for="update-trailer"
@@ -266,6 +278,7 @@ export default {
                     data: {
                         name: this.course.name,
                         description: this.course.description,
+                        price: this.course.price,
                         trailer: this.course.trailer,
                         ...(this.newCategories.length > 0 && {
                             categories: this.newCategories,

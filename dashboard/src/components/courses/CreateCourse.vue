@@ -29,6 +29,21 @@
                     </b-form-group>
                     <b-form-group
                         class="row"
+                        label="Precio"
+                        label-cols-md="3"
+                        label-for="course-price"
+                    >
+                        <b-form-input
+                            id="course-price"
+                            v-model="newCourse.price"
+                            placeholder="0,0"
+                            required
+                            type="number"
+                            min="0"
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
                         label="Trailer"
                         label-cols-md="3"
                         label-for="course-trailer"

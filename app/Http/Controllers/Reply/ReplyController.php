@@ -74,7 +74,7 @@ class ReplyController extends ApiController
             $category = Category::findOrFail($key);
             $average[$category->name] = round(($item->pluck('r')->reduce(function ($carry, $item) {
                 return $carry + $item;
-            })) / ($item->count()), 2);
+            })) / ($item->count()), 3);
         });
         $reply = $reply->load(['user.courses', 'survey.profile'])->toArray();
         $reply["reply"] = $average;

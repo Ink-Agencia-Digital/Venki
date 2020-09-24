@@ -96,6 +96,14 @@ export default {
                     label: "Descripcion",
                     field: "description",
                 },
+                 {
+                    label: "Duracion",
+                    field: "duration",
+                },
+                 {
+                    label: "Precio",
+                    field: "price",
+                },
                 {
                     label: "Trailer",
                     field: "trailer",
