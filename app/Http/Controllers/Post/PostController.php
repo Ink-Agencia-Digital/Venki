@@ -19,7 +19,7 @@ class PostController extends ApiController
      */
     public function index()
     {
-        return $this->collectionResponse(PostResource::collection($this->getModel(new Post, ['medias'])));
+        return $this->collectionResponse(PostResource::collection($this->getModel(new Post, ['medias', 'user'])));
     }
 
     /**

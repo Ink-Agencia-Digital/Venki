@@ -35,7 +35,11 @@ class User extends Authenticatable
         'phone',
         'profile_id',
         'premium',
-        'surveyed'
+        'surveyed',
+        'cognitivo',
+        'emocional',
+        'conductual',
+        'fortaleza_mental',
     ];
 
     /**
@@ -123,6 +127,11 @@ class User extends Authenticatable
     public function recomendation()
     {
         return $this->hasOne(Recomendation::class);
+    }
+
+    public function timelines()
+    {
+        return $this->hasMany(Timeline::class);
     }
 
     /** Overrided Functions */

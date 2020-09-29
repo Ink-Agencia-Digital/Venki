@@ -45,8 +45,28 @@ class ReplyController extends ApiController
         $reply->fill($request->all());
         $reply->saveOrFail();
 
+        $replies = collect($reply->reply)->groupBy('ct');
+
+        $average = array();
+        $replies->each(function ($item, $key) use (&$average) {
+            $category = Category::findOrFail($key);
+            $average[$category->name] = round(($item->pluck('r')->reduce(function ($carry, $item) {
+                return $carry + $item;
+            })) / ($item->count()), 3);
+        });
+
         /**Update user surveyed */
         $userRequest = new UpdateUserRequest;
+
+        foreach($average as $skill){
+            switch ($skill) {
+                case 'value':
+                   
+                    break;
+                
+            }
+        }
+
         $userRequest->request->add(["surveyed" => 1]);
         $user = User::find($reply->user_id);
         $userController = new UserController;
