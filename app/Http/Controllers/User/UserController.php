@@ -19,7 +19,7 @@ class UserController extends ApiController
      */
     public function index()
     {
-        return $this->collectionResponse(UserResource::collection($this->getModel(new User, ['roles'])));
+        return $this->collectionResponse(UserResource::collection($this->getModel(new User, ['roles', 'profile'])));
     }
 
     /**
