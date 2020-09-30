@@ -34,6 +34,7 @@ Route::resource('users.chats', 'User\UserChatController', ['except' => ['create'
 Route::resource('users.posts', 'User\UserPostController', ['only' => ['index']]);
 Route::resource('users.replies', 'User\UserReplyController', ['only' => ['index']]);
 Route::resource('users.recomendations', 'User\UserRecomendationController', ['only' => ['index']]);
+Route::resource('users.timelines', 'User\UserTimelineController', ['only' => ['index']]);
 /** 
  * Courses
  */

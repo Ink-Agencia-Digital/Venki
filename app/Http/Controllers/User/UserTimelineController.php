@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
+use App\Http\Resources\TimelineResource;
+use App\Timeline;
 use App\User;
 use Illuminate\Http\Request;
 
-class UserTimelineController extends Controller
+class UserTimelineController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        //
+        return $this->collectionResponse(TimelineResource::collection($this->getModel(new Timeline, [], $user->timelines())));
     }
 
     /**
