@@ -105,3 +105,7 @@ Route::resource('exams', 'Exam\ExamController', ['except' => ['create', 'edit']]
  * Recomendation
  */
 Route::resource('recomendations', 'Recomendation\RecomendationController', ['except' => ['create', 'edit']]);
+/**
+ * DailyActivity
+ */
+Route::resource('dailyactivities', 'DailyActivity\DailyActivityController', ['except' => ['create', 'edit']]);
