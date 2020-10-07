@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Resources\AchievementResource;
 use App\Notifications\UserRegistration;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -133,6 +134,11 @@ class User extends Authenticatable
     public function timelines()
     {
         return $this->hasMany(Timeline::class);
+    }
+
+    public function achievements()
+    {
+        return $this->hasMany(Achievement::class);
     }
 
     /** Overrided Functions */

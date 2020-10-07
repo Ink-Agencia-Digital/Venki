@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Achievement;
+namespace App\Http\Controllers\User;
 
 use App\Achievement;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AchievementResource;
+use App\User;
 use Illuminate\Http\Request;
 
-class AchievementController extends ApiController
+class UserAchievementController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        return $this->collectionResponse(AchievementResource::collection($this->getModel(new Achievement, [])));
+        return $this->collectionResponse(AchievementResource::collection($this->getModel(new Achievement, [], $user->achievements())));
     }
 
     /**
@@ -38,24 +39,16 @@ class AchievementController extends ApiController
      */
     public function store(Request $request)
     {
-        $achievement = new Achievement;
-        $achievement->fill($request->all());
-        $achievement->saveOrFail();
-
-        return $this->api_success([
-            'data'      =>  new AchievementResource($achievement),
-            'message'   => __('pages.responses.created'),
-            'code'      =>  201
-        ], 201);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Achievement  $achievement
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Achievement $achievement)
+    public function show(User $user)
     {
         //
     }
@@ -63,10 +56,10 @@ class AchievementController extends ApiController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Achievement  $achievement
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Achievement $achievement)
+    public function edit(User $user)
     {
         //
     }
@@ -75,10 +68,10 @@ class AchievementController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Achievement  $achievement
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Achievement $achievement)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -86,16 +79,11 @@ class AchievementController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Achievement  $achievement
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Achievement $achievement)
+    public function destroy(User $user)
     {
-        $achievement->delete();
-        return $this->api_success([
-            'data'      =>  new AchievementResource($achievement),
-            'message'   => __('pages.responses.deleted'),
-            'code'      =>  201
-        ], 201);
+        //
     }
 }

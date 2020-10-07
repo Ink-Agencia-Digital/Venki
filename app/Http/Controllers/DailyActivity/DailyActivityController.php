@@ -19,7 +19,7 @@ class DailyActivityController extends ApiController
     public function index(Request $request)
     {
         if ($request->has('today')) {
-            $dailyActivity = DailyActivity::orderBy('last_done', 'desc')->first();
+            $dailyActivity = DailyActivity::orderBy('last_done', 'asc')->first();
             $dailyActivity->last_done = Carbon::now();
             $dailyActivity->saveOrFail();
             return $this->singleResponse(new DailyActivityResource($dailyActivity));
