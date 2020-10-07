@@ -18,7 +18,7 @@ Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user()->load(['profile', 'roles']);
+    return $request->user()->load(['profile', 'roles', 'achievements']);
 });
 
 Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
