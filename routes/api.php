@@ -113,4 +113,4 @@ Route::resource('dailyactivities', 'DailyActivity\DailyActivityController', ['ex
 /**
  * Achievements
  */
-Route::resource('achievements', 'Achievements\AchievementsController', ['except' => ['create', 'edit']]);
+Route::resource('achievements', 'Achievement\AchievementController', ['except' => ['create', 'edit']]);
