@@ -110,3 +110,7 @@ Route::resource('recomendations', 'Recomendation\RecomendationController', ['exc
  * DailyActivity
  */
 Route::resource('dailyactivities', 'DailyActivity\DailyActivityController', ['except' => ['create', 'edit']]);
+/**
+ * Achievements
+ */
+Route::resource('achievements', 'Achievements\AchievementsController', ['except' => ['create', 'edit']]);
