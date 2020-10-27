@@ -107,7 +107,7 @@ class UserController extends ApiController
         if ($request->has("description")) {
             $user->description = $request->description;
         }
-        if ($request->has(" institution")) {
+        if ($request->has("institution")) {
             $user->institution = $request->institution;
         }
         if ($request->has("status")) {
