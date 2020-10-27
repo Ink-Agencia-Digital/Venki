@@ -41,7 +41,10 @@ class User extends Authenticatable
         'emocional',
         'conductual',
         'fortaleza_mental',
-        'description'
+        'description',
+        'institution',
+        'status',
+        'city'
     ];
 
     /**
