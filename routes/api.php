@@ -90,6 +90,7 @@ Route::resource('profiles.questions', 'Profile\ProfileQuestionController', ['onl
  * Survey
  */
 Route::resource('surveys', 'Survey\SurveyController', ['except' => ['create', 'edit']]);
+Route::resource('surveys.questions', 'Survey\SurveyQuestionController', ['except' => ['create', 'edit']]);
 /** 
  * Reply 
  */
