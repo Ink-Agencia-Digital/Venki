@@ -2,8 +2,8 @@
     <div>
         <!-- begin page-header -->
         <h1 class="page-header">
-            Categorias
-            <small>Admnistración de categorias</small>
+            Imagenes del dia
+            <small>Admnistración de imagenes</small>
         </h1>
         <!-- end page-header -->
 
@@ -16,8 +16,8 @@
                         leave-active-class="bounce-out-bck"
                         mode="out-in"
                     >
-                        <CreateCategory
-                            v-if="!selectedCategory"
+                        <CreateImage
+                            v-if="!selectedImage"
                             :key="registerKey"
                             @registrationSuccessful="registrationSuccessful"
                             @resetRegister="resetRegister"
@@ -25,9 +25,9 @@
                     </transition>
                 </b-col>
                 <b-col md="12">
-                    <ListCategories
-                        ref="categories-list"
-                        @selectCategory="selectCategory"
+                    <ListImage
+                        ref="images-list"
+                        @selectImage="selectImage"
                     />
                 </b-col>
                 <b-col md="12">
@@ -37,13 +37,7 @@
                         leave-active-class="bounce-out-bck"
                         mode="out-in"
                     >
-                        <UpdateCategory
-                            v-if="selectedCategory"
-                            :initialCategory="selectedCategory"
-                            :key="updateKey"
-                            @resetUpdate="resetUpdate"
-                            @updateSuccess="updateSuccess"
-                        />
+                    
                     </transition>
                 </b-col>
             </b-row>
@@ -54,54 +48,44 @@
 <script>
 export default {
     components: {
-        CreateCategory: (resolve) => {
+        CreateImage: (resolve) => {
             import(
-                /* webpackChunkName: "components" */ "@/components/categories/CreateCategory.vue"
-            ).then((CreateCategory) => {
-                resolve(CreateCategory.default);
+                /* webpackChunkName: "components" */ "@/components/images/CreateImage.vue"
+            ).then((CreateImage) => {
+                resolve(CreateImage.default);
             });
         },
-        ListCategories: (resolve) => {
+        ListImage: (resolve) => {
             import(
-                /* webpackChunkName: "components" */ "@/components/categories/ListCategories.vue"
-            ).then((ListCategories) => {
-                resolve(ListCategories.default);
+                /* webpackChunkName: "components" */ "@/components/images/ListImage.vue"
+            ).then((ListImage) => {
+                resolve(ListImage.default);
             });
         },
-        UpdateCategory: (resolve) => {
-            import(
-                /* webpackChunkName: "components" */ "@/components/categories/UpdateCategory.vue"
-            ).then((UpdateCategory) => {
-                resolve(UpdateCategory.default);
-            });
-        },
+      
     },
     data() {
         return {
-            selectedCategory: null,
+            selectedImage: null,
             registerKey: 1,
             listKey: 1,
             updateKey: 1,
         };
     },
     methods: {
-        selectCategory(category) {
+        selectImage(image) {
             this.updateKey++;
-            this.selectedCategory = { ...category };
+            this.selectedImage= { ...image };
         },
         resetRegister() {
             this.registerKey++;
         },
-        resetUpdate() {
-            this.selectedCategory = null;
-            this.updateKey++;
-        },
         registrationSuccessful() {
             this.resetRegister();
-            this.$refs["categories-list"].loadCategories();
+            this.$refs["images-list"].loadImage();
         },
         updateSuccess() {
-            this.$refs["categories-list"].loadCategories();
+            this.$refs["images-list"].loadImage();
         },
     },
 };

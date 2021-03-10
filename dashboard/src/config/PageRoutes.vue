@@ -90,6 +90,24 @@ const routes = [
                 }
             ),
     },
+    {
+        path: "/users",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Users.vue").then(
+                (Users) => {
+                    resolve(Users.default);
+                }
+            ),
+    },
+     {
+        path: "/images",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Image.vue").then(
+                (Image) => {
+                    resolve(Image.default);
+                }
+            ),
+    },
 ];
 
 export default routes;

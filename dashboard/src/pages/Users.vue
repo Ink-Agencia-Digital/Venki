@@ -2,49 +2,17 @@
     <div>
         <!-- begin page-header -->
         <h1 class="page-header">
-            Categorias
-            <small>Admnistración de categorias</small>
+            Usuarios
+            <small>Admnistración de usuarios</small>
         </h1>
         <!-- end page-header -->
 
         <b-container>
             <b-row>
                 <b-col md="12">
-                    <transition
-                        name="my-swing"
-                        enter-active-class="bounce-in-top"
-                        leave-active-class="bounce-out-bck"
-                        mode="out-in"
-                    >
-                        <CreateCategory
-                            v-if="!selectedCategory"
-                            :key="registerKey"
-                            @registrationSuccessful="registrationSuccessful"
-                            @resetRegister="resetRegister"
-                        />
-                    </transition>
-                </b-col>
-                <b-col md="12">
-                    <ListCategories
-                        ref="categories-list"
-                        @selectCategory="selectCategory"
+                    <ListUser
+                        ref="users-list"
                     />
-                </b-col>
-                <b-col md="12">
-                    <transition
-                        name="my-swing"
-                        enter-active-class="bounce-in-top"
-                        leave-active-class="bounce-out-bck"
-                        mode="out-in"
-                    >
-                        <UpdateCategory
-                            v-if="selectedCategory"
-                            :initialCategory="selectedCategory"
-                            :key="updateKey"
-                            @resetUpdate="resetUpdate"
-                            @updateSuccess="updateSuccess"
-                        />
-                    </transition>
                 </b-col>
             </b-row>
         </b-container>
@@ -54,25 +22,11 @@
 <script>
 export default {
     components: {
-        CreateCategory: (resolve) => {
+        ListUser: (resolve) => {
             import(
-                /* webpackChunkName: "components" */ "@/components/categories/CreateCategory.vue"
-            ).then((CreateCategory) => {
-                resolve(CreateCategory.default);
-            });
-        },
-        ListCategories: (resolve) => {
-            import(
-                /* webpackChunkName: "components" */ "@/components/categories/ListCategories.vue"
-            ).then((ListCategories) => {
-                resolve(ListCategories.default);
-            });
-        },
-        UpdateCategory: (resolve) => {
-            import(
-                /* webpackChunkName: "components" */ "@/components/categories/UpdateCategory.vue"
-            ).then((UpdateCategory) => {
-                resolve(UpdateCategory.default);
+                /* webpackChunkName: "components" */ "@/components/users/ListUser.vue"
+            ).then((ListUser) => {
+                resolve(ListUser.default);
             });
         },
     },
@@ -85,24 +39,11 @@ export default {
         };
     },
     methods: {
-        selectCategory(category) {
+        selectCategory(user) {
             this.updateKey++;
-            this.selectedCategory = { ...category };
+            this.selectedUser = { ...user };
         },
-        resetRegister() {
-            this.registerKey++;
-        },
-        resetUpdate() {
-            this.selectedCategory = null;
-            this.updateKey++;
-        },
-        registrationSuccessful() {
-            this.resetRegister();
-            this.$refs["categories-list"].loadCategories();
-        },
-        updateSuccess() {
-            this.$refs["categories-list"].loadCategories();
-        },
+       
     },
 };
 </script>

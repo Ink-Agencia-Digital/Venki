@@ -44,7 +44,9 @@ class User extends Authenticatable
         'description',
         'institution',
         'status',
-        'city'
+        'city',
+        'confirmed',
+        'confirmation_code'
     ];
 
     /**

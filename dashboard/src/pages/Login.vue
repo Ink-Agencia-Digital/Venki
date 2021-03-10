@@ -7,8 +7,8 @@
             <div class="login-header">
                 <div class="brand">
                     <span class="logo"></span>
-                    <b>Color</b> Admin
-                    <small>responsive bootstrap 4 admin template</small>
+                    <b>Color</b> Administrador
+                   
                 </div>
                 <div class="icon">
                     <i class="fa fa-lock"></i>
@@ -45,7 +45,7 @@
                             @click="checkForm"
                             class="btn btn-success btn-block btn-lg"
                         >
-                            Sign me in
+                            Iniciar sesion
                         </button>
                     </div>
                 </div>
@@ -77,8 +77,8 @@ export default {
                 data: {
                     username: "ricardo1@dominio.com",
                     password: "12345678",
-                    client_secret: "gRkm3DmM8DNwhDS5l7UYkUMkJiFa4tgRYgviMRVf",
-                    client_id: "90ef3f03-b692-496e-9240-c6486e4c8c51",
+                    client_secret: "lDcTfL8zFExFDQWf3I7ppk4PWuFTR81d0o8YVPeT",
+                    client_id: "920a627b-13a9-4dbb-8af1-e269807f1a74",
                     grant_type: "password",
                 },
             })

@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+Route::get('/register/verify/{code}', 'GuestController@verify');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
-
+Route::resource('images', 'Image\ImageController', ['except' => [ 'edit']]);
 /** 
  * Users
  */
