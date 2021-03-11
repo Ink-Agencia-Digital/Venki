@@ -5,7 +5,7 @@
             <!-- begin navbar-header -->
             <div class="navbar-header">
                 <router-link to="/home" class="navbar-brand">
-                    <b>Onlyput</b> Dashboard
+                    <b>Venki</b> Dashboard
                 </router-link>
                 <button
                     type="button"
@@ -27,7 +27,8 @@
                     class="dropdown navbar-user"
                     no-caret
                 >
-                    <template slot="button-content">
+                    <template slot="button-content" v-if="isLoggedIn">
+                        <span class="profile-header-img">{{ $store.state.user.email }}</span>
                         <div class="image image-icon bg-black text-grey-darker">
                             <i class="fa fa-user"></i>
                         </div>
@@ -47,7 +48,7 @@
                         >Setting</b-dropdown-item
                     >
                     <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item href="javascript:;"
+                    <b-dropdown-item @click="logout"
                         >Log Out</b-dropdown-item
                     >
                 </b-nav-item-dropdown>
@@ -67,6 +68,11 @@ export default {
         return {
             pageOptions: PageOptions,
         };
+    },
+    computed: {
+        isLoggedIn: function (){
+            return this.$store.getters.isLoggedIn
+        }
     },
     methods: {
         toggleMobileSidebar() {
@@ -97,6 +103,12 @@ export default {
             e.preventDefault();
             this.$router.push({ path: "/extra/search" });
         },
+        logout: function () {
+            this.$store.dispatch('logout')
+                .then(() => {
+                    this.$router.push('/');
+            })
+        }
     },
 };
 </script>

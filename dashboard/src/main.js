@@ -48,6 +48,8 @@ import "bootstrap-social/bootstrap-social.css";
 import App from "./App.vue";
 import store from "./store";
 
+Axios.defaults.withCredentials = true
+
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
 
@@ -84,6 +86,13 @@ Vue.component(VueCountdown.name, VueCountdown);
 
 Vue.prototype.$http = Axios;
 
+// store.dispatch('getUser')
+const token = localStorage.getItem('token')
+if (token) {
+    store.dispatch('getUser');
+    Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
+
 window.moment = moment;
 moment.locale("es-us");
 
@@ -102,6 +111,32 @@ const router = new VueRouter({
     routes,
     mode: "history",
 });
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (store.getters.isLoggedIn) {
+            next()
+            return
+        }
+        next('/')
+    } else {
+        next()
+    }
+})
+
+// if expire token
+if (token) {
+    Axios.interceptors.response.use(undefined, function (error) {
+        return new Promise(function () {
+            const originalRequest = error.config;
+            if (error.status === 401 && !originalRequest.retry) {
+                originalRequest.retry = true;
+                store.dispatch('logout')
+                return router.push('/')
+            }
+        })
+    })
+}
 
 new Vue({
     render: (h) => h(App),

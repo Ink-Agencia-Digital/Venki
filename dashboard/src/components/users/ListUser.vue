@@ -1,6 +1,5 @@
 <template>
     <div>
-        Entrando ando
         <Panel ref="panelList" title="Tabla de usuarios">
             <b-container>
                 <div class="table-responsive">
@@ -83,7 +82,6 @@ export default {
         this.loadUsers();
     },
     methods: {
-       
         loadUsers() {
             let loader = this.$loading.show();
             this.$http({

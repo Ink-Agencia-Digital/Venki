@@ -98,6 +98,7 @@ class DailyActivityController extends ApiController
      */
     public function destroy(DailyActivity $dailyActivity)
     {
-        //
+        $dailyActivity->delete();
+        return $this->singleResponse(new DailyActivityResource($dailyActivity), 200);
     }
 }
