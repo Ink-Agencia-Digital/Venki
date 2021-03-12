@@ -10,9 +10,41 @@
         <b-container>
             <b-row>
                 <b-col md="12">
-                    <ListActivity
+                    <transition
+                        name="my-swing"
+                        enter-active-class="bounce-in-top"
+                        leave-active-class="bounce-out-bck"
+                        mode="out-in"
+                    >
+                        <CreateActivity
+                            v-if="!selectedActivity"
+                            :key="registerKey"
+                            @registrationSuccessful="registrationSuccessful"
+                            @resetRegister="resetRegister"
+                        />
+                    </transition>
+                </b-col>
+                <b-col md="12">
+                    <ListActivities
                         ref="activities-list"
+                        @selectActivity="selectActivity"
                     />
+                </b-col>
+                <b-col md="12">
+                    <transition
+                        name="my-swing"
+                        enter-active-class="bounce-in-top"
+                        leave-active-class="bounce-out-bck"
+                        mode="out-in"
+                    >
+                        <UpdateActivity
+                            v-if="selectedActivity"
+                            :initialActivity="selectedActivity"
+                            :key="updateKey"
+                            @resetUpdate="resetUpdate"
+                            @updateSuccess="updateSuccess"
+                        />
+                    </transition>
                 </b-col>
             </b-row>
         </b-container>
@@ -22,11 +54,25 @@
 <script>
 export default {
     components: {
-        ListActivity: (resolve) => {
+        CreateActivity: (resolve) => {
+            import(
+                /* webpackChunkName: "components" */ "@/components/activities/CreateActivity.vue"
+                ).then((CreateActivity) => {
+                resolve(CreateActivity.default);
+            });
+        },
+        ListActivities: (resolve) => {
             import(
                 /* webpackChunkName: "components" */ "@/components/activities/ListActivities.vue"
-            ).then((ListActivity) => {
-                resolve(ListActivity.default);
+            ).then((ListActivities) => {
+                resolve(ListActivities.default);
+            });
+        },
+        UpdateActivity: (resolve) => {
+            import(
+                /* webpackChunkName: "components" */ "@/components/activities/UpdateActivity.vue"
+                ).then((UpdateActivity) => {
+                resolve(UpdateActivity.default);
             });
         },
     },
@@ -43,7 +89,20 @@ export default {
             this.updateKey++;
             this.selectedActivity = { ...activity };
         },
-
+        resetRegister() {
+            this.registerKey++;
+        },
+        registrationSuccessful() {
+            this.resetRegister();
+            this.$refs["activities-list"].loadActivities();
+        },
+        resetUpdate() {
+            this.selectedActivity = null;
+            this.updateKey++;
+        },
+        updateSuccess() {
+            this.$refs["activities-list"].loadActivities();
+        },
     },
 };
 </script>

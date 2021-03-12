@@ -39,6 +39,9 @@
                                     </div>
                                 </span>
                             </span>
+                            <span v-else>{{
+                                    props.formattedRow[props.column.field]
+                                }}</span>
                         </template>
                     </vue-good-table>
                 </div>
@@ -48,7 +51,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
     data() {
@@ -59,11 +61,15 @@ export default {
             activities: [],
             columns: [
                 {
+                    label: "ID",
+                    field: "id",
+                },
+                {
                     label: "Nombre",
                     field: "activity",
                 },
                 {
-                    label: "Ultima hecha",
+                    label: "Fecha",
                     field: "last_done",
                 },
                 {
@@ -86,8 +92,6 @@ export default {
                 perPageDropdown: [10, 30, 50],
                 dropdownAllowAll: false,
             },
-            selectedPhoto: null,
-            isOpen: "none",
         };
     },
     created() {
@@ -137,19 +141,17 @@ export default {
             }).then((response) => {
                 if (response.value) {
                     let loader = this.$loading.show();
-                    axios.delete('/api/dailyactivities/'+ activity_id, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`
-                        }
+                    this.$http({
+                        method: "DELETE",
+                        url: "/api/dailyactivities/" + activity_id,
                     })
                         .then(() => {
+                            loader.hide();
                             this.$swal({
                                 title: "Hecho!",
                                 icon: "success",
                             }).then(() => {
                                 this.loadActivities();
-                                loader.hide();
                             });
                         })
                         .catch((error) => {
@@ -161,7 +163,6 @@ export default {
                                 loader.hide();
                             });
                         });
-
                 }
             });
         },
