@@ -122,6 +122,9 @@ class UserController extends ApiController
         if ($request->has("city")) {
             $user->city = $request->city;
         }
+        if ($request->has("avatar")) {
+            $user->avatar = $request->avatar;
+        }
 
         if ($request->has("photo")) {
             if ($user->photo)

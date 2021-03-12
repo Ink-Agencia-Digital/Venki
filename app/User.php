@@ -46,7 +46,8 @@ class User extends Authenticatable
         'status',
         'city',
         'confirmed',
-        'confirmation_code'
+        'confirmation_code',
+        'avatar'
     ];
 
     /**
