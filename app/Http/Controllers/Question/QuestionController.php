@@ -17,7 +17,7 @@ class QuestionController extends ApiController
      */
     public function index()
     {
-        //
+        return $this->collectionResponse(QuestionResource::collection($this->getModel(new Question, ['survey', 'category'])));
     }
 
     /**
@@ -98,7 +98,7 @@ class QuestionController extends ApiController
         if ($request->has("survey_id")) {
             $question->survey_id = $request->survey_id;
         }
-        
+
         if ($request->has("category_id")) {
             $question->category_id = $request->category_id;
         }

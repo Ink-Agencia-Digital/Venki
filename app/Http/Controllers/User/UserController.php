@@ -9,7 +9,7 @@ use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 class UserController extends ApiController
 {
     /**

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class CourseController extends ApiController
 {
+
     /**
      * Display a listing of the resource.
      *

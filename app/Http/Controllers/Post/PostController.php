@@ -72,7 +72,8 @@ class PostController extends ApiController
      */
     public function show(Post $post)
     {
-        //
+        $post->medias;
+        return $this->singleResponse(new PostResource($post));
     }
 
     /**
@@ -95,7 +96,29 @@ class PostController extends ApiController
      */
     public function update(Request $request, Post $post)
     {
-        //
+        if ($request->has('post')) {
+            $post->post = $request->post;
+        }
+
+        if ($request->has('count_like')) {
+            $post->count_like = $request->count_like;
+        }
+
+        if (!$post->isDirty()) {
+            return $this->errorResponse(
+                'Se debe especificar al menos un valor diferente para actualizar',
+                422
+            );
+        }
+
+        $post->saveOrFail();
+
+        return $this->api_success([
+            'data'      =>  new PostResource($post),
+            'message'   => __('pages.responses.updated'),
+            'code'      =>  200
+        ], 200);
+
     }
 
     /**

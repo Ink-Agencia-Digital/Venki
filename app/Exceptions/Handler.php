@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Throwable;
 use ErrorException;
 use Illuminate\Database\QueryException;
