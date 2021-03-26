@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Api\ApiController;
-use Illuminate\Support\Str;
+
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\PostResource;
 use App\Post;
 use App\PostMedia;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class PostController extends ApiController
 {
@@ -43,7 +45,9 @@ class PostController extends ApiController
         $post = new Post;
         $post->fill($request->all());
         $post->saveOrFail();
+
         if ($request->has('medias')) {
+
             foreach ($request->medias as $file) {
                 $postMedia = new PostMedia;
                 $image = $file;

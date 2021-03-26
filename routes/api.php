@@ -28,9 +28,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user', function (Request $request) {
         return $request->user()->load(['profile', 'roles', 'achievements']);
     });
+
     /**
      * Users
      */
+
     Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]);
     Route::resource('users.courses', 'User\UserCourseController', ['except' => ['create', 'edit']]);
     Route::resource('users.scores', 'User\UserScoreController', ['except' => ['create', 'edit']]);

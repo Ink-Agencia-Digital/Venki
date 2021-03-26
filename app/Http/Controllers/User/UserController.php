@@ -42,8 +42,8 @@ class UserController extends ApiController
     {
         $user = new User;
         $user->fill($request->all());
-	$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
-// Output: 54esmdr0qf
+	    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+
         $user->confirmation_code=substr(str_shuffle($permitted_chars), 0, 10);
         if ($request->hasFile('photo')) {
             $user->photo = $request->photo->store('images');
@@ -52,7 +52,8 @@ class UserController extends ApiController
         $user->saveOrFail();
         $data=['email' => $user->email,'name' => $user->name,'confirmation_code' => $user->confirmation_code];
         Mail::send('confirmation_code', $data, function($message) use ($data) {
-            $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
+            $message->to($data['email'], $data['name'])
+                ->subject('Por favor confirma tu correo');
         });
         return $this->api_success([
             'data' => new UserResource($user),

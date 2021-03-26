@@ -80,7 +80,24 @@ class AchievementController extends ApiController
      */
     public function update(Request $request, Achievement $achievement)
     {
-        //
+        if ($request->has("achievement")) {
+            $achievement->achievement = $request->achievement;
+        }
+
+        if (!$achievement->isDirty()) {
+            return $this->errorResponse(
+                'Se debe especificar al menos un valor diferente para actualizar',
+                422
+            );
+        }
+
+        $achievement->saveOrFail();
+
+        return $this->api_success([
+            'data'      =>  new AchievementResource($achievement),
+            'message'   => __('pages.responses.updated'),
+            'code'      =>  201
+        ], 201);
     }
 
     /**
