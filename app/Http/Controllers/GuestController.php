@@ -19,9 +19,9 @@ class GuestController extends Controller
         $user->confirmation_code = null;
         $user->save();
         echo '<script type="text/javascript">
-             alert("Tarea Guardada");
+                alert("Excelente, ya puedes inciar sesion en la App!!!");
             </script>';
-        return Session::flash('message', 'Bien hecho, Ya puedes iniciar sesion en la App');
+        echo '<script>window.close();</script>';
         // return redirect('/')->with('notification', 'Has confirmado correctamente tu correo!');
     }
 }
