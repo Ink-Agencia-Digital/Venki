@@ -45,13 +45,11 @@ class PostController extends ApiController
         $post->saveOrFail();
 
         if ($request->has('medias')) {
-            if ($request->hasFile('medias.0.media')) {
-                foreach ($request->file('medias.0.media') as $media) {
-                    $postMedia = new PostMedia;
-                    $postMedia->media = Storage::putFile('medias', $media);
-                    $postMedia->post_id = $post->id;
-                    $postMedia->save();
-                }
+            foreach ($request->file('medias.0.media') as $media) {
+                $postMedia = new PostMedia;
+                $postMedia->media = Storage::putFile('medias', $media);
+                $postMedia->post_id = $post->id;
+                $postMedia->save();
             }
         }
 
