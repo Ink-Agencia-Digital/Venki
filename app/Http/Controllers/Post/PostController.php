@@ -45,9 +45,10 @@ class PostController extends ApiController
         $post->saveOrFail();
 
         if ($request->has('medias')) {
-            foreach ($request->medias[0] as $data) {
+            foreach ($request->medias as $file) {
                 $postMedia = new PostMedia;
-                $image_64 = $data;
+                $image_64 = $file;
+                $image_64 = $image_64["data"];
                 $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[0])[1]; // .jpg .png .pdf
                 $replace = substr($image_64, 0, strpos($image_64, ',')+1);
                 // find substring fro replace here eg: data:image/png;base64,
