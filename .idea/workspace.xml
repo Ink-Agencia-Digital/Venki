@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c1a8aa8f-3e02-4d25-8e65-ca736ff19c0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Message/MessageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Message/MessageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Post/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Post/PostController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +196,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sofi-back" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -229,7 +232,8 @@
       <workItem from="1616579447079" duration="10881000" />
       <workItem from="1616718935319" duration="27643000" />
       <workItem from="1616776081275" duration="19428000" />
-      <workItem from="1616888816987" duration="49009000" />
+      <workItem from="1616888816987" duration="52051000" />
+      <workItem from="1617085967576" duration="4507000" />
     </task>
     <servers />
   </component>
