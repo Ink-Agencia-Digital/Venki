@@ -7,9 +7,6 @@
     <list default="true" id="c1a8aa8f-3e02-4d25-8e65-ca736ff19c0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Post/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Post/PostController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/medias/CBzCQyQNRPi45dUXsp6QchaljBkeIj8grKGLEIy9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/medias/bptrV2DyN8.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/medias/sBnvkwU9UD2kSl6KugnHmvM3fBfWrruzdbDXv4tq.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +231,7 @@
       <workItem from="1616718935319" duration="27643000" />
       <workItem from="1616776081275" duration="19428000" />
       <workItem from="1616888816987" duration="52051000" />
-      <workItem from="1617085967576" duration="8755000" />
+      <workItem from="1617085967576" duration="12431000" />
     </task>
     <servers />
   </component>
