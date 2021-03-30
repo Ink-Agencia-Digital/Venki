@@ -49,10 +49,10 @@ class MessageController extends ApiController
         $name = "Usuario";
 
         if ($message->chat->receiver_id == $message->user_id) {
-            $token = $message->chat->transmitter->devices()->latest()->first()->code;
+            $token = $message->chat->transmitter->devices[0]->code;
             $name = $message->chat->transmitter->name;
         } else {
-            $token = $message->chat->receiver->devices()->latest()->first()->code;
+            $token = $message->chat->receiver->devices[0]->code;
             $name = $message->chat->receiver->name;
         }
         if ($token) {
