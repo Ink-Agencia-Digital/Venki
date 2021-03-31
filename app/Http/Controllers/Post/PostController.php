@@ -50,11 +50,7 @@ class PostController extends ApiController
                 $postMedia = new PostMedia;
                 $image_64 = $file;
                 $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
-                $replace = substr($image_64, 0, strpos($image_64, ',')+1);
-
-                // find substring fro replace here eg: data:image/png;base64,
-
-                $image = str_replace($replace, '', $image_64);
+                $image = str_replace('data:image/jpeg;base64,', '', $image_64);
                 $image = str_replace(' ', '+', $image);
                 $imageName = Str::random(10).'.'.$extension;
                 Storage::disk("medias")->put($imageName, base64_decode($image));
