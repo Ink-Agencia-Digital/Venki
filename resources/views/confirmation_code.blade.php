@@ -12,11 +12,9 @@
         Clic para confirmar tu email
     </a>
 
-    @if('password')
-        <p>Despúes de confirmar el correo, inicia sesion con la contraseña: {{$password}} </p>
+    @if($register_social == 1)
+        <p>Despúes de confirmar el correo, inicia sesion con la contraseña: Password123 </p>
     @endif
-
-    <p>Prueba de ensaje con la variable fuera del isset: {{$password}} </p>
 
 </body>
 </html>
