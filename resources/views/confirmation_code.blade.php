@@ -12,9 +12,9 @@
         Clic para confirmar tu email
     </a>
 
-    @if($register_social == 1)
+    @isset($register_social)
         <p>Despúes de confirmar el correo, inicia sesion con la contraseña: Password123 </p>
-    @endif
+    @endisset
 
 </body>
 </html>
