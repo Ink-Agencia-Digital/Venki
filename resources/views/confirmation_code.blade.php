@@ -12,9 +12,8 @@
         Clic para confirmar tu email
     </a>
 
-    @if(isset($password))
-        <p>Despues de confirmar el correo inicia sesion con la contraseña: </p>
-        <p>{{$password}}</p>
-    @endif
+    <p>Despues de confirmar el correo inicia sesion con la contraseña: </p>
+    <p>{{$password}}</p>
+
 </body>
 </html>
