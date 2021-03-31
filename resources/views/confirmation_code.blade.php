@@ -12,7 +12,7 @@
         Clic para confirmar tu email
     </a>
 
-    @if('{{password}}')
+    @if('password')
         <p>Despúes de confirmar el correo, inicia sesion con la contraseña: {{$password}} </p>
     @endif
 
