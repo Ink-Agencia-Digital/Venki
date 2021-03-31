@@ -12,8 +12,10 @@
         Clic para confirmar tu email
     </a>
 
-    <p>Despues de confirmar el correo inicia sesion con la contraseña: </p>
-    <p>{{$password}}</p>
+    @isset($password)
+        <p>Despúes de confirmar el correo, inicia sesion con la contraseña: </p>
+        <p>{{$password}}</p>
+    @endisset
 
 </body>
 </html>
