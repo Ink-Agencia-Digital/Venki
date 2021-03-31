@@ -10,10 +10,10 @@ class SocialAccountsService
 {
     /**
      * Find or create user instance by provider user instance and provider name.
-     * 
+     *
      * @param ProviderUser $providerUser
      * @param string $provider
-     * 
+     *
      * @return User
      */
     public function findOrCreate(ProviderUser $providerUser, string $provider): User
@@ -30,8 +30,7 @@ class SocialAccountsService
             }
             if (!$user) {
                 $user = User::create([
-                    'first_name' => $providerUser->getName(),
-                    'last_name' => $providerUser->getName(),
+                    'name' => $providerUser->getName(),
                     'email' => $providerUser->getEmail(),
                 ]);
             }

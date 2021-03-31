@@ -6,7 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="c1a8aa8f-3e02-4d25-8e65-ca736ff19c0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Post/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Post/PostController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/StoreUserRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/StoreUserRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/LinkedSocialAccount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/LinkedSocialAccount.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/SocialAccountsService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/SocialAccountsService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/confirmation_code.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/confirmation_code.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,7 +239,8 @@
       <workItem from="1616718935319" duration="27643000" />
       <workItem from="1616776081275" duration="19428000" />
       <workItem from="1616888816987" duration="52051000" />
-      <workItem from="1617085967576" duration="17930000" />
+      <workItem from="1617085967576" duration="33883000" />
+      <workItem from="1617174372371" duration="4169000" />
     </task>
     <servers />
   </component>

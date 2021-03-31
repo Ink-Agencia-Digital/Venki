@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Mail;
@@ -40,20 +41,35 @@ class UserController extends ApiController
      */
     public function store(StoreUserRequest $request)
     {
+
         $user = new User;
         $user->fill($request->all());
-	$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
-// Output: 54esmdr0qf
+	    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+        // Output: 54esmdr0qf
         $user->confirmation_code=substr(str_shuffle($permitted_chars), 0, 10);
         if ($request->hasFile('photo')) {
             $user->photo = $request->photo->store('images');
         }
 
-        $user->saveOrFail();
-        $data=['email' => $user->email,'name' => $user->name,'confirmation_code' => $user->confirmation_code];
-        Mail::send('confirmation_code', $data, function($message) use ($data) {
-            $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
-        });
+        if ($request->has('register_social')) {
+
+            $passgenerate = Str::random(8);
+            $user->password = Hash::make($passgenerate);
+            $user->register_social = 1;
+            $user->saveOrFail();
+
+            $data=['email' => $user->email,'name' => $user->name,'confirmation_code' => $user->confirmation_code, 'password' => $passgenerate];
+            Mail::send('confirmation_code', $data, function($message) use ($data) {
+                $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
+            });
+        } else {
+            $user->saveOrFail();
+            $data=['email' => $user->email,'name' => $user->name,'confirmation_code' => $user->confirmation_code];
+            Mail::send('confirmation_code', $data, function($message) use ($data) {
+                $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
+            });
+        }
+
         return $this->api_success([
             'data' => new UserResource($user),
             'message' => __('pages.responses.created'),
