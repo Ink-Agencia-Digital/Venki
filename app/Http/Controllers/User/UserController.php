@@ -54,7 +54,7 @@ class UserController extends ApiController
         if ($request->register_social == 'true') {
 
             $password_social = Str::random(8);
-            $user->password = Hash::make($password_social);
+            $user->password = $password_social;
             $user->register_social = 1;
             $user->saveOrFail();
 
