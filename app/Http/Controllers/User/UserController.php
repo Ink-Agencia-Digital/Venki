@@ -53,7 +53,8 @@ class UserController extends ApiController
 
         if ($request->register_social == 'true') {
 
-            $password_social = Str::random(8);
+            $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $password_social = substr(str_shuffle($permitted_chars), 0, 8);
             $user->password = $password_social;
             $user->register_social = 1;
             $user->saveOrFail();
