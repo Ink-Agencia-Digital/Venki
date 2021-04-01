@@ -14,8 +14,8 @@ Route::get('/register/verify/{code}', 'GuestController@verify');
 |
 */
 
-Route::get('login/{socialNetwork}', 'Auth\LoginController@redirectToProvider');
-Route::get('login/{socialNetwork}/callback', 'Auth\LoginController@handleProviderCallback');
+Route::post('password/email', 'Auth\ForgotPasswordController@forgot');
+Route::post('password/reset', 'Auth\ForgotPasswordController@reset');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user()->load(['profile', 'roles', 'achievements']);
