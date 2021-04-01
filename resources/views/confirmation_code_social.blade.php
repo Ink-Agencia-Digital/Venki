@@ -5,7 +5,7 @@
 </head>
 <body>
 
-    <p>Despúes de confirmar el correo, inicia sesion con la contraseña: {{$password}} </p>
+    <p>Despúes de confirmar el correo, inicia sesion con la contraseña: {{$password_social}} </p>
 
 </body>
 </html>
