@@ -54,7 +54,6 @@ class UserController extends ApiController
         if ($request->register_social == true) {
 
             $password = Str::random(8);
-            dd($password);
             $user->password = Hash::make($password);
             // $user->password = bcrypt('Password123');
             $user->register_social = 1;
@@ -64,6 +63,7 @@ class UserController extends ApiController
             Mail::send('confirmation_code_social', $data, function($message) use ($data) {
                 $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
             });
+
         } else {
             $user->saveOrFail();
             $data=['email' => $user->email,'name' => $user->name,'confirmation_code' => $user->confirmation_code];
