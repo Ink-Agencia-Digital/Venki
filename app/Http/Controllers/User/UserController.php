@@ -66,7 +66,7 @@ class UserController extends ApiController
         } else {
             $user->saveOrFail();
             $data=['email' => $user->email,'name' => $user->name,'confirmation_code' => $user->confirmation_code];
-            Mail::send('confirmation_code', $data, function($message) use ($data) {
+            Mail::send('confirmation_code_social', $data, function($message) use ($data) {
                 $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
             });
         }
