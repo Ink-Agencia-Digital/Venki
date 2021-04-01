@@ -51,7 +51,7 @@ class UserController extends ApiController
             $user->photo = $request->photo->store('images');
         }
 
-        if ($request->has('register_social')) {
+        if ($request->register_social == true) {
 
             $password = Str::random(8);
             $user->password = Hash::make($password);
