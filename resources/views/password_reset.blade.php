@@ -7,7 +7,7 @@
 
     <h2>Hola {{ $name }}, Activaste el reestablecimiento de contraseña</h2>
 
-    <p>Por favor Inicia sesion con {{$password_reset}} para reestablecer.</p>
+    <p>Por favor inicia sesión con la siguiente contraseña para reestablecer: {{$password_reset}}</p>
 
 
 </body>

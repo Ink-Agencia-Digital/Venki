@@ -16,8 +16,7 @@ class ForgotPasswordController extends ApiController
             'email' => 'required|email|exists:users'
         ]);
 
-        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $password_reset = substr(str_shuffle($permitted_chars), 0, 8);
+        $password_reset = $this->randomPassword();
         $user = User::Where('email', $request->email)->first();
         $user->password = $password_reset;
         $user->register_social = 1;
@@ -54,5 +53,29 @@ class ForgotPasswordController extends ApiController
             'message' => 'Password update successful!',
             'code' => 200
         ]);
+    }
+
+    public function randomPassword($len = 8) {
+        if($len < 8)
+            $len = 8;
+
+        $sets = array();
+        $sets[] = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+        $sets[] = 'abcdefghjkmnpqrstuvwxyz';
+        $sets[] = '23456789';
+        $sets[]  = '~!@#$%^&*(){}[],./?';
+
+        $password = '';
+
+        foreach ($sets as $set) {
+            $password .= $set[array_rand(str_split($set))];
+        }
+
+        while(strlen($password) < $len) {
+            $randomSet = $sets[array_rand($sets)];
+            $password .= $randomSet[array_rand(str_split($randomSet))];
+        }
+
+        return str_shuffle($password);
     }
 }

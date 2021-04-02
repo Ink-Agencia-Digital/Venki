@@ -38,14 +38,21 @@ class AchievementController extends ApiController
      */
     public function store(Request $request)
     {
-        foreach ($request->objectives as $objective) {
-            $achievement = new Achievement([
-                'achievement' => $objective['achievement'],
-                'priority' => $objective['priority'],
-                'date' => $objective['date'],
-                'user_id' => $request->user_id
-            ]);
-            $achievement->save();
+        if ($request->has('objectives')) {
+            foreach ($request->objectives as $objective) {
+                $achievement = new Achievement([
+                    'achievement' => $objective['achievement'],
+                    'priority' => $objective['priority'],
+                    'date' => $objective['date'],
+                    'user_id' => $request->user_id
+                ]);
+                $achievement->save();
+            }
+        } else {
+            return $this->errorResponse(
+                'Se debe especificar al menos un objetivo',
+                422
+            );
         }
 
         return $this->api_success([
