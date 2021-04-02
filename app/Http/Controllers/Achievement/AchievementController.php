@@ -38,13 +38,18 @@ class AchievementController extends ApiController
      */
     public function store(Request $request)
     {
-        $achievement = new Achievement;
-        $achievement->fill($request->all());
-        $achievement->saveOrFail();
+        foreach ($request->objectives as $objective) {
+            $achievement = new Achievement([
+                'achievement' => $objective['achievement'],
+                'priority' => $objective['priority'],
+                'date' => $objective['date'],
+                'user_id' => $request->user_id
+            ]);
+            $achievement->save();
+        }
 
         return $this->api_success([
-            'data'      =>  new AchievementResource($achievement),
-            'message'   => __('pages.responses.created'),
+            'message'   => 'objetivos agregados correctamente!',
             'code'      =>  201
         ], 201);
     }
@@ -80,8 +85,16 @@ class AchievementController extends ApiController
      */
     public function update(Request $request, Achievement $achievement)
     {
-        if ($request->has("achievement")) {
+        if ($request->has('achievement')) {
             $achievement->achievement = $request->achievement;
+        }
+
+        if ($request->has('priority')) {
+            $achievement->priority = $request->priority;
+        }
+
+        if ($request->has('date')) {
+            $achievement->date = $request->date;
         }
 
         if (!$achievement->isDirty()) {
