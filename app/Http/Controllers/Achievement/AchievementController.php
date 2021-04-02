@@ -6,6 +6,7 @@ use App\Achievement;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AchievementResource;
+use App\User;
 use Illuminate\Http\Request;
 
 class AchievementController extends ApiController
@@ -38,6 +39,9 @@ class AchievementController extends ApiController
      */
     public function store(Request $request)
     {
+        $user = User::with('achievements')->findOrFail($request->user_id);
+        $user->achievements()->delete();
+
         if ($request->has('objectives')) {
             foreach ($request->objectives as $objective) {
                 $achievement = new Achievement([
