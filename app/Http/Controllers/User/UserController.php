@@ -7,7 +7,6 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Mail;
@@ -118,9 +117,6 @@ class UserController extends ApiController
         }
         if ($request->has("lastname")) {
             $user->lastname = $request->lastname;
-        }
-        if ($request->has("address")) {
-            $user->address = $request->address;
         }
         if ($request->has("birthday")) {
             $user->birthday = $request->birthday;
