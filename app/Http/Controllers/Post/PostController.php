@@ -46,10 +46,9 @@ class PostController extends ApiController
         $post->saveOrFail();
 
         if ($request->has('medias')) {
-
             foreach ($request->medias as $file) {
                 $postMedia = new PostMedia;
-                $image_64 = $file;
+                $image_64 = $file['image'];
                 $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
                 $image = str_replace('data:image/jpeg;base64,', '', $image_64);
                 $image = str_replace(' ', '+', $image);
