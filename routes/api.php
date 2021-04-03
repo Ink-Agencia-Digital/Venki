@@ -123,4 +123,3 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('achievements', 'Achievement\AchievementController', ['except' => ['create', 'edit']]);
 
 });
-
