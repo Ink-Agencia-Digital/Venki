@@ -51,13 +51,11 @@ class MessageController extends ApiController
         if ($message->chat->receiver_id == $message->user_id) {
             $token = $message->chat->transmitter->devices[0]->code;
             $name = $message->chat->transmitter->name;
-        } else {
-            $token = $message->chat->receiver->devices[0]->code;
-            $name = $message->chat->receiver->name;
         }
         if ($token) {
             $this->sendPush($message->message, $token, $name);
         }
+
         event(new ChatEvent($message));
         return $this->api_success([
             'data' => new MessageResource($message),
