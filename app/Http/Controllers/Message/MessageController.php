@@ -45,22 +45,6 @@ class MessageController extends ApiController
         $message->fill($request->all());
         $message->saveOrFail();
 
-        if ($message->chat->transmitter->devices[0]->code != null || $message->chat->receiver->devices[0]->code != null) {
-            $token = null;
-            $name = "Usuario";
-            if ($message->chat->receiver_id == $message->user_id) {
-                $token = $message->chat->transmitter->devices[0]->code;
-                $name = $message->chat->transmitter->name;
-            } else {
-                $token = $message->chat->receiver->devices[0]->code;
-                $name = $message->chat->receiver->name;
-            }
-            if ($token) {
-                $this->sendPush($message->message, $token, $name);
-            }
-            event(new ChatEvent($message));
-        }
-
         return $this->api_success([
             'data' => new MessageResource($message),
             'message' => __('pages.responses.created'),
