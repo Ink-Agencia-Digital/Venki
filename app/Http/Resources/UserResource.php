@@ -19,10 +19,11 @@ class UserResource extends JsonResource
             "name" => isset($this->name) ? $this->name : null,
             "email" => isset($this->email) ? $this->email : null,
             "lastname" => isset($this->lastname) ? $this->lastname : null,
-            "status" => isset($this->status) ? $this->status : null,
             "birthday" => isset($this->birthday) ? $this->birthday : null,
             "phone" => isset($this->phone) ? $this->phone : null,
             "photo" => isset($this->photo) ? $this->photo : null,
+            "avatar" => isset($this->avatar) ? $this->avatar : null,
+            "status" => isset($this->status) ? $this->status : null,
             "roles" => RoleResource::collection($this->whenLoaded('roles'))
         ];
     }
