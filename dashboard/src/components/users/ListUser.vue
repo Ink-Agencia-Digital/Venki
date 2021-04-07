@@ -1,6 +1,5 @@
 <template>
     <div>
-        Entrando ando
         <Panel ref="panelList" title="Tabla de usuarios">
             <b-container>
                 <div class="table-responsive">
@@ -31,6 +30,8 @@
 </template>
 
 <script>
+import Axios from "axios";
+
 export default {
     data() {
         return {
@@ -83,17 +84,18 @@ export default {
         this.loadUsers();
     },
     methods: {
-       
         loadUsers() {
             let loader = this.$loading.show();
-            this.$http({
-                method: "GET",
-                url:
-                    "/api/users?per_page=" +
+                Axios
+                 .get("/api/users?per_page=" +
                     this.perPage +
                     "&page=" +
-                    this.page,
-            })
+                    this.page, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                })
                 .then((response) => {
                     console.log(response);
                     this.users = response.data.data;

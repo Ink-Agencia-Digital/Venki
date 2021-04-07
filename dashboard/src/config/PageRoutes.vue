@@ -17,6 +17,9 @@ const routes = [
                     resolve(Home.default);
                 }
             ),
+        meta: {
+          requiresAuth: true,
+        },
     },
     {
         path: "/categories",

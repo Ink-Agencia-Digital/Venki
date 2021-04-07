@@ -140,7 +140,7 @@ class UserController extends ApiController
             $user->avatar = $request->avatar;
         }
 
-        if ($request->has("photo")) {
+        /*if ($request->has("photo")) {
             if ($user->photo)
                 Storage::delete($user->photo);
             $image = $request->photo;
@@ -149,6 +149,10 @@ class UserController extends ApiController
             $imageName = Str::random(10) . '.jpeg';
             Storage::disk('photos')->put($imageName, base64_decode($image));
             $user->photo =  $imageName;
+        }*/
+
+        if ($request->has('photo')) {
+            $user->photo = $request->photo;
         }
 
         if ($request->has("profile_id")) {

@@ -83,12 +83,19 @@ Vue.component("vue-custom-scrollbar", VueCustomScrollbar);
 Vue.component(VueCountdown.name, VueCountdown);
 
 Vue.prototype.$http = Axios;
+const token = localStorage.getItem('token')
+if (token) {
+    store.dispatch('getUser')
+    // Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
 
 window.moment = moment;
 moment.locale("es-us");
 
 Axios.defaults.headers.common["Content-Type"] = "application/json";
 Axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+Axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem('token')}`
+Axios.defaults.withCredentials = true
 
 String.prototype.capitalize = function (lower) {
     return (lower ? this.toLowerCase() : this).replace(/(?:^|\s)\S/g, function (
@@ -102,6 +109,33 @@ const router = new VueRouter({
     routes,
     mode: "history",
 });
+
+// proteccion de rutas
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (store.getters.isLoggedIn) {
+            next()
+            return
+        }
+        next('/')
+    } else {
+        next()
+    }
+})
+
+// if expire token
+if(token) {
+    Axios.interceptors.response.use(undefined, function (error) {
+        if (error) {
+            const originalRequest = error.config;
+            if (error.response.status === 401 && !originalRequest.retry) {
+                originalRequest.retry = true;
+                store.dispatch('logout')
+                return router.push('/')
+            }
+        }
+    })
+}
 
 new Vue({
     render: (h) => h(App),
