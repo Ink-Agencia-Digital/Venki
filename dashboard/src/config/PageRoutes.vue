@@ -29,6 +29,9 @@ const routes = [
                     resolve(Category.default);
                 }
             ),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/profiles",
@@ -38,6 +41,9 @@ const routes = [
                     resolve(Profile.default);
                 }
             ),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/courses",
@@ -47,6 +53,9 @@ const routes = [
                     resolve(Course.default);
                 }
             ),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/lessons",
@@ -56,6 +65,9 @@ const routes = [
                     resolve(Course.default);
                 }
             ),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/resource",
@@ -65,6 +77,9 @@ const routes = [
                     resolve(Resource.default);
                 }
             ),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/surveys",
@@ -74,6 +89,9 @@ const routes = [
                     resolve(Survey.default);
                 }
             ),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/questions",
@@ -83,6 +101,9 @@ const routes = [
                     resolve(Question.default);
                 }
             ),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/replies",
@@ -92,6 +113,9 @@ const routes = [
                     resolve(Reply.default);
                 }
             ),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/users",
@@ -101,6 +125,9 @@ const routes = [
                     resolve(Users.default);
                 }
             ),
+        meta: {
+            requiresAuth: true,
+        },
     },
      {
         path: "/images",
@@ -110,6 +137,21 @@ const routes = [
                     resolve(Image.default);
                 }
             ),
+         meta: {
+             requiresAuth: true,
+         },
+    },
+    {
+        path: "/activities",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Activity.vue").then(
+                (Activity) => {
+                    resolve(Activity.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
     },
 ];
 
