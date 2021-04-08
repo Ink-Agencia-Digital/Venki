@@ -148,6 +148,16 @@ class User extends Authenticatable
         return $this->hasMany(Achievement::class);
     }
 
+    public function feelings()
+    {
+        return $this->hasMany(Feeling::class);
+    }
+
+    public function coins()
+    {
+        return $this->hasMany(Coin::class);
+    }
+
     /** Overrided Functions */
 
 
