@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Survey;
+namespace App\Http\Controllers\Answer;
 
+use App\Answer;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\QuestionResource;
 use App\Question;
-use App\Survey;
 use Illuminate\Http\Request;
 
-class SurveyQuestionController extends ApiController
+class AnswerController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Survey $survey)
+    public function index()
     {
-        return $this->collectionResponse(QuestionResource::collection($this->getModel(new Question, ['answers'], $survey->questions())));
+        //
     }
 
     /**
@@ -39,16 +39,30 @@ class SurveyQuestionController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+        $answer = new Answer;
+        $answer->fill($request->all());
+
+        if ($request->has('question_id')) {
+            $question = Question::findOrFail($request->question_id);
+        }
+
+        $answer->saveOrFail();
+
+        return $this->api_success([
+            'data' => new QuestionResource($question->load(['answers'])),
+            'message' => __('pages.responses.created'),
+            'code' => 201
+        ], 201);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Survey  $survey
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function show(Survey $survey)
+    public function show(Answer $answer)
     {
         //
     }
@@ -56,10 +70,10 @@ class SurveyQuestionController extends ApiController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Survey  $survey
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Survey $survey)
+    public function edit(Answer $answer)
     {
         //
     }
@@ -68,10 +82,10 @@ class SurveyQuestionController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Survey  $survey
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Survey $survey)
+    public function update(Request $request, Answer $answer)
     {
         //
     }
@@ -79,11 +93,16 @@ class SurveyQuestionController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Survey  $survey
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Survey $survey)
+    public function destroy(Answer $answer)
     {
-        //
+        $answer->delete();
+
+        return $this->api_success([
+            'message'   => __('pages.responses.deleted'),
+            'code'      =>  204
+        ], 204);
     }
 }

@@ -18,7 +18,7 @@ class CourseScoreController extends ApiController
      */
     public function index(Course $course)
     {
-        $scores = $course->scores();
+        $scores = $course->scoresApproved();
         return $this->collectionResponse(ScoreResource::collection($this->getModel(new Score, ['user'], $scores)));
     }
 
