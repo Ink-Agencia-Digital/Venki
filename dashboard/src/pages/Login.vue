@@ -7,7 +7,7 @@
             <div class="login-header">
                 <div class="brand">
                     <span class="logo"></span>
-                    <b>MAGIN</b> Administrador
+                    <b>Venki</b> Administrador
 
                 </div>
                 <div class="icon">

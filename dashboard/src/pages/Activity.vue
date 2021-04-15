@@ -3,16 +3,48 @@
         <!-- begin page-header -->
         <h1 class="page-header">
             Actividades
-            <small>Admnistración de actividades</small>
+            <small>Admnistración de actividades diarias</small>
         </h1>
         <!-- end page-header -->
 
         <b-container>
             <b-row>
                 <b-col md="12">
+                    <transition
+                        name="my-swing"
+                        enter-active-class="bounce-in-top"
+                        leave-active-class="bounce-out-bck"
+                        mode="out-in"
+                    >
+                        <CreateActivity
+                            v-if="!selectedActivity"
+                            :key="registerKey"
+                            @registrationSuccessful="registrationSuccessful"
+                            @resetRegister="resetRegister"
+                        />
+                    </transition>
+                </b-col>
+                <b-col md="12">
                     <ListActivities
                         ref="activities-list"
+                        @selectActivity="selectActivity"
                     />
+                </b-col>
+                <b-col md="12">
+                    <transition
+                        name="my-swing"
+                        enter-active-class="bounce-in-top"
+                        leave-active-class="bounce-out-bck"
+                        mode="out-in"
+                    >
+                        <UpdateActivity
+                            v-if="selectedActivity"
+                            :initialActivity="selectedActivity"
+                            :key="updateKey"
+                            @resetUpdate="resetUpdate"
+                            @updateSuccess="updateSuccess"
+                        />
+                    </transition>
                 </b-col>
             </b-row>
         </b-container>
@@ -20,7 +52,6 @@
 </template>
 
 <script>
-
 export default {
     components: {
         ListActivities: (resolve) => {
@@ -30,21 +61,48 @@ export default {
                 resolve(ListActivities.default);
             });
         },
+        CreateActivity: (resolve) => {
+            import(
+                /* webpackChunkName: "components" */ "@/components/activities/CreateActivity.vue"
+                ).then((CreateActivity) => {
+                resolve(CreateActivity.default);
+            });
+        },
+        UpdateActivity: (resolve) => {
+            import(
+                /* webpackChunkName: "components" */ "@/components/activities/UpdateActivity.vue"
+                ).then((UpdateActivity) => {
+                resolve(UpdateActivity.default);
+            });
+        },
     },
     data() {
         return {
-            selectedCategory: null,
+            selectedActivity: null,
             registerKey: 1,
             listKey: 1,
             updateKey: 1,
         };
     },
     methods: {
-        selectCategory(user) {
+        selectActivity(activity) {
             this.updateKey++;
-            this.selectedUser = { ...user };
+            this.selectedActivity = { ...activity };
         },
-
+        resetRegister() {
+            this.registerKey++;
+        },
+        resetUpdate() {
+            this.selectedActivity = null;
+            this.updateKey++;
+        },
+        registrationSuccessful() {
+            this.resetRegister();
+            this.$refs["activities-list"].loadActivities();
+        },
+        updateSuccess() {
+            this.$refs["activities-list"].loadActivities();
+        },
     },
 };
 </script>

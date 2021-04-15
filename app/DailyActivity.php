@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DailyActivity extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        "activity"
+    ];
 }

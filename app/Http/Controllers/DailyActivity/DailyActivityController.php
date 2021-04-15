@@ -85,9 +85,26 @@ class DailyActivityController extends ApiController
      * @param  \App\DailyActivity  $dailyActivity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DailyActivity $dailyActivity)
+    public function update(Request $request, $id)
     {
-        //
+        $dailyActivity = DailyActivity::findOrFail($id);
+        if ($request->has('activity')) {
+            $dailyActivity->activity = $request->activity;
+        }
+
+        if (!$dailyActivity->isDirty()) {
+            return $this->errorResponse(
+                'Se debe especificar al menos un valor diferente para actualizar',
+                422
+            );
+        }
+
+        $dailyActivity->saveOrFail();
+        return $this->api_success([
+            'data' => new DailyActivityResource($dailyActivity),
+            'message' => __('pages.responses.updated'),
+            'code' => 200
+        ]);
     }
 
     /**
@@ -96,8 +113,14 @@ class DailyActivityController extends ApiController
      * @param  \App\DailyActivity  $dailyActivity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DailyActivity $dailyActivity)
+    public function destroy($id)
     {
-        //
+        $dailyActivity = DailyActivity::findOrFail($id);
+        $dailyActivity->delete();
+        return $this->api_success([
+            'data' => new DailyActivityResource($dailyActivity),
+            'message' => __('pages.responses.deleted'),
+            'code' => 200
+        ]);
     }
 }

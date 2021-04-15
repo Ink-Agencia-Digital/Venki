@@ -2,8 +2,8 @@
     <div>
         <!-- begin page-header -->
         <h1 class="page-header">
-            Categorias
-            <small>Admnistración de categorias</small>
+            Componentes
+            <small>Admnistración de componentes</small>
         </h1>
         <!-- end page-header -->
 

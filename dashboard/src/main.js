@@ -95,6 +95,7 @@ moment.locale("es-us");
 Axios.defaults.headers.common["Content-Type"] = "application/json";
 Axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 Axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem('token')}`
+
 Axios.defaults.withCredentials = true
 
 String.prototype.capitalize = function (lower) {

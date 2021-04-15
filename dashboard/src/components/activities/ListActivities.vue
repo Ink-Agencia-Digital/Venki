@@ -18,7 +18,27 @@
                             No hay informacion disponible
                         </div>
                         <template slot="table-row" slot-scope="props">
-                            <span >{{
+                            <span v-if="props.column.field == 'actions'">
+                                <span>
+                                    <div class="text-center">
+                                        <a
+                                            class="btn btn-grey"
+                                            @click="selectActivity(props.row)"
+                                        >
+                                            <i class="fas fa-edit fa-fw"></i>
+                                        </a>
+                                        <a
+                                            class="btn btn-danger"
+                                            @click="confirmDelete(props.row.id)"
+                                        >
+                                            <i
+                                                class="fas fa-trash-alt fa-fw"
+                                            ></i>
+                                        </a>
+                                    </div>
+                                </span>
+                            </span>
+                            <span v-else>{{
                                     props.formattedRow[props.column.field]
                                 }}</span>
                         </template>
@@ -39,12 +59,20 @@ export default {
             activities: [],
             columns: [
                 {
+                    label: "ID",
+                    field: "id",
+                },
+                {
                     label: "Nombre",
                     field: "activity",
                 },
                 {
                     label: "Fecha",
                     field: "created_at",
+                },
+                {
+                    label: "Acciones",
+                    field: "actions",
                 },
             ],
             sort: {
@@ -62,27 +90,58 @@ export default {
                 perPageDropdown: [10, 30, 50],
                 dropdownAllowAll: false,
             },
-            selectedPhoto: null,
-            isOpen: "none",
         };
     },
-    mounted() {
-        this.loadActivities();
-    },
     methods: {
-        async loadActivities() {
+        confirmDelete(activity_id) {
+            this.$swal({
+                title: "Está seguro?",
+                text: "Estos cambios no podran ser revertidos",
+                icon: "warning",
+                showCancelButton: true,
+            }).then((response) => {
+                if (response.value) {
+                    let loader = this.$loading.show();
+                    this.$http({
+                        method: "DELETE",
+                        url: "/api/dailyactivities/" + activity_id,
+                    })
+                        .then(() => {
+                            loader.hide();
+                            this.$swal({
+                                title: "Hecho!",
+                                icon: "success",
+                            }).then(() => {
+                                this.loadActivities();
+                            });
+                        })
+                        .catch((error) => {
+                            this.$swal({
+                                title: "Error!",
+                                icon: "error",
+                                text: error.data.error,
+                            }).then(() => {
+                                loader.hide();
+                            });
+                        });
+                }
+            });
+        },
+        selectActivity(activity) {
+            this.$emit("selectActivity", activity);
+        },
+        loadActivities() {
             let loader = this.$loading.show();
-            await this.$http({
+            this.$http({
                 method: "GET",
-                url: "/api/dailyactivities?per_page=" +
-                    this.perPage +
-                    "&page=" +
-                    this.page,
+                url: "/api/dailyactivities",
+                params: {
+                    per_page: this.perPage,
+                    page: this.page,
+                },
             })
                 .then((response) => {
-                    console.log(response);
                     this.activities = response.data.data;
-                    console.log(this.activities);
                     this.totalRecords = response.data.meta.total;
                     loader.hide();
                 })
@@ -97,12 +156,15 @@ export default {
         },
         onPageChange(params) {
             this.page = params.currentPage;
-            this.loadUsers();
+            this.loadActivities();
         },
         onPerPageChange(params) {
             this.perPage = params.currentPerPage;
-            this.loadUsers();
+            this.loadActivities();
         },
+    },
+    created() {
+        this.loadActivities();
     },
 };
 </script>

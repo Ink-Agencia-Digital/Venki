@@ -2,7 +2,7 @@
     <div>
         <!-- begin page-header -->
         <h1 class="page-header">
-            Lecciones
+            Perfiles
             <small>Admnistracion de Perfiles</small>
         </h1>
         <!-- end page-header -->
