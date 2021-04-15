@@ -158,6 +158,11 @@ class User extends Authenticatable
         return $this->hasMany(Coin::class);
     }
 
+    public function competences()
+    {
+        return $this->hasMany(Competence::class);
+    }
+
     /** Overrided Functions */
 
 

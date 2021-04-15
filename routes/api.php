@@ -44,6 +44,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('users.achievements', 'User\UserAchievementController', ['only' => ['index']]);
     Route::resource('users.feelings', 'User\UserFeelingController', ['only' => ['index']]);
     Route::resource('users.coins', 'User\UserCoinController', ['only' => ['index']]);
+    Route::resource('users.competences', 'User\UserCompetenceController', ['only' => ['index']]);
     /**
      * Courses
      */
@@ -135,5 +136,9 @@ Route::middleware('auth:api')->group(function () {
      * Coins
      */
     Route::resource('coins', 'Coin\CoinController', ['except' => ['create', 'edit']]);
+    /**
+     * Competences
+     */
+    Route::resource('competences', 'Competence\CompetenceController', ['except' => ['create', 'edit']]);
 
 });

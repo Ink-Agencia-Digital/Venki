@@ -3,18 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="18db0073-b97c-4395-86bf-ffd2bed56e7b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/DailyActivity.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/DailyActivity.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/DailyActivity/DailyActivityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/DailyActivity/DailyActivityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/Post/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/Post/PostController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/activities/CreateActivity.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/activities/CreateActivity.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/activities/ListActivities.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/activities/ListActivities.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/activities/UpdateActivity.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/activities/UpdateActivity.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Activity.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Activity.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Users.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Users.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/../routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +77,7 @@
       <workItem from="1615507967262" duration="16550000" />
       <workItem from="1616158982297" duration="695000" />
       <workItem from="1617752656306" duration="19634000" />
-      <workItem from="1618266221841" duration="23078000" />
+      <workItem from="1618266221841" duration="24244000" />
     </task>
     <servers />
   </component>

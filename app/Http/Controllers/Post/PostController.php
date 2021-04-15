@@ -133,7 +133,7 @@ class PostController extends ApiController
         $post->delete();
         return $this->api_success([
             'data' => new PostResource($post),
-            'message' => __('pages.responses.created'),
+            'message' => __('pages.responses.deleted'),
             'code' => 201
         ], 201);
     }
