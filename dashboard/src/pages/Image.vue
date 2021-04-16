@@ -30,22 +30,13 @@
                         @selectImage="selectImage"
                     />
                 </b-col>
-                <b-col md="12">
-                    <transition
-                        name="my-swing"
-                        enter-active-class="bounce-in-top"
-                        leave-active-class="bounce-out-bck"
-                        mode="out-in"
-                    >
-                    
-                    </transition>
-                </b-col>
             </b-row>
         </b-container>
     </div>
 </template>
 
 <script>
+
 export default {
     components: {
         CreateImage: (resolve) => {
@@ -62,14 +53,12 @@ export default {
                 resolve(ListImage.default);
             });
         },
-      
     },
     data() {
         return {
             selectedImage: null,
             registerKey: 1,
             listKey: 1,
-            updateKey: 1,
         };
     },
     methods: {
@@ -80,12 +69,16 @@ export default {
         resetRegister() {
             this.registerKey++;
         },
+        resetUpdate() {
+            this.selectedImage = null;
+            this.updateKey++;
+        },
         registrationSuccessful() {
             this.resetRegister();
-            this.$refs["images-list"].loadImage();
+            this.$refs["images-list"].loadImages();
         },
         updateSuccess() {
-            this.$refs["images-list"].loadImage();
+            this.$refs["images-list"].loadImages();
         },
     },
 };

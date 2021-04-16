@@ -3,74 +3,38 @@
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
-                    <b-form-group
-                        class="row"
-                        label="Nombre"
-                        label-cols-md="3"
-                        label-for="update-name"
-                    >
-                        <b-form-input
-                            id="update-name"
-                            v-model="course.name"
-                            required
-                        ></b-form-input>
+                    <b-form-group class="row" label="Nombre" label-cols-md="3" label-for="update-name">
+                        <b-form-input id="update-name" v-model="course.name" required></b-form-input>
                     </b-form-group>
-                    <b-form-group
-                        class="row"
-                        label="Descripcion"
-                        label-cols-md="3"
-                        label-for="update-description"
-                    >
+                    <b-form-group class="row" label="Descripcion" label-cols-md="3" label-for="update-description">
                         <b-form-textarea
                             id="update-description"
                             type="text"
                             v-model="course.description"
                         ></b-form-textarea>
                     </b-form-group>
-                    <b-form-group
-                        class="row"
-                        label="Precio"
-                        label-cols-md="3"
-                        label-for="update-price"
-                    >
+                    <b-form-group class="row" label="Precio" label-cols-md="3" label-for="update-price">
                         <b-form-input
                             id="update-price"
                             v-model="course.price"
                             required
                         ></b-form-input>
                     </b-form-group>
-                    <b-form-group
-                        class="row"
-                        label="Trailer"
-                        label-cols-md="3"
-                        label-for="update-trailer"
-                    >
+                    <b-form-group class="row" label="Trailer" label-cols-md="3" label-for="update-trailer">
                         <b-form-input
                             id="update-trailer"
                             v-model="course.trailer"
                             required
                         ></b-form-input>
                     </b-form-group>
-                    <b-form-group
-                        class="row"
-                        label="Imagen Actual"
-                        label-cols-md="3"
-                        label-for="actual-photo"
-                    >
+                    <b-form-group class="row" label="Imagen Actual" label-cols-md="3" label-for="actual-photo">
                         <div class="text-center">
-                            <img
-                                class="img-course"
-                                loading="lazy"
+                            <img class="img-course" loading="lazy"
                                 :src="'/' + course.photo"
                             />
                         </div>
                     </b-form-group>
-                    <b-form-group
-                        class="row"
-                        label="Imagen Nueva"
-                        label-cols-md="3"
-                        label-for="picture"
-                    >
+                    <b-form-group class="row" label="Imagen Nueva" label-cols-md="3" label-for="picture">
                         <vue-dropzone
                             id="update-picture"
                             ref="dropzone_picture"
@@ -92,12 +56,7 @@
                             </div>
                         </vue-dropzone>
                     </b-form-group>
-                    <b-form-group
-                        class="row"
-                        label="Categorias"
-                        label-cols-md="3"
-                        label-for="categories-update"
-                    >
+                    <b-form-group class="row" label="Categorias" label-cols-md="3" label-for="categories-update">
                         <v-select
                             label="name"
                             :options="categories"
@@ -132,23 +91,20 @@
                 </b-col>
             </b-row>
             <b-row ref="scores" class="m-t-30" v-if="scores.length > 0">
-                <h3>Comentarios:</h3>
+                <h3 class="text-cyan-lighter">Puntuaciones y Comentarios:</h3>
                 <b-col md="12"
                     ><b-card v-for="(score, index) in scores" :key="index">
                         <b-row no-gutters>
                             <b-col md="2">
                                 <b-card-img
-                                    :src="
-                                        score.user.photo
-                                            ? '/photos/' + score.user.photo
-                                            : require('@/assets/img/user/user.png')
-                                    "
+                                    :src="require('@/assets/img/user/user.png')"
                                     alt="Imagen Perfil"
                                     height="100px"
                                     width="100px"
                                 ></b-card-img>
                             </b-col>
                             <b-col md="9">
+                                <b-form-rating v-model="score.score" variant="warning" class="mb-2" readonly></b-form-rating>
                                 <b-card-body
                                     :title="
                                         score.user.name +
@@ -163,7 +119,7 @@
                                         size="sm"
                                         variant="danger"
                                         @click="deleteScore(score.id)"
-                                        >Eliminar</b-button
+                                    >Eliminar</b-button
                                     >
                                 </b-card-body>
                             </b-col>
@@ -387,4 +343,16 @@ export default {
 img {
     max-width: 200px;
 }
+
+.rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    color: #b7b7b7;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 33px rgba(19, 18, 18, 0.09);
+}
+
 </style>

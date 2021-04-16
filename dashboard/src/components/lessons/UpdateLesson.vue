@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelUpdate" title="Modificacion de categorias">
+    <panel ref="panelUpdate" title="Modificacion de Lecciones">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">

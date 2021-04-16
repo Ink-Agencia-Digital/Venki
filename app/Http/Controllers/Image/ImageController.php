@@ -85,7 +85,31 @@ class ImageController extends ApiController
      */
     public function update(Request $request, $id)
     {
-        //
+        $image = Image::find($id)->get();
+
+        if ($request->has('name')) {
+            $image->name = $request->name;
+        }
+
+        if ($request->hasFile('url')) {
+            Storage::disk('images')->delete($image->url);
+            $image->url = $request->url->store('images');
+        }
+
+        if (!$image->isDirty()) {
+            return $this->errorResponse(
+                'Se debe especificar al menos un valor diferente para actualizar',
+                422
+            );
+        }
+
+        $image->saveOrFail();
+
+        return $this->api_success([
+            'data'      =>  new ImageResource($image),
+            'message'   => __('pages.responses.updated'),
+            'code'      =>  200
+        ]);
     }
 
     /**

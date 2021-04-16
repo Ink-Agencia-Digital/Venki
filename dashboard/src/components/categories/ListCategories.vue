@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Panel ref="panelList" title="Tabla de categorias">
+        <Panel ref="panelList" title="Tabla de componentes">
             <b-container>
                 <div class="table-responsive">
                     <vue-good-table

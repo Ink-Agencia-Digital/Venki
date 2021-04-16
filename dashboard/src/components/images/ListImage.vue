@@ -22,12 +22,6 @@
                                 <span>
                                     <div class="text-center">
                                         <a
-                                            class="btn btn-grey"
-                                            @click="selectImage(props.row)"
-                                        >
-                                            <i class="fas fa-edit fa-fw"></i>
-                                        </a>
-                                        <a
                                             class="btn btn-danger"
                                             @click="confirmDelete(props.row.id)"
                                         >
@@ -135,12 +129,12 @@ export default {
                         url: "/api/images/" + image_id,
                     })
                         .then(() => {
+                            loader.hide();
                             this.$swal({
                                 title: "Hecho!",
                                 icon: "success",
                             }).then(() => {
                                 this.loadImages();
-                                loader.hide();
                             });
                         })
                         .catch((error) => {

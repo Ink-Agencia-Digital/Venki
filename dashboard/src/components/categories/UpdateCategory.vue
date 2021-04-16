@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelUpdate" title="Modificacion de categorias">
+    <panel ref="panelUpdate" title="Modificacion de componentes">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -62,7 +62,7 @@
                                     Arrastra y suelta para subir contenido!
                                 </h3>
                                 <div class="subtitle">
-                                    ...o da click para seleccionar un arricho de
+                                    ...o da click para seleccionar un archivo de
                                     tu computadora
                                 </div>
                             </div>

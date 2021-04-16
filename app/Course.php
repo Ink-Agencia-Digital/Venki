@@ -44,12 +44,6 @@ class Course extends Model
         return $this->hasMany(Score::class);
     }
 
-    public function scoresApproved()
-    {
-        return $this->hasMany(Score::class)
-            ->where('active', '=', 1);
-    }
-
     public function users()
     {
         return $this->belongsToMany(User::class, 'users_courses');

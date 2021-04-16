@@ -15,7 +15,7 @@
                             required
                         ></b-form-input>
                     </b-form-group>
-                
+
                     <b-form-group
                         class="row"
                         label="Imagen"
@@ -37,7 +37,7 @@
                                     Arrastra y suelta para subir contenido!
                                 </h3>
                                 <div class="subtitle">
-                                    ...o da click para seleccionar un arricho de
+                                    ...o da click para seleccionar un archivo de
                                     tu computadora
                                 </div>
                             </div>
