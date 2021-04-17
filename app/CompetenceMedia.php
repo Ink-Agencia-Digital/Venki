@@ -11,7 +11,8 @@ class CompetenceMedia extends Model
 
     protected $fillable = [
         'competence_id',
-        'media'
+        'media',
+        'type'
     ];
 
     public function competence()

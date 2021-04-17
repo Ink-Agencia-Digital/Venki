@@ -45,6 +45,7 @@ class CompetenceController extends ApiController
                 Storage::disk("medias")->put($imageName, base64_decode($image));
                 $competenceMedia->media = $imageName;
                 $competenceMedia->competence_id = $competence->id;
+                $competenceMedia->type = 1;
                 $competenceMedia->save();
             }
         }
@@ -60,6 +61,7 @@ class CompetenceController extends ApiController
                 Storage::disk("medias")->put($imageName, base64_decode($image));
                 $competenceMedia->media = $imageName;
                 $competenceMedia->competence_id = $competence->id;
+                $competenceMedia->type = 2;
                 $competenceMedia->save();
             }
         }

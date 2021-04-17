@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c1a8aa8f-3e02-4d25-8e65-ca736ff19c0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/CompetenceMedia.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/CompetenceMedia.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Competence/CompetenceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Competence/CompetenceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/components/questions/ListQuestions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/questions/ListQuestions.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,7 +246,7 @@
       <workItem from="1617691027328" duration="37000" />
       <workItem from="1617743366558" duration="51595000" />
       <workItem from="1618266317283" duration="91000" />
-      <workItem from="1618578107110" duration="5071000" />
+      <workItem from="1618578107110" duration="7728000" />
     </task>
     <servers />
   </component>
