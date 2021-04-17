@@ -54,7 +54,7 @@ class CompetenceController extends ApiController
                 $competenceMedia = new CompetenceMedia;
                 $image_64 = $video['video'];
                 $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
-                $image = str_replace('data:image/jpeg;base64,', '', $image_64);
+                $image = str_replace('data:video/mp4;base64,', '', $image_64);
                 $image = str_replace(' ', '+', $image);
                 $imageName = Str::random(10).'.'.$extension;
                 Storage::disk("medias")->put($imageName, base64_decode($image));

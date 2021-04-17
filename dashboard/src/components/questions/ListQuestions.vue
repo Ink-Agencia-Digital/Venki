@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Panel ref="panelList" title="Tabla de cursos">
+        <Panel ref="panelList" title="Tabla de preguntas">
             <b-container>
                 <b-row class="m-t-10 m-b-10">
                     <b-col md="10" offset-md="1">
@@ -59,6 +59,34 @@
                         </template>
                     </vue-good-table>
                 </div>
+                <b-row ref="scores" class="m-t-30" v-if="answers.length > 0">
+                    <h3 class="text-cyan-lighter">Respuestas y puntos:</h3>
+                    <b-col md="12"
+                    ><b-card v-for="(answers, index) in answers" :key="index">
+                        <b-row no-gutters>
+                            <b-col md="9">
+                                <b-card-body>
+                                    <template>
+                                        <div>
+                                            <b-table striped hover :answers="answers"></b-table>
+                                        </div>
+                                    </template>
+                                    <b-card-text>
+                                        {{ answers.answer }}
+                                    </b-card-text>
+                                    <b-card-text>
+                                        {{ answers.point }}
+                                    </b-card-text>
+                                    <b-button
+                                        size="sm"
+                                        variant="danger"
+                                    >Eliminar</b-button>
+                                </b-card-body>
+                            </b-col>
+                        </b-row>
+                    </b-card>
+                    </b-col>
+                </b-row>
             </b-container>
         </Panel>
     </div>
@@ -107,6 +135,7 @@ export default {
                 dropdownAllowAll: false,
             },
             profiles: [],
+            answers: [],
             selectedProfile: null,
         };
     },
@@ -165,6 +194,8 @@ export default {
                 })
                     .then((response) => {
                         this.questions = response.data.data;
+                        this.answers = response.data.data[0].answers;
+                        console.log(this.questions, this.answers);
                         this.totalRecords = response.data.meta.total;
                         loader.hide();
                     })

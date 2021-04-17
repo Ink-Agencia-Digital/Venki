@@ -3,22 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="18db0073-b97c-4395-86bf-ffd2bed56e7b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/Course.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/Course/CourseScoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/Course/CourseScoreController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/Image/ImageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/Image/ImageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/Http/Controllers/Competence/CompetenceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../app/Http/Controllers/Competence/CompetenceController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/categories/CreateCategory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/categories/CreateCategory.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/categories/ListCategories.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/categories/ListCategories.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/categories/UpdateCategory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/categories/UpdateCategory.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/courses/UpdateCourse.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/courses/UpdateCourse.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/images/CreateImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/images/CreateImage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/images/ListImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/images/ListImage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/lessons/CreateLesson.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/lessons/CreateLesson.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/lessons/ListLessons.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/lessons/ListLessons.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/lessons/UpdateLesson.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/lessons/UpdateLesson.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/resources/CreateResource.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/resources/CreateResource.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/resources/ListResources.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/resources/ListResources.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Image.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Image.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/questions/ListQuestions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/questions/ListQuestions.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +45,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -90,7 +77,8 @@
       <workItem from="1615507967262" duration="16550000" />
       <workItem from="1616158982297" duration="695000" />
       <workItem from="1617752656306" duration="19634000" />
-      <workItem from="1618266221841" duration="45791000" />
+      <workItem from="1618266221841" duration="47215000" />
+      <workItem from="1618578543969" duration="4724000" />
     </task>
     <servers />
   </component>
