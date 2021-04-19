@@ -29,7 +29,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        async login({ dispatch }, user) {
+        login({ dispatch }, user) {
             Axios.post("/api/oauth/token",{
                     username: user.email,
                     password: user.password,

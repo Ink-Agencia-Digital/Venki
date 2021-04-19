@@ -38,7 +38,7 @@
                             name="password"
                             v-model="user.password"
                             type="password"
-                            class="form-control form-control-lg inverse-mode"
+                            class="form-control"
                             placeholder="Password"
                             required
                         />
@@ -86,7 +86,7 @@ export default {
         login: function () {
             let loader = this.$loading.show();
             this.$store
-                .dispatch('login', {
+                 .dispatch('login', {
                     email: this.user.email,
                     password: this.user.password
                 })

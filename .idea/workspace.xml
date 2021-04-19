@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1a8aa8f-3e02-4d25-8e65-ca736ff19c0b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/config/PageRoutes.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/config/PageRoutes.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/src/pages/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/pages/Login.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,7 +248,7 @@
       <workItem from="1618681286398" duration="4169000" />
       <workItem from="1618787864472" duration="352000" />
       <workItem from="1618804518349" duration="72000" />
-      <workItem from="1618844487318" duration="1817000" />
+      <workItem from="1618844487318" duration="2484000" />
     </task>
     <servers />
   </component>
