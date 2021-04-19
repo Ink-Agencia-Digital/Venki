@@ -29,8 +29,8 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        login({ dispatch }, user) {
-            Axios.post("/api/oauth/token",{
+        async login({ dispatch }, user) {
+            await Axios.post("/api/oauth/token",{
                     username: user.email,
                     password: user.password,
                     client_secret: process.env.VUE_APP_CLIENT_SECRET,
@@ -44,8 +44,8 @@ export default new Vuex.Store({
                 return dispatch("getUser");
             })
         },
-        getUser({ commit }) {
-            Axios
+        async getUser({ commit }) {
+            await Axios
                 .get("/api/user", {
                     headers: {
                         'Content-Type': 'application/json',
