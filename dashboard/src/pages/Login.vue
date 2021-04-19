@@ -66,6 +66,7 @@
 import PageOptions from "../config/PageOptions.vue";
 
 export default {
+    name: "login",
     created() {
         PageOptions.pageEmpty = true;
     },
