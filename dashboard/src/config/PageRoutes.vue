@@ -2,6 +2,7 @@
 const routes = [
     {
         path: "/",
+        name: "login",
         component: (resolve) =>
             import(/* webpackChunkName: "pages" */ "@/pages/Login.vue").then(
                 (Login) => {
@@ -11,6 +12,7 @@ const routes = [
     },
     {
         path: "/home",
+        name: "home",
         component: (resolve) =>
             import(/* webpackChunkName: "pages" */ "@/pages/Home.vue").then(
                 (Home) => {

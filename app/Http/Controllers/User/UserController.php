@@ -166,6 +166,22 @@ class UserController extends ApiController
             $user->premium = $request->premium;
         }
 
+        if ($request->has("cognitivo")) {
+            $user->cognitivo = $request->cognitivo;
+        }
+
+        if ($request->has("emocional")) {
+            $user->emocional = $request->emocional;
+        }
+
+        if ($request->has("conductual")) {
+            $user->conductual = $request->conductual;
+        }
+
+        if ($request->has("fortaleza_mental")) {
+            $user->fortaleza_mental = $request->fortaleza_mental;
+        }
+
 
         if (!$user->isDirty()) {
             return $this->errorResponse(
