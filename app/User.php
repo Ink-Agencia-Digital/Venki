@@ -163,6 +163,11 @@ class User extends Authenticatable
         return $this->hasMany(Competence::class);
     }
 
+    public function diagnostics()
+    {
+        return $this->hasMany(Diagnostic::class);
+    }
+
     /** Overrided Functions */
 
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\QuestionResource;
 use App\Profile;
 use App\Question;
+use App\SubCategory;
 use Illuminate\Http\Request;
 
 class QuestionController extends ApiController

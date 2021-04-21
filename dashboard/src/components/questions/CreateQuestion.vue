@@ -47,6 +47,32 @@
                             id="quesition-question"
                             type="text"
                             v-model="newQuestion.question"
+                            required
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Respuestas: "
+                        label-cols-md="3"
+                        label-for="answers-answer"
+                    >
+                        <b-form-input
+                            id="answers-answer"
+                            label="Respuesta"
+                            type="text"
+                            v-model="answers.answer"
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Puntajes: "
+                        label-cols-md="3"
+                        label-for="answers-point"
+                    >
+                        <b-form-input
+                            id="answers-answer"
+                            type="number"
+                            v-model="answers.point"
                         ></b-form-input>
                     </b-form-group>
                 </b-col>
@@ -82,7 +108,23 @@ export default {
             loading: null,
             profiles: [],
             categories: [],
+            answers: [{
+                answer: null,
+                point: null
+            }],
+            columns: [
+                {
+                    label: "Respuesta",
+                    field: "answer"
+                },
+                {
+                    label: "Puntaje",
+                    field: "point",
+                }
+            ],
         };
+    },
+    mounted() {
     },
     methods: {
         createQuestion() {
@@ -90,14 +132,27 @@ export default {
             this.$http({
                 method: "POST",
                 url: "/api/questions",
-                data: this.newQuestion,
+                data: {
+                    survey_id: this.newQuestion.profile_id,
+                    category_id: this.newQuestion.category_id,
+                    question: this.newQuestion.question,
+                    answers: [
+                        {
+                            answer: this.answers.answer,
+                            point: this.answers.point,
+                        },
+
+                    ]
+                }
             })
                 .then(() => {
+                    console.log(this.newQuestion, this.answers);
                     this.registrationSuccessful();
                     loader.hide();
                     this.$swal.fire("Exito!", "Registro exitoso", "success");
                 })
                 .catch((error) => {
+                    console.log(this.newQuestion, this.answers);
                     console.log(error);
                     loader.hide();
                     this.$swal

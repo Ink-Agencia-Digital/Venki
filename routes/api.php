@@ -100,6 +100,7 @@ Route::middleware('auth:api')->group(function () {
      */
     Route::resource('surveys', 'Survey\SurveyController', ['except' => ['create', 'edit']]);
     Route::resource('surveys.questions', 'Survey\SurveyQuestionController', ['except' => ['create', 'edit']]);
+    Route::resource('surveys.category.questions', 'Survey\SurveyCategoryQuestionController', ['only' => ['index']]);
     /**
      * Reply
      */

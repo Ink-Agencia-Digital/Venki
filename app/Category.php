@@ -14,6 +14,7 @@ class Category extends Model
         'name',
         'photo',
         'description',
+        'category_id',
     ];
 
     /** Relationships */
@@ -21,5 +22,21 @@ class Category extends Model
     public function courses()
     {
         return $this->belongsToMany(Course::class, 'courses_categories');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function childrenCategories()
+    {
+        return $this->hasMany(Category::class)
+            ->with('categories');
+    }
+
+    public function subcategories()
+    {
+        return $this->hasMany(SubCategory::class);
     }
 }

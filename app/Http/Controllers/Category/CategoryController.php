@@ -19,7 +19,7 @@ class CategoryController extends ApiController
      */
     public function index()
     {
-        return $this->collectionResponse(CategoryResource::collection($this->getModel(new Category, [])));
+        return $this->collectionResponse(CategoryResource::collection($this->getModel(new Category, ['childrenCategories'])));
     }
 
     /**
