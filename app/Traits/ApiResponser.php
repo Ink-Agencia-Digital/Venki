@@ -7,6 +7,7 @@
  */
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Cache;
 
@@ -58,4 +59,9 @@ trait ApiResponser
             return $data;
         });
     }
+    protected function showAll(Collection $collection, $code = 200)
+    {
+        return $this->success(['data' => $collection], 200);
+    }
+
 }

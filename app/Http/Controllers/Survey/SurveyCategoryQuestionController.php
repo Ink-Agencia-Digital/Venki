@@ -20,8 +20,10 @@ class SurveyCategoryQuestionController extends ApiController
     {
 
         $questions = $survey->questions()->with(['answers'])
-            ->where('category_id', '=', $category->id);
-        return $this->collectionResponse(QuestionResource::collection($this->getModel(new Question, ['answers'], $questions)));
+            ->where('category_id', '=', $category->id)
+            ->get();
+        //return $this->collectionResponse(QuestionResource::collection($this->getModel(new Question, ['answers'], $questions))->all());
+        return $this->showAll($questions);
     }
 
     /**

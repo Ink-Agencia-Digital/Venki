@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Category;
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ReplyResource;
-use App\Reply;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -18,7 +16,29 @@ class UserReplyController extends ApiController
      */
     public function index(User $user)
     {
-        return $this->collectionResponse(ReplyResource::collection($this->getModel(new Reply, [], $user->replies())));
+        foreach ($user->replies as $reply) {
+            $replies = collect($reply->reply)->groupBy('ct');
+            $average = array();
+            $replies->each(function ($item, $key) use (&$average) {
+                $category = Category::findOrFail($key);
+                $category['name'] = $this->quitar_tildes($category['name']);
+                $average[$category['name']] = round(($item->pluck('r')->reduce(function ($carry, $item) {
+                        return $carry + $item;
+                    })) / ($item->count()), 3);
+            });
+            $reply->reply = array($average);
+        }
+
+        return $this->showAll($user->replies);
+        // return $this->collectionResponse(ReplyResource::collection($this->getModel(new Reply, [], $replies)));
+    }
+
+    function quitar_tildes ($cadena)
+    {
+        $cadBuscar = array("á", "Á", "é", "É", "í", "Í", "ó", "Ó", "ú", "Ú");
+        $cadPoner = array("a", "A", "e", "E", "i", "I", "o", "O", "u", "U");
+        $cadena = str_replace ($cadBuscar, $cadPoner, $cadena);
+        return $cadena;
     }
 
     /**
