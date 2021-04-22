@@ -151,12 +151,9 @@ class UserController extends ApiController
             $user->photo =  $imageName;
         }
 
-        if ($request->has('photo')) {
-            $user->photo = $request->photo;
-        }
-
         if ($request->has("profile_id")) {
             $user->profile_id = $request->profile_id;
+            $user->surveyed = 0;
         }
 
         if ($request->has("surveyed")) {
