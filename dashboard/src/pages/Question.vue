@@ -30,12 +30,6 @@
                         @selectQuestion="selectQuestion"
                     />
                 </b-col>
-                <b-col md="12">
-                    <ListAnswers
-                        ref="answers-list"
-                        @selectQuestion="selectQuestion"
-                    />
-                </b-col>
             </b-row>
         </b-container>
     </div>
@@ -56,13 +50,6 @@ export default {
                 /* webpackChunkName: "components" */ "@/components/questions/ListQuestions.vue"
             ).then((ListQuestions) => {
                 resolve(ListQuestions.default);
-            });
-        },
-        ListAnswers: (resolve) => {
-            import(
-                /* webpackChunkName: "components" */ "@/components/questions/ListAnswers.vue"
-                ).then((ListAnswers) => {
-                resolve(ListAnswers.default);
             });
         },
     },

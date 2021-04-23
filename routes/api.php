@@ -109,6 +109,7 @@ Route::middleware('auth:api')->group(function () {
      * Question
      */
     Route::resource('questions', 'Question\QuestionController', ['except' => ['create', 'edit']]);
+    Route::resource('questions.answers', 'Question\QuestionAnswerController', ['only' => ['index']]);
     /**
      * Answer
      */

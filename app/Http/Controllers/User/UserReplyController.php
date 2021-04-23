@@ -22,6 +22,7 @@ class UserReplyController extends ApiController
             $replies->each(function ($item, $key) use (&$average) {
                 $category = Category::findOrFail($key);
                 $category['name'] = $this->quitar_tildes($category['name']);
+                $category['name'] = str_replace(' ','_',$category['name']);
                 $average[$category['name']] = round(($item->pluck('r')->reduce(function ($carry, $item) {
                         return $carry + $item;
                     })) / ($item->count()), 3);

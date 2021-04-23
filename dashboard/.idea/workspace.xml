@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/questions/CreateQuestion.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/questions/CreateQuestion.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/questions/ListQuestions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/questions/ListQuestions.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Question.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Question.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,6 +83,7 @@
       <workItem from="1618798608310" duration="595000" />
       <workItem from="1618844823704" duration="14887000" />
       <workItem from="1618935765150" duration="64000" />
+      <workItem from="1619126419008" duration="5582000" />
     </task>
     <servers />
   </component>
