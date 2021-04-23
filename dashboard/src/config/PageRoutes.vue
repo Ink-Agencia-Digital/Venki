@@ -108,6 +108,19 @@ const routes = [
         },
     },
     {
+        path: "/answers",
+        name: "Answer",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Answer.vue").then(
+                (Answer) => {
+                    resolve(Answer.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
         path: "/replies",
         component: (resolve) =>
             import(/* webpackChunkName: "pages" */ "@/pages/Reply.vue").then(

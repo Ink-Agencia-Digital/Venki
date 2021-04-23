@@ -58,6 +58,12 @@
                                     <span>
                                         <div class="text-center">
                                             <a
+                                                class="btn btn-grey"
+                                                @click="selectQuestion(props.row)"
+                                            >
+                                                <i class="fas fa-edit fa-fw"></i>
+                                            </a>
+                                            <a
                                                 class="btn btn-danger"
                                                 @click="confirmDelete(props.row.id)"
                                             >
@@ -234,7 +240,7 @@ export default {
         },
     },
     created() {
-        if (this.selectedProfile) {
+        if (this.selectedProfile, this.selectedCategory) {
             this.loadQuestions();
         }
     },

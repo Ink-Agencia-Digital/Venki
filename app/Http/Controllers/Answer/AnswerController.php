@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Answer;
 use App\Answer;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AnswerResource;
 use App\Http\Resources\QuestionResource;
 use App\Question;
 use Illuminate\Http\Request;
@@ -87,7 +88,29 @@ class AnswerController extends ApiController
      */
     public function update(Request $request, Answer $answer)
     {
-        //
+        if ($request->has("asnwer")) {
+            $answer->answer = $request->answer;
+        }
+
+        if ($request->has("point")) {
+            $answer->point = $request->point;
+        }
+
+        if (!$answer->isDirty()) {
+            return $this->errorResponse(
+                'Se debe especificar al menos un valor diferente para actualizar',
+                422
+            );
+        }
+
+        $answer->saveOrFail();
+
+        return $this->api_success([
+            'data'      =>  new AnswerResource($answer),
+            'message'   => __('pages.responses.updated'),
+            'code'      =>  201
+        ], 201);
+
     }
 
     /**

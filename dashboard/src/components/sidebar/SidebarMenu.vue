@@ -11,6 +11,7 @@ const sidebarMenu = [
     { path: "/resource", icon: "fa fa-box", title: "Recursos de Lecciones" },
     { path: "/surveys", icon: "fa fa-box", title: "Encuesta de Diagnostico" },
     { path: "/questions", icon: "fa fa-box", title: "Preguntas de Encuestas" },
+    { path: "/answers", icon: "fa fa-box", title: "Respuestas de Encuestas" },
     { path: "/replies", icon: "fa fa-box", title: "Resul. Diag." },
 
 ];

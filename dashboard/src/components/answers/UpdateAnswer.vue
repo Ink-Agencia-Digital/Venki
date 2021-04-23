@@ -1,17 +1,31 @@
 <template>
-    <panel ref="panelUpdate" title="Modificacion de preguntas">
+    <panel ref="panelUpdate" title="Modificacion de respuestas">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
                     <b-form-group
                         class="row"
-                        label="Pregunta"
+                        label="Respuesta"
                         label-cols-md="3"
-                        label-for="update-question"
+                        label-for="update-answer"
                     >
                         <b-form-input
-                            id="update-question"
-                            v-model="question.question"
+                            id="update-answer"
+                            v-model="answer.answer"
+                            required
+                        ></b-form-input>
+                    </b-form-group>
+                </b-col>
+                <b-col md="10" offset-md="1">
+                    <b-form-group
+                        class="row"
+                        label="Puntaje"
+                        label-cols-md="3"
+                        label-for="update-point"
+                    >
+                        <b-form-input
+                            id="update-point"
+                            v-model="answer.point"
                             required
                         ></b-form-input>
                     </b-form-group>
@@ -28,7 +42,7 @@
                             >
                         </b-col>
                         <b-col col sm="6" md="4" offset-md="1">
-                            <b-button variant="warning" @click="updateQuestion"
+                            <b-button variant="warning" @click="updateAnswer"
                             >Modificar</b-button
                             >
                         </b-col>
@@ -41,33 +55,32 @@
 
 <script>
 export default {
+    name: "UpdateAnswer",
     props: {
-        initialQuestion: Object,
+        initialAnswer: Object,
     },
     data() {
         return {
-            question: { ...this.initialQuestion },
+            answer: { ...this.initialAnswer },
         };
     },
     methods: {
-        updateQuestion() {
+        updateAnswer() {
             this.$http({
                 method: "PUT",
-                url: "/api/questions/" + this.question.id,
-                data: this.question,
-            })
-                .then((response) => {
-                    this.question = response.data.data;
-                    this.$swal
-                        .fire("Exito!", "Cambio exitoso", "success")
-                        .then(() => {
-                            this.updateSuccess();
-                        });
-                })
-                .catch((error) => {
-                    console.log(error);
-                    this.$swal.fire("Error!", "Cambio fallido", "error");
-                });
+                url: "/api/answers/" + this.answer.id,
+                data: this.answer,
+            }).then((response) => {
+                this.answers = response.data.data;
+                this.$swal
+                    .fire("Exito!", "Cambio exitoso", "success")
+                    .then(() => {
+                        this.updateSuccess();
+                    });
+            }).catch((error) => {
+                console.log(error);
+                this.$swal.fire("Error!", "Cambio fallido", "error");
+            });
         },
         resetUpdate() {
             this.$emit("resetUpdate");
@@ -75,7 +88,7 @@ export default {
         updateSuccess() {
             this.$emit("updateSuccess");
         },
-    },
+    }
 }
 </script>
 

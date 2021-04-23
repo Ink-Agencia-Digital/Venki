@@ -2,8 +2,8 @@
     <div>
         <!-- begin page-header -->
         <h1 class="page-header">
-            Preguntas
-            <small>Admnistracion de Preguntas</small>
+            Respuestas
+            <small>Admnistracion de Respuestas a Preguntas</small>
         </h1>
         <!-- end page-header -->
 
@@ -16,8 +16,8 @@
                         leave-active-class="bounce-out-bck"
                         mode="out-in"
                     >
-                        <CreateQuestion
-                            v-if="!selectedQuestion"
+                        <CreateAnswer
+                            v-if="!selectedAnswer"
                             :key="registerKey"
                             @registrationSuccessful="registrationSuccessful"
                             @resetRegister="resetRegister"
@@ -25,9 +25,9 @@
                     </transition>
                 </b-col>
                 <b-col md="12">
-                    <ListQuestions
-                        ref="questions-list"
-                        @selectQuestion="selectQuestion"
+                    <ListAnswers
+                        ref="answers-list"
+                        @selectAnswer="selectAnswer"
                     />
                 </b-col>
                 <b-col md="12">
@@ -37,9 +37,9 @@
                         leave-active-class="bounce-out-bck"
                         mode="out-in"
                     >
-                        <UpdateQuestion
-                            v-if="selectedQuestion"
-                            :initialQuestion="selectedQuestion"
+                        <UpdateAnswer
+                            v-if="selectedAnswer"
+                            :initialAnswer="selectedAnswer"
                             :key="updateKey"
                             @resetUpdate="resetUpdate"
                             @updateSuccess="updateSuccess"
@@ -53,58 +53,59 @@
 
 <script>
 export default {
+name: "Answer",
     components: {
-        CreateQuestion: (resolve) => {
+        CreateAnswer: (resolve) => {
             import(
-                /* webpackChunkName: "components" */ "@/components/questions/CreateQuestion.vue"
-            ).then((CreateQuestion) => {
-                resolve(CreateQuestion.default);
+                /* webpackChunkName: "components" */ "@/components/answers/CreateAnswer.vue"
+                ).then((CreateAnswer) => {
+                    resolve(CreateAnswer.default);
             });
         },
-        ListQuestions: (resolve) => {
+        ListAnswers: (resolve) => {
             import(
-                /* webpackChunkName: "components" */ "@/components/questions/ListQuestions.vue"
-            ).then((ListQuestions) => {
-                resolve(ListQuestions.default);
+                /* webpackChunkName: "components" */ "@/components/answers/ListAnswers.vue"
+                ).then((ListAnswers) => {
+                resolve(ListAnswers.default);
             });
         },
-        UpdateQuestion: (resolve) => {
+        UpdateAnswer: (resolve) => {
             import(
-                /* webpackChunkName: "components" */ "@/components/questions/UpdateQuestion.vue"
-                ).then((UpdateQuestion) => {
-                resolve(UpdateQuestion.default);
+                /* webpackChunkName: "components" */ "@/components/answers/UpdateAnswer.vue"
+                ).then((UpdateAnswer) => {
+                resolve(UpdateAnswer.default);
             });
         },
     },
     data() {
         return {
-            selectedQuestion: null,
+            selectedAnswer: null,
             registerKey: 1,
             listKey: 1,
             updateKey: 1,
-        };
+        }
     },
     methods: {
-        selectQuestion(question) {
+        selectAnswer(answer) {
             this.updateKey++;
-            this.selectedQuestion = { ...question };
+            this.selectedAnswer = { ...answer };
         },
         resetRegister() {
             this.registerKey++;
         },
         resetUpdate() {
-            this.selectedQuestion = null;
+            this.selectedAnswer = null;
             this.updateKey++;
         },
         registrationSuccessful() {
             this.resetRegister();
-            this.$refs["questions-list"].loadQuestions();
+            this.$refs["answers-list"].loadAnswers();
         },
         updateSuccess() {
-            this.$refs["questions-list"].loadQuestions();
+            this.$refs["answers-list"].loadAnswers();
         },
     },
-};
+}
 </script>
 
 <style scoped>
