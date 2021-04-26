@@ -4,6 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Category;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Resources\ReplyResource;
+use App\Reply;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -29,9 +31,7 @@ class UserReplyController extends ApiController
             });
             $reply->reply = array($average);
         }
-
         return $this->showAll($user->replies);
-        // return $this->collectionResponse(ReplyResource::collection($this->getModel(new Reply, [], $replies)));
     }
 
     function quitar_tildes ($cadena)

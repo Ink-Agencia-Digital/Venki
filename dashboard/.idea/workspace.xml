@@ -4,12 +4,8 @@
     <list default="true" id="18db0073-b97c-4395-86bf-ffd2bed56e7b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/questions/ListAnswers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/answers/ListAnswers.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/questions/ListQuestions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/questions/ListQuestions.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/questions/UpdateQuestion.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/questions/UpdateQuestion.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/sidebar/SidebarMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sidebar/SidebarMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/PageRoutes.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/PageRoutes.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Question.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Question.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/categories/CreateCategory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/categories/CreateCategory.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/categories/ListCategories.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/categories/ListCategories.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +85,7 @@
       <workItem from="1618798608310" duration="595000" />
       <workItem from="1618844823704" duration="14887000" />
       <workItem from="1618935765150" duration="64000" />
-      <workItem from="1619126419008" duration="20154000" />
+      <workItem from="1619126419008" duration="41549000" />
     </task>
     <servers />
   </component>

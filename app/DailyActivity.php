@@ -11,6 +11,6 @@ class DailyActivity extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "activity"
+        "activity",
     ];
 }

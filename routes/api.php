@@ -65,6 +65,7 @@ Route::middleware('auth:api')->group(function () {
      */
     Route::resource('categories', 'Category\CategoryController', ['except' => ['create', 'edit']]);
     Route::resource('categories.courses', 'Category\CategoryCourseController', ['only' => ['index']]);
+    Route::resource('categoriesChildren', 'Category\CategoryChildrenController', ['only' => ['index']]);
     /**
      * Scores
      */

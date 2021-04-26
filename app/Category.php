@@ -35,8 +35,4 @@ class Category extends Model
             ->with('categories');
     }
 
-    public function subcategories()
-    {
-        return $this->hasMany(SubCategory::class);
-    }
 }
