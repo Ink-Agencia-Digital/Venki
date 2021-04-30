@@ -36,7 +36,7 @@
                         <b-form-select
                             id="image-type"
                             v-model="newImage.type"
-                            :options="['Inicio', 'Academico', 'Deportivo']"
+                            :options="options"
                             required
                         ></b-form-select>
                     </b-form-group>
@@ -99,7 +99,9 @@ export default {
     data() {
         return {
             busy: false,
-            newImage: {},
+            newImage: {
+                type: null,
+            },
             dropzoneOptions: {
                 url: "/api/images",
                 thumbnailWidth: 150,
@@ -113,6 +115,12 @@ export default {
                 },
             },
             loading: null,
+            options: [
+                { value: null, text: 'Selecciona una opción' },
+                { value: 0, text: 'Académico' },
+                { value: 1, text: 'Deportivo' },
+                { value: 2, text: 'Inicio' },
+            ]
         };
     },
     components: {
@@ -120,6 +128,7 @@ export default {
     },
     methods: {
         sendingEvent(file, xhr, formData) {
+            console.log(this.newImage);
             Object.keys(this.newImage).forEach((key) => {
                 formData.append(key, this.newImage[key]);
             });
@@ -129,7 +138,6 @@ export default {
         },
         sendSuccess() {
             this.registrationSuccessful();
-            console.log(this.newImage);
             this.$swal.fire("Exito!", "Registro exitoso", "success");
         },
         createImage() {

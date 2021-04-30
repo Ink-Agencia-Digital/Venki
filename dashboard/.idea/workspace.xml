@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18db0073-b97c-4395-86bf-ffd2bed56e7b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/images/CreateImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/images/CreateImage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/images/ListImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/images/ListImage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +86,7 @@
       <workItem from="1618844823704" duration="14887000" />
       <workItem from="1618935765150" duration="64000" />
       <workItem from="1619126419008" duration="41549000" />
-      <workItem from="1619446607471" duration="13053000" />
+      <workItem from="1619446607471" duration="17115000" />
     </task>
     <servers />
   </component>

@@ -96,6 +96,10 @@ export default {
                     field: "description",
                 },
                 {
+                    label: "Ubicación",
+                    field: this.type,
+                },
+                {
                     label: "Imagen",
                     field: "url",
                 },
@@ -124,6 +128,17 @@ export default {
         };
     },
     methods: {
+        type(images){
+            if (images.type === 0) {
+                return "Académico"
+            } else if (images.type === 1) {
+                return "Deportivo"
+            } else if (images.type === 2) {
+                return "Inicio"
+            } else if (images.type === null) {
+                return "Almacén"
+            }
+        },
         confirmDelete(image_id) {
             this.$swal({
                 title: "Está seguro?",
