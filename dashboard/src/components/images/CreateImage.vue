@@ -108,6 +108,9 @@ export default {
                 autoProcessQueue: false,
                 paramName: "url",
                 maxFiles: 1,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
             },
             loading: null,
         };

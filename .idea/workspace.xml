@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1a8aa8f-3e02-4d25-8e65-ca736ff19c0b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Image/ImageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Image/ImageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Image.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Image.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/components/answers/ListAnswers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/answers/ListAnswers.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/src/components/images/CreateImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/images/CreateImage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/components/images/ListImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/images/ListImage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,7 +252,7 @@
       <workItem from="1619036919098" duration="67754000" />
       <workItem from="1619283688646" duration="1283000" />
       <workItem from="1619410092695" duration="1383000" />
-      <workItem from="1619424526397" duration="18350000" />
+      <workItem from="1619424526397" duration="18814000" />
     </task>
     <servers />
   </component>
