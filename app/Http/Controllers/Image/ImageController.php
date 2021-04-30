@@ -91,6 +91,10 @@ class ImageController extends ApiController
             $image->name = $request->name;
         }
 
+        if ($request->has('description')) {
+            $image->description = $request->description;
+        }
+
         if ($request->hasFile('url')) {
             Storage::disk('images')->delete($image->url);
             $image->url = $request->url->store('images');

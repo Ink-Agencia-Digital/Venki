@@ -125,10 +125,6 @@ export default {
                     field: "point",
                 },
                 {
-                    label: "Fecha",
-                    field: "created_at",
-                },
-                {
                     label: "Acciones",
                     field: "actions",
                 },

@@ -15,7 +15,31 @@
                             required
                         ></b-form-input>
                     </b-form-group>
-
+                    <b-form-group
+                        class="row"
+                        label="Descripcion"
+                        label-cols-md="3"
+                        label-for="image-description"
+                    >
+                        <b-form-input
+                            id="image-description"
+                            v-model="newImage.description"
+                            required
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Ubicación"
+                        label-cols-md="3"
+                        label-for="image-type"
+                    >
+                        <b-form-select
+                            id="image-type"
+                            v-model="newImage.type"
+                            :options="['Inicio', 'Academico', 'Deportivo']"
+                            required
+                        ></b-form-select>
+                    </b-form-group>
                     <b-form-group
                         class="row"
                         label="Imagen"
@@ -102,6 +126,7 @@ export default {
         },
         sendSuccess() {
             this.registrationSuccessful();
+            console.log(this.newImage);
             this.$swal.fire("Exito!", "Registro exitoso", "success");
         },
         createImage() {

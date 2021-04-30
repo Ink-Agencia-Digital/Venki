@@ -18,6 +18,11 @@
                             No hay informacion disponible
                         </div>
                         <template slot="table-row" slot-scope="props">
+                            <span v-if="props.column.field.type === null">
+                                <div>es nulo</div>
+                            </span>
+                        </template>
+                        <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'actions'">
                                 <span>
                                     <div class="text-center">
@@ -85,6 +90,10 @@ export default {
                 {
                     label: "Nombre",
                     field: "name",
+                },
+                {
+                    label: "Descripcion",
+                    field: "description",
                 },
                 {
                     label: "Imagen",

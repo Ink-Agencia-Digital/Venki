@@ -18,7 +18,6 @@ Route::get('/register/verify/{code}', 'GuestController@verify');
 Route::post('password/email', 'Auth\ForgotPasswordController@forgot');
 Route::post('password/reset', 'Auth\ForgotPasswordController@reset');
 Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
-Route::resource('images', 'Image\ImageController', ['except' => [ 'edit']]);
 Route::post('users', 'User\UserController@store');
 
 Route::middleware('auth:api')->group(function () {
@@ -143,5 +142,9 @@ Route::middleware('auth:api')->group(function () {
      * Competences
      */
     Route::resource('competences', 'Competence\CompetenceController', ['except' => ['create', 'edit']]);
+    /**
+     * Images
+     */
+    Route::resource('images', 'Image\ImageController', ['except' => [ 'edit']]);
 
 });

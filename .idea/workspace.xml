@@ -6,12 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c1a8aa8f-3e02-4d25-8e65-ca736ff19c0b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Category.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/DailyActivity.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/DailyActivity.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/UserReplyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/UserReplyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Image/ImageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Image/ImageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Image.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Image.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/components/categories/CreateCategory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/categories/CreateCategory.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/src/components/categories/ListCategories.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/categories/ListCategories.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/src/components/answers/ListAnswers.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/answers/ListAnswers.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/src/components/images/CreateImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/images/CreateImage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/src/components/images/ListImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/src/components/images/ListImage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,7 +200,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sofi-back" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -258,7 +258,7 @@
       <workItem from="1619036919098" duration="67754000" />
       <workItem from="1619283688646" duration="1283000" />
       <workItem from="1619410092695" duration="1383000" />
-      <workItem from="1619424526397" duration="2610000" />
+      <workItem from="1619424526397" duration="18350000" />
     </task>
     <servers />
   </component>
