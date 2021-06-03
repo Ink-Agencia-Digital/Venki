@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelRegister" title="Creacion de recursos">
+    <panel ref="panelRegister" title="Creación de recursos">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -59,7 +59,7 @@
                     >
                         <v-select
                             id="resource-type"
-                            :options="['audio', 'video', 'document']"
+                            :options="['audio', 'video', 'document','quiz']"
                             :value="selectedType"
                             @input="selectType"
                             :clearable="false"
@@ -70,7 +70,7 @@
                         label="Recurso"
                         label-cols-md="3"
                         label-for="resource"
-                        v-if="selectedType != 'video'"
+                        v-if="selectedType == 'audio'"
                     >
                         <vue-dropzone
                             id="resource"
@@ -108,6 +108,18 @@
                             required
                         ></b-form-input>
                     </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Document"
+                        label-cols-md="3"
+                        v-if="selectedType == 'document'"
+                        label-for="resource-document"
+                    ></b-form-group>
+                    <b-form-textarea
+                        id="resource-document"
+                        v-model="newResource.document"
+                        required
+                    ></b-form-textarea>
                 </b-col>
             </b-row>
             <b-row>
@@ -165,9 +177,10 @@ export default {
             this.selectedType = type;
             if (type == "audio") {
                 this.dropzoneOptions.acceptedFiles = "audio/*";
-            } else if (type == "document") {
-                this.dropzoneOptions.acceptedFiles = ".doc,.docx,.pdf";
-            }
+            } 
+            //else if (type == "document") {
+              //  this.dropzoneOptions.acceptedFiles = ".doc,.docx,.pdf";
+            //}
             this.dropzoneOptions.paramName = type;
             delete this.newResource.video;
             this.resetDropzone();
@@ -238,7 +251,7 @@ export default {
             this.$swal.fire("Exito!", "Registro exitoso", "success");
         },
         createResource() {
-            if (this.selectedType == "video") {
+            if (this.selectedType != "audio") {
                 this.$http({
                     method: "POST",
                     url: "/api/resources",
