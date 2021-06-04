@@ -114,12 +114,34 @@
                         label-cols-md="3"
                         v-if="selectedType == 'document'"
                         label-for="resource-document"
-                    ></b-form-group>
+                    >
                     <b-form-textarea
                         id="resource-document"
                         v-model="newResource.document"
+                        rows="3"
+                        max-rows="6"
                         required
                     ></b-form-textarea>
+                    </b-form-group>
+                    <b-form-group 
+                        class="row"
+                        label="Pregunta"
+                        label-cols-md="3"
+                        v-if="selectedType=='quiz'"
+                        label-for="resource-quiz">
+                        <b-form-input 
+                            id="resource-quiz" 
+                            v-model="newResource.quiz"
+                            placeholder="Escribe la pregunta y selecciona el tipo de respuesta"
+                            required>
+                        </b-form-input>
+                        <v-select
+                            id="AnswerType"
+                            :options="['Abierta', 'Numérica', 'Multiple']"
+                            :value="selectedAnswer"
+                            :clearable="false"
+                        ></v-select>
+                    </b-form-group> 
                 </b-col>
             </b-row>
             <b-row>
@@ -158,6 +180,7 @@ export default {
             selectedCourse: null,
             keyDrop: 0,
             selectedType: "audio",
+            selectedAnswer:"Abierta",
             dropzoneOptions: {
                 url: "/api/resources",
                 thumbnailWidth: 150,

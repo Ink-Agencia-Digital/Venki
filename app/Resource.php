@@ -11,6 +11,8 @@ class Resource extends Model
         'audio',
         'video',
         'document',
+        'quiz',
+        'tiporespuesta',
         'order'
     ];
 }
