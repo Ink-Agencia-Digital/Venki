@@ -49,6 +49,28 @@ class User extends Authenticatable
         'confirmation_code',
         'gender',
         'register_social',
+        'placeOfBirth',
+        'height',
+        'weight',
+        'dominantFoot',
+        'dominantHand',
+        'graduationYear',
+        'highSchoolAverage',
+        'gpa',
+        'sat',
+        'toef',
+        'mainSport',
+        'playingPosition',
+        'events',
+        'time',
+        'records',
+        'route',
+        'rankings',
+        'recognitions',
+        'press',
+        'differences',
+        'competencies',
+        'goals'
     ];
 
     /**

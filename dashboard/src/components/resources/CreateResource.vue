@@ -59,7 +59,7 @@
                     >
                         <v-select
                             id="resource-type"
-                            :options="['audio', 'video', 'document']"
+                            :options="['audio', 'video', 'document','quiz']"
                             :value="selectedType"
                             @input="selectType"
                             :clearable="false"
