@@ -40,7 +40,6 @@ class UserController extends ApiController
      */
     public function store(StoreUserRequest $request)
     {
-
         $user = new User;
         $user->fill($request->all());
 	    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -180,6 +179,74 @@ class UserController extends ApiController
             $user->fortaleza_mental = $request->fortaleza_mental;
         }
 
+        if($request->has("placeOfBirth")){
+            $user->placeOfBirth = $request ->placeOfBirth;
+        }
+
+        if($request->has("height")){
+            $user->height = $request ->height;
+        }
+        if($request->has("weight")){
+            $user->weight = $request ->weight;
+        }
+        if($request->has("dominantFoot")){
+            $user->dominantFoot = $request ->dominantFoot;
+        }
+        if($request->has("dominantHand")){
+            $user->dominantHand = $request ->dominantHand;
+        }
+
+        if($request->has("graduationYear")){
+            $user->graduationYear = $request ->graduationYear;
+        }
+        if($request->has("highSchoolAverage")){
+            $user->highSchoolAverage = $request ->highSchoolAverage;
+        }
+        if($request->has("gpa")){
+            $user->gpa = $request ->gpa;
+        }
+        if($request->has("sat")){
+            $user->sat = $request ->sat;
+        }
+        if($request->has("toef")){
+            $user->toef = $request ->toef;
+        }
+        if($request->has("mainSport")){
+            $user->mainSport = $request ->mainSport;
+        }
+        if($request->has("playingPosition")){
+            $user->playingPosition = $request ->playingPosition;
+        }
+        if($request->has("events")){
+            $user->events = $request ->events;
+        }
+        if($request->has("time")){
+            $user->time = $request ->time;
+        }
+        if($request->has("records")){
+            $user->records = $request ->records;
+        }
+        if($request->has("route")){
+            $user->route = $request ->route;
+        }
+        if($request->has("rankings")){
+            $user->rankings = $request ->rankings;
+        }
+        if($request->has("recognitions")){
+            $user->recognitions = $request ->recognitions;
+        }
+        if($request->has("press")){
+            $user->press = $request ->press;
+        }
+        if($request->has("differences")){
+            $user->differences = $request ->differences;
+        }
+        if($request->has("competencies")){
+            $user->competencies = $request ->competencies;
+        }
+        if($request->has("goals")){
+            $user->goals = $request ->goals;
+        }
         if (!$user->isDirty()) {
             return $this->errorResponse(
                 'Se debe especificar al menos un valor diferente para actualizar',
