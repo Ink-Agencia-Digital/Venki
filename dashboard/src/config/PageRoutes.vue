@@ -168,6 +168,18 @@ const routes = [
             requiresAuth: true,
         },
     },
+    {
+        path: "/membresias",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Membresia.vue").then(
+                (Membresia) => {
+                    resolve(Membresia.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    }
 ];
 
 export default routes;

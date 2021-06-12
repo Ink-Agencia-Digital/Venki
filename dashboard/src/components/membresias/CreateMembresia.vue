@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelUpdate" title="Modificacion de componentes">
+    <panel ref="panelRegister" title="Creación de membresias">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -7,48 +7,46 @@
                         class="row"
                         label="Nombre"
                         label-cols-md="3"
-                        label-for="update-name"
+                        label-for="membresia-name"
                     >
                         <b-form-input
-                            id="update-name"
-                            v-model="category.name"
+                            id="membresia-name"
+                            v-model="newMembresia.nombre"
                             required
                         ></b-form-input>
                     </b-form-group>
                     <b-form-group
                         class="row"
-                        label="Descripcion"
+                        label="Precio"
                         label-cols-md="3"
-                        label-for="update-description"
+                        label-for="membresia-precio"
                     >
-                        <b-form-textarea
-                            id="update-description"
-                            type="text"
-                            v-model="category.description"
-                        ></b-form-textarea>
+                        <b-form-input
+                            id="membresia-precio"
+                            type="number"
+                            v-model="newMembresia.precio"
+                        ></b-form-input>
+                    </b-form-group>
+                     <b-form-group
+                        class="row"
+                        label="Duración (días)"
+                        label-cols-md="3"
+                        label-for="membresia-duracion"
+                    >
+                        <b-form-input
+                            id="membresia-duracion"
+                            type="number"
+                            v-model="newMembresia.duracion"
+                        ></b-form-input>
                     </b-form-group>
                     <b-form-group
                         class="row"
-                        label="Imagen Actual"
-                        label-cols-md="3"
-                        label-for="actual-photo"
-                    >
-                        <div class="text-center">
-                            <img
-                                class="img-category"
-                                loading="lazy"
-                                :src="'/' + category.photo"
-                            />
-                        </div>
-                    </b-form-group>
-                    <b-form-group
-                        class="row"
-                        label="Imagen Nueva"
+                        label="Imagen"
                         label-cols-md="3"
                         label-for="picture"
                     >
                         <vue-dropzone
-                            id="update-picture"
+                            id="picture"
                             ref="dropzone_picture"
                             :options="dropzoneOptions"
                             @vdropzone-max-files-exceeded="deletePicture"
@@ -62,7 +60,7 @@
                                     Arrastra y suelta para subir contenido!
                                 </h3>
                                 <div class="subtitle">
-                                    ...o da click para seleccionar un archivo de
+                                    ...o da click para seleccionar un arricho de
                                     tu computadora
                                 </div>
                             </div>
@@ -76,13 +74,13 @@
                         <b-col col sm="6" md="4" offset-md="0">
                             <b-button
                                 variant="outline-primary"
-                                @click="resetUpdate"
-                                >Cerrar</b-button
+                                @click="resetRegister"
+                                >Limpiar</b-button
                             >
                         </b-col>
                         <b-col col sm="6" md="4" offset-md="1">
-                            <b-button variant="warning" @click="updateCategory"
-                                >Modificar</b-button
+                            <b-button variant="warning" @click="createMembresia"
+                                >Registrar</b-button
                             >
                         </b-col>
                     </b-row>
@@ -97,19 +95,18 @@ import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
 export default {
-    props: {
-        initialCategory: Object,
-    },
     data() {
         return {
-            category: { ...this.initialCategory },
+            busy: false,
+            newMembresia: {},
+            membresias: [],
             dropzoneOptions: {
-                url: "/api/categories/" + this.initialCategory.id,
+                url: "/api/membresias",
                 thumbnailWidth: 150,
                 acceptedFiles: "image/*",
                 addRemoveLinks: true,
                 autoProcessQueue: false,
-                paramName: "photo",
+                paramName: "imagen",
                 maxFiles: 1,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -123,55 +120,30 @@ export default {
     },
     methods: {
         sendingEvent(file, xhr, formData) {
-            Object.keys(this.category).forEach((key) => {
-                formData.append(key, this.category[key]);
+            console.log(this.newMembresia);
+            Object.keys(this.newMembresia).forEach((key) => {
+                formData.append(key, this.newMembresia[key]);
             });
-            formData.append("_method", "PUT");
         },
         deletePicture(file) {
             this.$refs.dropzone_picture.removeFile(file);
         },
-        sendSuccess(file, response) {
-            this.category = response.data;
-            this.$refs.dropzone_picture.removeAllFiles();
-            this.$swal.fire("Exito!", "Cambio exitoso", "success").then(() => {
-                this.updateSuccess();
-            });
+        sendSuccess() {
+            this.registrationSuccessful();
+            this.$swal.fire("Exito!", "Registro exitoso", "success");
         },
-        updateCategory() {
-            if (this.$refs.dropzone_picture.dropzone.files.length > 0) {
-                this.$refs.dropzone_picture.processQueue();
-            } else {
-                this.$http({
-                    method: "PUT",
-                    url: "/api/categories/" + this.category.id,
-                    data: {
-                        name: this.category.name,
-                        description: this.category.description,
-                    },
-                })
-                    .then((response) => {
-                        this.category = response.data.data;
-                        this.$swal
-                            .fire("Exito!", "Cambio exitoso", "success")
-                            .then(() => {
-                                this.updateSuccess();
-                            });
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$swal.fire("Error!", "Cambio fallido", "error");
-                    });
-            }
+        createMembresia() {
+            this.$refs.dropzone_picture.processQueue();
         },
         sendError() {
-            this.$swal.fire("Error!", "Cambio fallido", "error");
+            this.$swal.fire("Error!", "Registro fallido", "error");
         },
-        resetUpdate() {
-            this.$emit("resetUpdate");
+        resetRegister() {
+            this.$emit("resetRegister");
         },
-        updateSuccess() {
-            this.$emit("updateSuccess");
+        registrationSuccessful() {
+            this.$emit("registrationSuccessful");
+            this.resetRegister();
         },
     },
 };
@@ -193,9 +165,5 @@ export default {
 .subtitle {
     color: #314b5f;
     font-size: medium;
-}
-
-img {
-    max-width: 200px;
 }
 </style>

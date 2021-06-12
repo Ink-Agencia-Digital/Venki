@@ -146,5 +146,8 @@ Route::middleware('auth:api')->group(function () {
      * Images
      */
     Route::resource('images', 'Image\ImageController', ['except' => [ 'edit']]);
-
+    /**
+     * Membresias
+     */
+    Route::resource('membresias','Membresias\MembresiasController',['except' => ['create', 'edit']]);
 });

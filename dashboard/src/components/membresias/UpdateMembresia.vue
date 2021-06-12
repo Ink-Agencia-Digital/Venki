@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelUpdate" title="Modificacion de componentes">
+    <panel ref="panelUpdate" title="Modificación de membresias">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -11,21 +11,33 @@
                     >
                         <b-form-input
                             id="update-name"
-                            v-model="category.name"
+                            v-model="membresia.nombre"
                             required
                         ></b-form-input>
                     </b-form-group>
                     <b-form-group
                         class="row"
-                        label="Descripcion"
+                        label="Precio"
                         label-cols-md="3"
-                        label-for="update-description"
+                        label-for="update-precio"
                     >
-                        <b-form-textarea
-                            id="update-description"
-                            type="text"
-                            v-model="category.description"
-                        ></b-form-textarea>
+                        <b-form-input
+                            id="update-precio"
+                            type="number"
+                            v-model="membresia.precio"
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Duración"
+                        label-cols-md="3"
+                        label-for="update-duracion"
+                    >
+                        <b-form-input
+                            id="update-duracion"
+                            type="number"
+                            v-model="membresia.duracion"
+                        ></b-form-input>
                     </b-form-group>
                     <b-form-group
                         class="row"
@@ -37,7 +49,7 @@
                             <img
                                 class="img-category"
                                 loading="lazy"
-                                :src="'/' + category.photo"
+                                :src="'/' + membresia.imagen"
                             />
                         </div>
                     </b-form-group>
@@ -81,7 +93,7 @@
                             >
                         </b-col>
                         <b-col col sm="6" md="4" offset-md="1">
-                            <b-button variant="warning" @click="updateCategory"
+                            <b-button variant="warning" @click="updateMembresia"
                                 >Modificar</b-button
                             >
                         </b-col>
@@ -98,18 +110,18 @@ import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
 export default {
     props: {
-        initialCategory: Object,
+        initialMembresia: Object,
     },
     data() {
         return {
-            category: { ...this.initialCategory },
+            membresia: { ...this.initialMembresia },
             dropzoneOptions: {
-                url: "/api/categories/" + this.initialCategory.id,
+                url: "/api/categories/" + this.initialMembresia.id,
                 thumbnailWidth: 150,
                 acceptedFiles: "image/*",
                 addRemoveLinks: true,
                 autoProcessQueue: false,
-                paramName: "photo",
+                paramName: "image",
                 maxFiles: 1,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -123,8 +135,8 @@ export default {
     },
     methods: {
         sendingEvent(file, xhr, formData) {
-            Object.keys(this.category).forEach((key) => {
-                formData.append(key, this.category[key]);
+            Object.keys(this.membresia).forEach((key) => {
+                formData.append(key, this.membresia[key]);
             });
             formData.append("_method", "PUT");
         },
@@ -132,22 +144,23 @@ export default {
             this.$refs.dropzone_picture.removeFile(file);
         },
         sendSuccess(file, response) {
-            this.category = response.data;
+            this.membresia = response.data;
             this.$refs.dropzone_picture.removeAllFiles();
             this.$swal.fire("Exito!", "Cambio exitoso", "success").then(() => {
                 this.updateSuccess();
             });
         },
-        updateCategory() {
+        updateMembresia() {
             if (this.$refs.dropzone_picture.dropzone.files.length > 0) {
                 this.$refs.dropzone_picture.processQueue();
             } else {
                 this.$http({
                     method: "PUT",
-                    url: "/api/categories/" + this.category.id,
+                    url: "/api/categories/" + this.membresia.id,
                     data: {
-                        name: this.category.name,
-                        description: this.category.description,
+                        nombre: this.membresia.nombre,
+                        precio: this.membresia.precio,
+                        duracion: this.membresia.duracion
                     },
                 })
                     .then((response) => {

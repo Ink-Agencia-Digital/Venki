@@ -2,6 +2,7 @@
 const sidebarMenu = [
     { path: "/home", icon: "fa fa-th", title: "Home" },
     { path: "/users", icon: "fa fa-user", title: "Usuarios " },
+    { path:"/membresias",icon:"fa fa-address-card", title:"Membresias"},
     { path: "/images", icon: "fa fa-user", title: "Imagenes del día " },
      { path: "/activities", icon: "fa fa-book", title: "Actividades" },
     { path: "/categories", icon: "fa fa-folder", title: "Componentes" },
