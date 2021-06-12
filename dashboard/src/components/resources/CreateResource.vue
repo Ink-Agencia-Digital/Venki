@@ -30,7 +30,7 @@
                         <v-select
                             label="name"
                             :options="lessons"
-                            :placeholder="'Digite nombre de la leccion'"
+                            :placeholder="'Digite nombre de la lección'"
                             id="lessons"
                             :clear-search-on-select="false"
                             :filterable="false"
@@ -138,9 +138,25 @@
                         <v-select
                             id="AnswerType"
                             :options="['Abierta', 'Numérica', 'Multiple']"
-                            :value="selectedAnswer"
+                            v-model="newResource.tiporespuesta"
+                            @input="selectAnswer"
                             :clearable="false"
                         ></v-select>
+                        <b-form
+                            class="row"
+                            v-if="newResource.tiporespuesta=='Multiple'">
+                            <b-row>
+                                <b-form-input id="quiz-answer" class="col-md-6" placeholder="respuesta" v-model="optionanswer"></b-form-input>
+                                <v-button type="button" class="btn btn-circle btn-primary col-md-2" @click="insertAnswer" v-if="edit==false"><i class="fa fa-plus"></i></v-button>
+                                <v-button type="button" class="btn btn-circle btn-warning col-md-2" @click="saveAnswer" v-if="edit==true"><i class="fa fa-edit"></i></v-button>
+                                <v-button type="button" class="btn btn-circle btn-danger col-md-2" @click="deleteAnswer" v-if="edit==true"><i class="fa fa-trash"></i></v-button>
+                            </b-row>
+                        </b-form>
+                        <b-row>
+                            <b-list-group v-if="quiz_answers.length>0">
+                                <b-list-group-item v-for="(item,index) in quiz_answers" v-bind:key="item"><a @click="editar(item,index)">{{item}}</a></b-list-group-item>
+                            </b-list-group>
+                        </b-row>
                     </b-form-group> 
                 </b-col>
             </b-row>
@@ -177,10 +193,14 @@ export default {
             loading: null,
             courses: [],
             lessons: [],
+            quiz_answers:[],
+            optionanswer:'',
             selectedCourse: null,
             keyDrop: 0,
             selectedType: "audio",
             selectedAnswer:"Abierta",
+            edit:false,
+            editindex:0,
             dropzoneOptions: {
                 url: "/api/resources",
                 thumbnailWidth: 150,
@@ -274,6 +294,7 @@ export default {
             this.$swal.fire("Exito!", "Registro exitoso", "success");
         },
         createResource() {
+            this.newResource.optionanswer=this.quiz_answers.join();
             if (this.selectedType != "audio") {
                 this.$http({
                     method: "POST",
@@ -309,6 +330,30 @@ export default {
         resetDropzone() {
             this.keyDrop++;
         },
+        insertAnswer(){
+            if(this.quiz_answers.length==10){
+                this.$swal.fire("Advertencia!","Máximo 10 respuestas.","warning");
+                return;
+            }
+            //var opciones = {option:this.optionanswer};
+            this.quiz_answers.push(this.optionanswer);
+            this.optionanswer='';
+        },
+        editar(item,index){
+            this.edit=true;
+            this.editindex=index;
+            this.optionanswer=item.option;
+        },
+        saveAnswer(){
+            this.quiz_answers[this.editindex]=this.optionanswer;
+            this.edit=false;
+            this.optionanswer='';
+        },
+        deleteAnswer(){
+            this.quiz_answers.splice(this.editindex,1);
+            this.edit=false;
+            this.optionanswer='';
+        }
     },
 };
 </script>

@@ -13,6 +13,7 @@ class Resource extends Model
         'document',
         'quiz',
         'tiporespuesta',
+        'optionanswer',
         'order'
     ];
 }
