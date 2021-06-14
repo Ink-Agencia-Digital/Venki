@@ -15,7 +15,9 @@ class AddOptionanswerToResources extends Migration
     {
         Schema::table('resources', function (Blueprint $table) {
             //
-            $table->string('optionanswer',256)->nullable()->after('tiporespuesta');
+            $table->string('quiz',191)->nullable()->after('document');
+            $table->string('tiporespuesta',191)->nullable();
+            $table->string('optionanswer',256)->nullable();
         });
     }
 
@@ -26,7 +28,9 @@ class AddOptionanswerToResources extends Migration
     public function down()
     {
         Schema::table('resources', function (Blueprint $table) {
-            $table ->dropColumn('optionanswer');
+            $table->dropcolumn('quiz');
+            $table->dropColumn('tiporespuesta');
+            $table->dropColumn('optionanswer');
         });
     }
 }
