@@ -209,6 +209,9 @@ export default {
                 acceptedFiles: "audio/*",
                 paramName: "audio",
                 maxFiles: 1,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
             },
         };
     },
