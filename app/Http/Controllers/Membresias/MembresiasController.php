@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\membresia;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\MembresiaResource;
-use App\http\Requests\StoreMembresiaRequest;
-use App\http\Requests\UpdateMembresiaRequest;
+use App\Http\Requests\StoreMembresiaRequest;
+use App\Http\Requests\UpdateMembresiaRequest;
 use Illuminate\Support\Facades\Storage;
 
 class MembresiasController extends ApiController
