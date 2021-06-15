@@ -150,4 +150,8 @@ Route::middleware('auth:api')->group(function () {
      * Membresias
      */
     Route::resource('membresias','Membresias\MembresiasController',['except' => ['create', 'edit']]);
+    /**
+     * Quiz
+     */
+    Route::resource('quiz','quiz\quizController',['except' => ['create', 'edit']]);
 });

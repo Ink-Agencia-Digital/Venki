@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelRegister" title="Creacion de encuestas">
+    <panel ref="panelRegister" title="Creación de encuestas">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">

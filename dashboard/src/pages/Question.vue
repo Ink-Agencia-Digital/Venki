@@ -3,7 +3,7 @@
         <!-- begin page-header -->
         <h1 class="page-header">
             Preguntas
-            <small>Admnistracion de Preguntas</small>
+            <small>Admnistración de Preguntas</small>
         </h1>
         <!-- end page-header -->
 

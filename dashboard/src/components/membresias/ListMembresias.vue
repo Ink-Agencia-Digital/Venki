@@ -15,7 +15,7 @@
                         styleClass="table table-bordered m-b-0"
                     >
                         <div slot="emptystate">
-                            No hay informacion disponible
+                            No hay información disponible
                         </div>
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'actions'">
@@ -41,12 +41,12 @@
                             <span v-else-if="props.column.field == 'imagen'">
                                 <div
                                     class="text-center"
-                                    @click="selectPhoto(props.row.imagen)"
+                                    @click="selectPhoto('/storage/app/' + props.row.imagen)"
                                 >
                                     <img
                                         class="img-category"
                                         loading="lazy"
-                                        :src="'/' + props.row.imagen"
+                                        :src="'/storage/app/' + props.row.imagen"
                                     />
                                 </div>
                             </span>
@@ -68,7 +68,7 @@
             <img
                 class="modal-content"
                 loading="lazy"
-                :src="'/' + selectedPhoto"
+                :src="'/storage/app/' + selectedPhoto"
                 id="image"
             />
         </div>
