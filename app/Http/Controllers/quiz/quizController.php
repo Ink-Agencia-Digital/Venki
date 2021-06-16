@@ -34,15 +34,23 @@ class quizController extends ApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request 
+     * $request
      * @return \Illuminate\Http\Response
      */
     public function store(StorequizRequest $request)
     {
-        $quiz = new quiz;
-        $quiz->fill($request->all());
-        $quiz->saveOrFail();
-
+       
+        foreach($request->all() as $item)
+        {
+            $quiz = new quiz;
+            $quiz->id_user=$item['id_user'];
+            $quiz->id_resource = $item['id_resource'];
+            $quiz->pregunta = $item['pregunta'];
+            $quiz->respuesta = $item['respuesta'];
+            //$quiz->fill($item->all());
+            $quiz->saveOrFail();
+        }        
         return $this->api_success([
             'data' => new QuizResource($quiz),
             'message' => __('pages.responses.created'),
