@@ -114,7 +114,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Course::class, 'users_courses')->withPivot(['progress', 'complete']);
     }
-
+    public function lessons()
+    {
+        return $this->belongsToMany(Lessons::class,'users_courses_lessons');
+    }
+    public function lessonscourses()
+    {
+        return $this->belongsToMany(Course::class,'users_courses_lessons');
+    }
     public function scores()
     {
         return $this->hasMany(Score::class);
@@ -191,5 +198,10 @@ class User extends Authenticatable
     public function sendEmailVerificationNotification()
     {
         $this->notify(new UserRegistration);
+    }
+
+    public function quizzes()
+    {
+        return $this->hasMany(quiz::class,'id_user');
     }
 }

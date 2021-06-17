@@ -33,6 +33,7 @@ Route::middleware('auth:api')->group(function () {
      */
     Route::resource('users', 'User\UserController', ['except' => ['create', 'edit', 'store']]);
     Route::resource('users.courses', 'User\UserCourseController', ['except' => ['create', 'edit']]);
+    //Route::resource('users.courses.lesson', 'User\UserCourseLessonController', ['expcept' => ['create', 'edit']]);
     Route::resource('users.scores', 'User\UserScoreController', ['except' => ['create', 'edit']]);
     Route::resource('users.devices', 'User\UserDeviceController', ['except' => ['create', 'edit']]);
     Route::resource('users.chats', 'User\UserChatController', ['except' => ['create', 'edit']]);
@@ -154,4 +155,5 @@ Route::middleware('auth:api')->group(function () {
      * Quiz
      */
     Route::resource('quiz','quiz\quizController',['except' => ['create', 'edit']]);
+    Route::resource('user.quiz','quiz\quizuserController',['only'=>['index']]);
 });

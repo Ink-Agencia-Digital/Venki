@@ -18,7 +18,7 @@ class quizController extends ApiController
      */
     public function index()
     {
-        return $this->collectionResponse(quizResource::collection($this->getModel(new quiz)));
+        
     }
 
     /**

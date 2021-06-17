@@ -179,6 +179,18 @@ const routes = [
         meta: {
             requiresAuth: true,
         },
+    },
+    {
+        path: "/quiz",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Quiz.vue").then(
+                (quiz) => {
+                    resolve(quiz.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
     }
 ];
 
