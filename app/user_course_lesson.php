@@ -18,17 +18,17 @@ class user_course_lesson extends Model
 
     public  function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function course()
     {
-        return $this->hasOne(Course::class);
+        return $this->belongsToMany(Course::class);
     }
 
     public function lesson()
     {
-        return $this->hasOne(Lesson::class);
+        return $this->belongsToMany(Lesson::class);
     }
 
     

@@ -1,66 +1,53 @@
 <template>
-    <panel ref="panelUpdate" title="Modificación de membresias">
+    <panel ref="panelRegister" title="Creación de trofeos">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
                     <b-form-group
                         class="row"
-                        label="Nombre"
+                        label="Rango Inicial"
                         label-cols-md="3"
-                        label-for="update-name"
+                        label-for="trofeo-rangoini"
                     >
                         <b-form-input
-                            id="update-name"
-                            v-model="membresia.nombre"
+                            id="trofeo-rangoini"
+                            v-model="newTrofeo.rangoini"
+                            type="number"
                             required
                         ></b-form-input>
                     </b-form-group>
                     <b-form-group
                         class="row"
-                        label="Precio"
+                        label="Rango Final"
                         label-cols-md="3"
-                        label-for="update-precio"
+                        label-for="trofeo-rangofin"
                     >
                         <b-form-input
-                            id="update-precio"
+                            id="trofeo-rangofin"
                             type="number"
-                            v-model="membresia.precio"
+                            v-model="newTrofeo.rangofin"
+                        ></b-form-input>
+                    </b-form-group>
+                     <b-form-group
+                        class="row"
+                        label="Nombre"
+                        label-cols-md="3"
+                        label-for="trofeo-nombre"
+                    >
+                        <b-form-input
+                            id="trofeo-nombre"
+                            type="text"
+                            v-model="newTrofeo.nombre"
                         ></b-form-input>
                     </b-form-group>
                     <b-form-group
                         class="row"
-                        label="Duración"
-                        label-cols-md="3"
-                        label-for="update-duracion"
-                    >
-                        <b-form-input
-                            id="update-duracion"
-                            type="number"
-                            v-model="membresia.duracion"
-                        ></b-form-input>
-                    </b-form-group>
-                    <b-form-group
-                        class="row"
-                        label="Imagen Actual"
-                        label-cols-md="3"
-                        label-for="actual-photo"
-                    >
-                        <div class="text-center">
-                            <img
-                                class="img-category"
-                                loading="lazy"
-                                :src="'/' + membresia.imagen"
-                            />
-                        </div>
-                    </b-form-group>
-                    <b-form-group
-                        class="row"
-                        label="Imagen Nueva"
+                        label="Imagen"
                         label-cols-md="3"
                         label-for="picture"
                     >
                         <vue-dropzone
-                            id="update-picture"
+                            id="picture"
                             ref="dropzone_picture"
                             :options="dropzoneOptions"
                             @vdropzone-max-files-exceeded="deletePicture"
@@ -74,7 +61,7 @@
                                     Arrastra y suelta para subir contenido!
                                 </h3>
                                 <div class="subtitle">
-                                    ...o da click para seleccionar un archivo de
+                                    ...o da click para seleccionar un arricho de
                                     tu computadora
                                 </div>
                             </div>
@@ -88,13 +75,13 @@
                         <b-col col sm="6" md="4" offset-md="0">
                             <b-button
                                 variant="outline-primary"
-                                @click="resetUpdate"
-                                >Cerrar</b-button
+                                @click="resetRegister"
+                                >Limpiar</b-button
                             >
                         </b-col>
                         <b-col col sm="6" md="4" offset-md="1">
-                            <b-button variant="warning" @click="updateMembresia"
-                                >Modificar</b-button
+                            <b-button variant="warning" @click="createTrofeo"
+                                >Registrar</b-button
                             >
                         </b-col>
                     </b-row>
@@ -109,19 +96,18 @@ import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
 export default {
-    props: {
-        initialMembresia: Object,
-    },
     data() {
         return {
-            membresia: { ...this.initialMembresia },
+            busy: false,
+            newTrofeo: {},
+            trofeos: [],
             dropzoneOptions: {
-                url: "/api/categories/" + this.initialMembresia.id,
+                url: "/api/trofeos",
                 thumbnailWidth: 150,
                 acceptedFiles: "image/*",
                 addRemoveLinks: true,
                 autoProcessQueue: false,
-                paramName: "image",
+                paramName: "imagen",
                 maxFiles: 1,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -135,56 +121,30 @@ export default {
     },
     methods: {
         sendingEvent(file, xhr, formData) {
-            Object.keys(this.membresia).forEach((key) => {
-                formData.append(key, this.membresia[key]);
+            console.log(this.newTrofeo);
+            Object.keys(this.newTrofeo).forEach((key) => {
+                formData.append(key, this.newTrofeo[key]);
             });
-            formData.append("_method", "PUT");
         },
         deletePicture(file) {
             this.$refs.dropzone_picture.removeFile(file);
         },
-        sendSuccess(file, response) {
-            this.membresia = response.data;
-            this.$refs.dropzone_picture.removeAllFiles();
-            this.$swal.fire("Exito!", "Cambio exitoso", "success").then(() => {
-                this.updateSuccess();
-            });
+        sendSuccess() {
+            this.registrationSuccessful();
+            this.$swal.fire("Exito!", "Registro exitoso", "success");
         },
-        updateMembresia() {
-            if (this.$refs.dropzone_picture.dropzone.files.length > 0) {
-                this.$refs.dropzone_picture.processQueue();
-            } else {
-                this.$http({
-                    method: "PUT",
-                    url: "/api/categories/" + this.membresia.id,
-                    data: {
-                        nombre: this.membresia.nombre,
-                        precio: this.membresia.precio,
-                        duracion: this.membresia.duracion
-                    },
-                })
-                    .then((response) => {
-                        this.membresia = response.data.data;
-                        this.$swal
-                            .fire("Exito!", "Cambio exitoso", "success")
-                            .then(() => {
-                                this.updateSuccess();
-                            });
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$swal.fire("Error!", "Cambio fallido", "error");
-                    });
-            }
+        createTrofeo() {
+            this.$refs.dropzone_picture.processQueue();
         },
         sendError() {
-            this.$swal.fire("Error!", "Cambio fallido", "error");
+            this.$swal.fire("Error!", "Registro fallido", "error");
         },
-        resetUpdate() {
-            this.$emit("resetUpdate");
+        resetRegister() {
+            this.$emit("resetRegister");
         },
-        updateSuccess() {
-            this.$emit("updateSuccess");
+        registrationSuccessful() {
+            this.$emit("registrationSuccessful");
+            this.resetRegister();
         },
     },
 };
@@ -206,9 +166,5 @@ export default {
 .subtitle {
     color: #314b5f;
     font-size: medium;
-}
-
-img {
-    max-width: 200px;
 }
 </style>

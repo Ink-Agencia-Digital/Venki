@@ -19,7 +19,7 @@ class CourseController extends ApiController
      */
     public function index()
     {
-        return $this->collectionResponse(CourseResource::collection($this->getModel(new Course, ['categories'])));
+        return $this->collectionResponse(CourseResource::collection($this->getModel(new Course, ['categories','examen'])));
     }
 
     /**

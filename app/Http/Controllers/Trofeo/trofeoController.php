@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Membresias;
+namespace App\Http\Controllers\Trofeo;
 
 use Illuminate\Http\Request;
-use App\membresia;
+use App\trofeo;
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Resources\MembresiaResource;
-use App\Http\Requests\StoreMembresiaRequest;
-use App\Http\Requests\UpdateMembresiaRequest;
+use App\Http\Resources\TrofeoResource;
+use App\Http\Requests\StoreTrofeoRequest;
+use App\Http\Requests\UpdateTrofeoRequest;
 use Illuminate\Support\Facades\Storage;
 
-class MembresiasController extends ApiController
+class trofeoController extends ApiController
 {
-   /**
+    //
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return $this->collectionResponse(MembresiaResource::collection($this->getModel(new membresia)));
+        return $this->collectionResponse(TrofeoResource::collection($this->getModel(new trofeo)));
     }
 
     /**
@@ -37,18 +38,18 @@ class MembresiasController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreMembresiaRequest $request)
+    public function store(StoreTrofeoRequest $request)
     {
-        $membresia = new membresia;
-        $membresia->fill($request->all());
+        $trofeo = new trofeo;
+        $trofeo->fill($request->all());
 
         if ($request->hasFile('imagen')) {
-            $membresia->imagen = $request->imagen->store('images');
+            $trofeo->imagen = $request->imagen->store('images');
         }
-        $membresia->saveOrFail();
+        $trofeo->saveOrFail();
 
         return $this->api_success([
-            'data' => new MembresiaResource($membresia),
+            'data' => new trofeoResource($trofeo),
             'message' => __('pages.responses.created'),
             'code' => 201
         ], 201);
@@ -57,12 +58,12 @@ class MembresiasController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Membresia  $membresia
+     * @param  \App\trofeo  $trofeo
      * @return \Illuminate\Http\Response
      */
-    public function show(Membresia $membresia)
+    public function show(trofeo $trofeo)
     {
-        return $this->singleResponse(new MembresiaResource($membresia));
+        return $this->singleResponse(new trofeoResource($trofeo));
     }
 
     /**
@@ -71,7 +72,7 @@ class MembresiasController extends ApiController
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Membresia $category)
+    public function edit(trofeo $category)
     {
         //
     }
@@ -80,37 +81,35 @@ class MembresiasController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Membresia  $category
+     * @param  \App\trofeo  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateMembresiaRequest $request, Membresia $membresia)
+    public function update(UpdatetrofeoRequest $request, trofeo $trofeo)
     {
+        if ($request->has("rangoini")) {
+            $trofeo->rangoini = $request->rangoini;
+        }
+        if ($request->has("rangofin")) {
+            $trofeo->rangofin = $request->rangofin;
+        }
         if ($request->has("nombre")) {
-            $membresia->nombre = $request->nombre;
-        }
-        if ($request->has("precio")) {
-            $membresia->precio = $request->precio;
-        }
-        if ($request->has("duracion")) {
-            $membresia->duracion = $request->duracion;
+            $trofeo->nombre = $request->nombre;
         }
         if ($request->has("imagen")) {
-            Storage::delete($membresia->imagen);
-            $membresia->imagen = $request->imagen->store('images');
+            Storage::delete($trofeo->imagen);
+            $trofeo->imagen = $request->imagen->store('images');
         }
-
-
-        if (!$membresia->isDirty()) {
+        if (!$trofeo->isDirty()) {
             return $this->errorResponse(
                 'Se debe especificar al menos un valor diferente para actualizar',
                 422
             );
         }
 
-        $membresia->saveOrFail();
+        $trofeo->saveOrFail();
 
         return $this->api_success([
-            'data'      =>  new MembresiaResource($membresia),
+            'data'      =>  new trofeoResource($trofeo),
             'message'   => __('pages.responses.updated'),
             'code'      =>  201
         ], 201);
@@ -122,9 +121,9 @@ class MembresiasController extends ApiController
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Membresia $membresia)
+    public function destroy(trofeo $trofeo)
     {
-        $membresia->delete();
-        return $this->singleResponse(new MembresiaResource($membresia), 200);
+        $trofeo->delete();
+        return $this->singleResponse(new trofeoResource($trofeo), 200);
     }
 }

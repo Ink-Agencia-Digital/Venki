@@ -114,13 +114,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Course::class, 'users_courses')->withPivot(['progress', 'complete']);
     }
-    public function lessons()
-    {
-        return $this->belongsToMany(Lessons::class,'users_courses_lessons');
-    }
+    
     public function lessonscourses()
     {
-        return $this->belongsToMany(Course::class,'users_courses_lessons');
+        return $this->hasMany(user_course_lesson::class,'id_user');
     }
     public function scores()
     {
@@ -203,5 +200,10 @@ class User extends Authenticatable
     public function quizzes()
     {
         return $this->hasMany(quiz::class,'id_user');
+    }
+
+    public function respuestas_examenes()
+    {
+        return $this->hasMany(respuesta_examen::class,'id_user');
     }
 }

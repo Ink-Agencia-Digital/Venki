@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\user_course_lesson;
@@ -19,14 +19,16 @@ class UserCourseLessonController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user, Course $course)
+    public function index($iduser, $idcourse)
     {
-       /* $usercourse=user_course_lesson::join("users","users_courses_lessons.id_user"="users.id")
-                    ->join("courses","users_courses_lessons.id_course"="courses.id")
-                    ->join("lessons","users_courses_lessons.id_lesson"="lessons.id")
-                    ->where("users_courses_lessons.id_user"=$user->id and "users_courses_lessons.id_course"=$course->id)
-                    ->get();*/
-        
+        $lessons = user_course_lesson::join('users','users.id','=','users_courses_lessons.id_user')
+                    ->join('courses','courses.id','=','users_courses_lessons.id_course')
+                    ->join('lessons','lessons.id','=','users_courses_lessons.id_lesson')
+                    ->where('id_user',$iduser)->where('id_course',$idcourse)->get();
+        //return $this->collectionResponse(UserCourseLessonResource::collection($this->getModel(new user_course_lesson,[],$usercourse)));
+        return response()->json([
+            'data'=>$lessons
+        ]);
     }
 
     /**

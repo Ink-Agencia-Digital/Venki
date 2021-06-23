@@ -1,42 +1,43 @@
 <template>
-    <panel ref="panelUpdate" title="Modificación de membresias">
+    <panel ref="panelUpdate" title="Modificación de trofeos">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
                     <b-form-group
                         class="row"
-                        label="Nombre"
+                        label="Rango Inicial"
                         label-cols-md="3"
-                        label-for="update-name"
+                        label-for="update-rangoini"
                     >
                         <b-form-input
-                            id="update-name"
-                            v-model="membresia.nombre"
+                            id="update-rangoini"
+                            v-model="trofeo.rangoini"
+                            type="number"
                             required
                         ></b-form-input>
                     </b-form-group>
                     <b-form-group
                         class="row"
-                        label="Precio"
+                        label="Rango Final"
                         label-cols-md="3"
-                        label-for="update-precio"
+                        label-for="update-rangofin"
                     >
                         <b-form-input
-                            id="update-precio"
+                            id="update-rangofin"
                             type="number"
-                            v-model="membresia.precio"
+                            v-model="trofeo.rangofin"
                         ></b-form-input>
                     </b-form-group>
                     <b-form-group
                         class="row"
-                        label="Duración"
+                        label="Nombre"
                         label-cols-md="3"
-                        label-for="update-duracion"
+                        label-for="update-nombre"
                     >
                         <b-form-input
-                            id="update-duracion"
-                            type="number"
-                            v-model="membresia.duracion"
+                            id="update-nombre"
+                            type="text"
+                            v-model="trofeo.nombre"
                         ></b-form-input>
                     </b-form-group>
                     <b-form-group
@@ -49,7 +50,7 @@
                             <img
                                 class="img-category"
                                 loading="lazy"
-                                :src="'/' + membresia.imagen"
+                                :src="'/' + trofeo.imagen"
                             />
                         </div>
                     </b-form-group>
@@ -93,7 +94,7 @@
                             >
                         </b-col>
                         <b-col col sm="6" md="4" offset-md="1">
-                            <b-button variant="warning" @click="updateMembresia"
+                            <b-button variant="warning" @click="updateTrofeo"
                                 >Modificar</b-button
                             >
                         </b-col>
@@ -110,13 +111,13 @@ import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
 export default {
     props: {
-        initialMembresia: Object,
+        initialTrofeo: Object,
     },
     data() {
         return {
-            membresia: { ...this.initialMembresia },
+            trofeo: { ...this.initialTrofeo },
             dropzoneOptions: {
-                url: "/api/categories/" + this.initialMembresia.id,
+                url: "/api/trofeos/" + this.initialTrofeo.id,
                 thumbnailWidth: 150,
                 acceptedFiles: "image/*",
                 addRemoveLinks: true,
@@ -135,8 +136,8 @@ export default {
     },
     methods: {
         sendingEvent(file, xhr, formData) {
-            Object.keys(this.membresia).forEach((key) => {
-                formData.append(key, this.membresia[key]);
+            Object.keys(this.trofeo).forEach((key) => {
+                formData.append(key, this.trofeo[key]);
             });
             formData.append("_method", "PUT");
         },
@@ -144,27 +145,27 @@ export default {
             this.$refs.dropzone_picture.removeFile(file);
         },
         sendSuccess(file, response) {
-            this.membresia = response.data;
+            this.trofeo = response.data;
             this.$refs.dropzone_picture.removeAllFiles();
             this.$swal.fire("Exito!", "Cambio exitoso", "success").then(() => {
                 this.updateSuccess();
             });
         },
-        updateMembresia() {
+        updateTrofeo() {
             if (this.$refs.dropzone_picture.dropzone.files.length > 0) {
                 this.$refs.dropzone_picture.processQueue();
             } else {
                 this.$http({
                     method: "PUT",
-                    url: "/api/categories/" + this.membresia.id,
+                    url: "/api/trofeos/" + this.trofeo.id,
                     data: {
-                        nombre: this.membresia.nombre,
-                        precio: this.membresia.precio,
-                        duracion: this.membresia.duracion
+                        rangoini: this.trofeo.rangoini,
+                        rangofin: this.trofeo.rangofin,
+                        nombre: this.trofeo.nombre
                     },
                 })
                     .then((response) => {
-                        this.membresia = response.data.data;
+                        this.trofeo = response.data.data;
                         this.$swal
                             .fire("Exito!", "Cambio exitoso", "success")
                             .then(() => {

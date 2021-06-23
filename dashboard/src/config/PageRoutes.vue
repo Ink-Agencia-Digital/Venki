@@ -191,7 +191,32 @@ const routes = [
         meta: {
             requiresAuth: true,
         },
+    },
+    {
+        path: "/examen",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Examen.vue").then(
+                (examen) => {
+                    resolve(examen.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/trofeos",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Trofeo.vue").then(
+                (trofeo) => {
+                    resolve(trofeo.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
     }
+
 ];
 
 export default routes;
