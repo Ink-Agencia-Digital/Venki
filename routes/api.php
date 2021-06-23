@@ -160,12 +160,12 @@ Route::middleware('auth:api')->group(function () {
     /**
      * Examen
      */
-    Route::resource('examen','examen\examenController',['except'=>['create','edit']]);
-    Route::resource('preguntaexamen','examen\preguntaexamenController',['except'=>['create','edit']]);
-    Route::get('examen/{idexamen}/preguntas','examen\examenpreguntasController@index');
-    Route::get('examen/{idcourse}/course','examen\examenController@index');
-    Route::post('respuesta/examen','examen\respuestaExamenController@store');
-    Route::get('respuestas/user/{iduser}/examen/{idexamen}','examen\respuestaExamenController@index');
+    Route::resource('examen','Examen\examenController',['except'=>['create','edit']]);
+    Route::resource('preguntaexamen','Examen\preguntaexamenController',['except'=>['create','edit']]);
+    Route::get('examen/{idexamen}/preguntas','Examen\examenpreguntasController@index');
+    Route::get('examen/{idcourse}/course','Examen\examenController@index');
+    Route::post('respuesta/examen','Examen\respuestaExamenController@store');
+    Route::get('respuestas/user/{iduser}/examen/{idexamen}','Examen\respuestaExamenController@index');
     /**
      * Trofeos
      */
