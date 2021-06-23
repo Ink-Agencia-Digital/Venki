@@ -33,7 +33,8 @@ Route::middleware('auth:api')->group(function () {
      */
     Route::resource('users', 'User\UserController', ['except' => ['create', 'edit', 'store']]);
     Route::resource('users.courses', 'User\UserCourseController', ['except' => ['create', 'edit']]);
-    //Route::resource('users.courses.lesson', 'User\UserCourseLessonController', ['expcept' => ['create', 'edit']]);
+    Route::get('users/{iduser}/course/{idcourse}','User\UserCourseLessonController@index');
+    Route::post('users/course/lesson','User\UserCourseLessonController@store');
     Route::resource('users.scores', 'User\UserScoreController', ['except' => ['create', 'edit']]);
     Route::resource('users.devices', 'User\UserDeviceController', ['except' => ['create', 'edit']]);
     Route::resource('users.chats', 'User\UserChatController', ['except' => ['create', 'edit']]);
@@ -156,4 +157,17 @@ Route::middleware('auth:api')->group(function () {
      */
     Route::resource('quiz','quiz\quizController',['except' => ['create', 'edit']]);
     Route::resource('user.quiz','quiz\quizuserController',['only'=>['index']]);
+    /**
+     * Examen
+     */
+    Route::resource('examen','examen\examenController',['except'=>['create','edit']]);
+    Route::resource('preguntaexamen','examen\preguntaexamenController',['except'=>['create','edit']]);
+    Route::get('examen/{idexamen}/preguntas','examen\examenpreguntasController@index');
+    Route::get('examen/{idcourse}/course','examen\examenController@index');
+    Route::post('respuesta/examen','examen\respuestaExamenController@store');
+    Route::get('respuestas/user/{iduser}/examen/{idexamen}','examen\respuestaExamenController@index');
+    /**
+     * Trofeos
+     */
+    Route::resource('trofeos','Trofeo\trofeoController',['except'=>['create','edit']]);
 });
