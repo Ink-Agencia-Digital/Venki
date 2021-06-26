@@ -16,7 +16,9 @@ const sidebarMenu = [
     { path: "/replies", icon: "fa fa-box", title: "Resul. Diag." },
     { path:"/quiz", icon:"fa fa-folder", title:"Respuestas del Quiz"},
     { path:"/examen", icon:"fa fa-folder", title:"Creación de Examen"},
-    { path:"/trofeos", icon:"fa fa-trophy", title:"Creación de Trofeos"}
+    { path:"/respuesta", icon:"fa fa-folder", title:"Calificación de Examen"},
+    { path:"/trofeos", icon:"fa fa-trophy", title:"Creación de Trofeos"},
+    { path:"/resultado", icon:"fa fa-box",title:"Consulta Resultados Examen"}
 ];
 
 export default sidebarMenu;

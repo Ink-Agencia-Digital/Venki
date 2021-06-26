@@ -15,7 +15,7 @@
                             v-model="selectedCourse"
                             :placeholder="'Digite nombre del curso'"
                             id="courses"
-                            :clear-search-on-select="false"
+                            :clear-search-on-select="true"
                             :filterable="false"
                             @input="selectCourse"
                             @search="searchCourse"
@@ -153,7 +153,6 @@ export default {
             }, 300);
         },
         selectCourse(course) {
-            console.log('curso: '+course.id);
             this.selectedCourse = course.id;
             this.newExamen.id_course=this.selectedCourse;
             if(course.examen.id!=null){
@@ -161,7 +160,6 @@ export default {
                 this.newPregunta.id_examen=course.examen.id;
                 this.nuevoexamen=false;
                 this.idexamen=course.examen.id;
-                console.log(course.examen.id);
             }
         },
         sendSuccess() {

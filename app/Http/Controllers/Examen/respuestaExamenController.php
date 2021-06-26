@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Examen;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
@@ -9,6 +9,9 @@ use App\Examen;
 use App\Http\Resources\respuestaExamenResource;
 use App\Http\Requests\StorerespuestaExamenRequest;
 use App\Http\Requests\UpdaterespuestaExamenRequest;
+use App\pregunta_examen;
+use App\resultado_examen;
+use App\trofeo;
 
 class respuestaExamenController extends ApiController
 {
@@ -18,9 +21,12 @@ class respuestaExamenController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($iduser,$idexamen)
     {
-        
+        $respuestas = respuesta_examen::where('id_user','=',$iduser)->where('id_examen','=',$idexamen)->get();
+        return response()->json([
+            'data'=>$respuestas
+        ]);
     }
 
     /**
@@ -90,25 +96,33 @@ class respuestaExamenController extends ApiController
      */
     public function update(UpdaterespuestaExamenRequest $request, respuesta_examen $respuesta)
     {
-        
-        if ($request->has("correcto")) {
-            $respuesta->correcto = $request->correcto;
+        $valorcorrecto =(float)0;
+        $idexamen = null;
+        $iduser=null;
+        foreach($request->all() as $item)
+        {
+            $idexamen =$item['id_examen'];
+            $iduser = $item['id_user'];
+            $valorcorrecto +=(float)$item['valor'];
+            $respuesta=respuesta_examen::where('id','=',$item['id'])->update(['correcto'=>1]);
         }
-
-        /*if (!$membresia->isDirty()) {
-            return $this->errorResponse(
-                'Se debe especificar al menos un valor diferente para actualizar',
-                422
-            );
-        }*/
-
-        $respuesta->saveOrFail();
-
-        return $this->api_success([
-            'data'      =>  new respuestaExamenResource($respuesta),
-            'message'   => __('pages.responses.updated'),
-            'code'      =>  201
-        ], 201);
+        $valorexamen = pregunta_examen::where('id_examen','=',$idexamen)->get();
+        $totalexamen=(float)0;
+        foreach($valorexamen->all() as $pregunta)
+        {
+            $totalexamen+=(float)$pregunta['valor'];
+        }
+        $nota = ($valorcorrecto/(float)$totalexamen)*100;
+        $trofeo = trofeo::select('id')->where('rangoini','<=',$nota)->where('rangofin','>=',$nota)->get();
+        $resultadoexamen = new resultado_examen();
+        $resultadoexamen->id_user=$iduser;
+        $resultadoexamen->id_examen=$idexamen;
+        $resultadoexamen->id_trofeo=$trofeo[0]->id;
+        $resultadoexamen->nota=$nota;
+        $resultadoexamen->save(); 
+        return response()->json([
+            'data'=>$resultadoexamen
+        ]) ;
     }
 
     /**

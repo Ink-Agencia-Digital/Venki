@@ -14,4 +14,9 @@ class trofeo extends Model
         'nombre',
         'imagen'
     ];
+
+    public function resultados()
+    {
+        return $this->hasMany(resultado_examen::class,'id_trofeo');
+    }
 }

@@ -25,4 +25,9 @@ class examen extends Model
     {
         return $this->hasMany(respuesta_examen::class,'id_examen');
     }
+
+    public function resultados_examen()
+    {
+        return $this->hasMany(resultado_examen::class,'id_examen');
+    }
 }

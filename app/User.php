@@ -206,4 +206,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(respuesta_examen::class,'id_user');
     }
+
+    public function resultados_examen()
+    {
+        return $this->hasMany(resultado_examen::class,'id_user');
+    }
 }

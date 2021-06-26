@@ -205,11 +205,35 @@ const routes = [
         },
     },
     {
+        path: "/respuesta",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Respuestas.vue").then(
+                (respuesta) => {
+                    resolve(respuesta.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
         path: "/trofeos",
         component: (resolve) =>
             import(/* webpackChunkName: "pages" */ "@/pages/Trofeo.vue").then(
                 (trofeo) => {
                     resolve(trofeo.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/resultado",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Resultados.vue").then(
+                (resultado) => {
+                    resolve(resultado.default);
                 }
             ),
         meta: {
