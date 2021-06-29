@@ -18,7 +18,8 @@ const sidebarMenu = [
     { path:"/examen", icon:"fa fa-folder", title:"Creación de Examen"},
     { path:"/respuesta", icon:"fa fa-folder", title:"Calificación de Examen"},
     { path:"/trofeos", icon:"fa fa-trophy", title:"Creación de Trofeos"},
-    { path:"/resultado", icon:"fa fa-box",title:"Consulta Resultados Examen"}
+    { path:"/resultado", icon:"fa fa-box",title:"Consulta Resultados Examen"},
+    { path:"/notificaciones", icon:"fa fa-folder", title:"Notificaciones Push"}
 ];
 
 export default sidebarMenu;

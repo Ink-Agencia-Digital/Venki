@@ -239,6 +239,18 @@ const routes = [
         meta: {
             requiresAuth: true,
         },
+    },
+    {
+        path: "/notificaciones",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Notification.vue").then(
+                (notificacion) => {
+                    resolve(notificacion.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
     }
 
 ];

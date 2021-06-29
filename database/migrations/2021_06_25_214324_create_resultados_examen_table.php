@@ -19,7 +19,7 @@ class CreateResultadosExamenTable extends Migration
             $table->unsignedBigInteger('id_examen');
             $table->unsignedBigInteger('id_trofeo');
             $table->decimal('nota',8,2);
-            $table->foreign('id_user')->references('id')->on('Users');
+            $table->foreign('id_user')->references('id')->on('users');
             $table->foreign('id_examen')->references('id')->on('examenes');
             $table->foreign('id_trofeo')->references('id')->on('trofeos');
             $table->timestamps();

@@ -172,4 +172,8 @@ Route::middleware('auth:api')->group(function () {
      * Trofeos
      */
     Route::resource('trofeos','Trofeo\trofeoController',['except'=>['create','edit']]);
+    /**
+     * Notifications push
+     */
+    Route::resource('notifications','Notification\notificationController',['except'=>['create','edit']]);
 });

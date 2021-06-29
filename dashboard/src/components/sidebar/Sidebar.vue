@@ -4,7 +4,7 @@
         <div
             id="sidebar"
             class="sidebar"
-            style="height:900px;overflow-y:scroll;"
+            style="height:775px;overflow-y:scroll;"
             :class="{
                 'sidebar-transparent': pageOptions.pageSidebarTransparent,
             }"
