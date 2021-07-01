@@ -26,6 +26,24 @@
                             v-model="newNotificacion.mensaje"
                         ></b-form-input>
                     </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Perfil"
+                        label-cols-md="3"
+                        label-for="notificacion-perfil"
+                    >
+                        <v-select
+                            label="name"
+                            :options="profiles"
+                            :placeholder="'Seleccione perfil'"
+                            id="profiles"
+                            :clear-search-on-select="false"
+                            :filterable="false"
+                            @input="selectProfile"
+                            @search="searchProfile"
+                            v-model="newNotificacion.id_profile"
+                        ></v-select>
+                    </b-form-group>
                 </b-col>
             </b-row>
             <b-row>
@@ -51,13 +69,16 @@
 </template>
 
 <script>
+let searchTimer = null;
 export default {
     data() {
         return {
             busy: false,
             newNotificacion: {},
             notificaciones: [],
+            profiles:[],
             loading: null,
+            selectedProfile:null
         };
     },
     components: {
@@ -100,6 +121,31 @@ export default {
         registrationSuccessful() {
             this.$emit("registrationSuccessful");
             this.resetRegister();
+        },
+        searchProfile(value, loading) {
+            loading(true);
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                this.$http({
+                    method: "GET",
+                    url: "/api/profiles?query=name|LIKE|%" + value + "%",
+                    
+                })
+                    .then((response) => {
+                        loading(false);
+                        this.profiles = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+            }, 300);
+        },
+        selectProfile(profile) {
+            this.selectedProfile = profile.id;
+            this.newNotificacion.id_profile = this.selectedProfile;
         },
     },
 };

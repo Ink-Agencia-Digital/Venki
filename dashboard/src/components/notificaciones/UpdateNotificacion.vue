@@ -26,6 +26,24 @@
                             v-model="notificacion.mensaje"
                         ></b-form-input>
                     </b-form-group>
+                     <b-form-group
+                        class="row"
+                        label="Perfil"
+                        label-cols-md="3"
+                        label-for="notificacion-perfil"
+                    >
+                        <v-select
+                            label="name"
+                            :options="profiles"
+                            :placeholder="'Seleccione perfil'"
+                            id="profiles"
+                            :clear-search-on-select="false"
+                            :filterable="false"
+                            @input="selectProfile"
+                            @search="searchProfile"
+                            v-model="notificacion.id_profile"
+                        ></v-select>
+                    </b-form-group>
                 </b-col>
             </b-row>
             <b-row>
@@ -51,6 +69,7 @@
 </template>
 
 <script>
+let searchTimer = null;
 export default {
     props: {
         initialNotificacion: Object,
@@ -59,6 +78,8 @@ export default {
         return {
             notificacion: { ...this.initialNotificacion },
             loading: null,
+            profiles:[],
+            selectedProfile:null
         };
     },
     components: {
@@ -83,7 +104,8 @@ export default {
                 url: "/api/notifications/" + this.notificacion.id,
                 data: {
                     titulo: this.notificacion.titulo,
-                    mensaje: this.notificacion.mensaje
+                    mensaje: this.notificacion.mensaje,
+                    id_profile:this.notificacion.id_profile
                 },
             })
                 .then((response) => {
@@ -108,6 +130,32 @@ export default {
         },
         updateSuccess() {
             this.$emit("updateSuccess");
+        },
+        searchProfile(value, loading) {
+            loading(true);
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                this.$http({
+                    method: "GET",
+                    url: "/api/profiles?query=name|LIKE|%" + value + "%",
+                    
+                })
+                    .then((response) => {
+                        loading(false);
+                        this.profiles = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+            }, 300);
+        },
+        selectProfile(profile) {
+            console.log(profile);
+            this.selectedProfile = profile.id;
+            this.notificacion.id_profile = this.selectedProfile;
         },
     },
 };

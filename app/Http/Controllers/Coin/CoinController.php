@@ -17,7 +17,7 @@ class CoinController extends ApiController
      */
     public function index()
     {
-        //
+        
     }
 
     /**

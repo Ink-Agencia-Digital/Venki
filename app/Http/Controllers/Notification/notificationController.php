@@ -13,7 +13,10 @@ class notificationController extends ApiController
 {
     public function index()
     {
-        return $this->collectionResponse(NotificationResource::collection($this->getModel(new notification)));
+        $notifications = notification::select('notifications.id','notifications.titulo','notifications.mensaje','notifications.id_profile','profiles.name')->join('profiles','profiles.id','=','notifications.id_profile')->get();
+        return response()->json([
+            'data'=>$notifications
+        ]);
     }
 
     /**
@@ -73,15 +76,18 @@ class notificationController extends ApiController
      * @param  \App\notification  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateNotificationRequest $request, notification $notification)
+    public function update(Request $request, $id)
     {
+        $notification = notification::findOrFail($id);
         if ($request->has("titulo")) {
             $notification->titulo = $request->titulo;
         }
         if ($request->has("mensaje")) {
             $notification->mensaje = $request->mensaje;
         }
-
+        if($request->has("id_profile")){
+            $notification->id_profile = $request->id_profile;
+        }
         if (!$notification->isDirty()) {
             return $this->errorResponse(
                 'Se debe especificar al menos un valor diferente para actualizar',
@@ -91,11 +97,16 @@ class notificationController extends ApiController
 
         $notification->saveOrFail();
 
-        return $this->api_success([
+        /*return $this->api_success([
             'data'      =>  new NotificationResource($notification),
             'message'   => __('pages.responses.updated'),
             'code'      =>  201
-        ], 201);
+        ], 201);*/
+        return response()->json([
+            'data'=>$notification
+
+        ]);
+
     }
 
     /**

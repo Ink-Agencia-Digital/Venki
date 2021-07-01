@@ -164,6 +164,7 @@ export default {
             });
         },
         selectMembresia(membresia) {
+            console.log(membresia);
             this.$emit("selectMembresia", membresia);
         },
         selectPhoto(imagen) {

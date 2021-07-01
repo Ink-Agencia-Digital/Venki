@@ -116,7 +116,7 @@ export default {
         return {
             membresia: { ...this.initialMembresia },
             dropzoneOptions: {
-                url: "/api/categories/" + this.initialMembresia.id,
+                url: "/api/membresias/" + this.initialMembresia.id,
                 thumbnailWidth: 150,
                 acceptedFiles: "image/*",
                 addRemoveLinks: true,
@@ -156,7 +156,7 @@ export default {
             } else {
                 this.$http({
                     method: "PUT",
-                    url: "/api/categories/" + this.membresia.id,
+                    url: "/api/membresias/" + this.membresia.id,
                     data: {
                         nombre: this.membresia.nombre,
                         precio: this.membresia.precio,

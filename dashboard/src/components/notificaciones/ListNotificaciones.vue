@@ -71,6 +71,10 @@ export default {
                     field: "mensaje",
                 },
                 {
+                    label:"Perfil",
+                    field:"name"
+                },
+                {
                     label: "Acciones",
                     field: "actions",
                 },
@@ -129,6 +133,7 @@ export default {
             });
         },
         selectNotificacion(notificacion) {
+            console.log(notificacion);
             this.$emit("selectNotificacion", notificacion);
         },
         loadNotificaciones() {
@@ -142,8 +147,9 @@ export default {
                     this.page,
             })
                 .then((response) => {
+                    console.log(response);
                     this.notificaciones = response.data.data;
-                    this.totalRecords = response.data.meta.total;
+                    //this.totalRecords = response.data.meta.total;
                     loader.hide();
                 })
                 .catch(() => {

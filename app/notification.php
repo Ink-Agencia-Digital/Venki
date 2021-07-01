@@ -10,7 +10,11 @@ class notification extends Model
     protected $table='notifications';
     protected $fillable=[
         'titulo',
-        'mensaje'
-
+        'mensaje',
+        'id_profile'
     ];
+
+    public function profiles(){
+        return $this->belongsTo(Profile::class);
+    }
 }

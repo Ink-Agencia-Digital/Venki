@@ -28,4 +28,9 @@ class Profile extends Model
     {
         return $this->hasMany(Description::class);
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(notification::class,'id_profile');
+    }
 }
