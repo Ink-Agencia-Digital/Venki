@@ -12,6 +12,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        
+        DB::table('users')->insert([
+            'profile_id'=>1,
+            'name'=>'Super',
+            'lastname'=>'Admin',
+            'email'=>'Superadmin@gmail.com',
+            'password'=>bcrypt('admin'),
+        ]);
+        
+
         /*DB::table('oauth_clients')->truncate();
 
         DB::table('oauth_clients')->insert([
@@ -29,7 +39,7 @@ class DatabaseSeeder extends Seeder
         ]);*/
 
         // DB::table('questions')->truncate();
-        DB::table('questions')->insert([
+        /*DB::table('questions')->insert([
             'question' => '¿Cuales de los siguientes son los grupos de alimentos?',
             'survey_id' => 1,
             'category_id' => 7,
@@ -247,7 +257,7 @@ class DatabaseSeeder extends Seeder
             'question' => '¿Qué puede ocurrir  si la alimentación  es insuficiente?',
             'survey_id' => 3,
             'category_id' => 7,
-        ]);
+        ]);*/
 
 
     }
