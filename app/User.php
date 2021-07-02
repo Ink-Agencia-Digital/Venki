@@ -47,7 +47,30 @@ class User extends Authenticatable
         'city',
         'confirmed',
         'confirmation_code',
-        'avatar',
+        'gender',
+        'register_social',
+        'placeOfBirth',
+        'height',
+        'weight',
+        'dominantFoot',
+        'dominantHand',
+        'graduationYear',
+        'highSchoolAverage',
+        'gpa',
+        'sat',
+        'toef',
+        'mainSport',
+        'playingPosition',
+        'events',
+        'time',
+        'records',
+        'route',
+        'rankings',
+        'recognitions',
+        'press',
+        'differences',
+        'competencies',
+        'goals'
     ];
 
     /**
@@ -91,7 +114,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Course::class, 'users_courses')->withPivot(['progress', 'complete']);
     }
-
+    
+    public function lessonscourses()
+    {
+        return $this->hasMany(user_course_lesson::class,'id_user');
+    }
     public function scores()
     {
         return $this->hasMany(Score::class);
@@ -147,11 +174,41 @@ class User extends Authenticatable
         return $this->hasMany(Achievement::class);
     }
 
+    public function feelings()
+    {
+        return $this->hasMany(Feeling::class);
+    }
+
+    public function coins()
+    {
+        return $this->hasMany(Coin::class);
+    }
+
+    public function competences()
+    {
+        return $this->hasMany(Competence::class);
+    }
+
     /** Overrided Functions */
 
 
     public function sendEmailVerificationNotification()
     {
         $this->notify(new UserRegistration);
+    }
+
+    public function quizzes()
+    {
+        return $this->hasMany(quiz::class,'id_user');
+    }
+
+    public function respuestas_examenes()
+    {
+        return $this->hasMany(respuesta_examen::class,'id_user');
+    }
+
+    public function resultados_examen()
+    {
+        return $this->hasMany(resultado_examen::class,'id_user');
     }
 }

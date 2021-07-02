@@ -3,6 +3,7 @@
 const routes = [
     {
         path: "/",
+        name: "login",
         component: (resolve) =>
             import(/* webpackChunkName: "pages" */ "@/pages/Login.vue").then(
                 (Login) => {
@@ -12,6 +13,7 @@ const routes = [
     },
     {
         path: "/home",
+        name: "home",
         component: (resolve) =>
             import(/* webpackChunkName: "pages" */ "@/pages/Home.vue").then(
                 (Home) => {
@@ -19,8 +21,8 @@ const routes = [
                 }
             ),
         meta: {
-            requiresAuth: true,
-        }
+          requiresAuth: true,
+        },
     },
     {
         path: "/categories",
@@ -32,7 +34,7 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        }
+        },
     },
     {
         path: "/profiles",
@@ -44,7 +46,7 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        }
+        },
     },
     {
         path: "/courses",
@@ -56,7 +58,7 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        }
+        },
     },
     {
         path: "/lessons",
@@ -68,7 +70,7 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        }
+        },
     },
     {
         path: "/resource",
@@ -80,7 +82,7 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        }
+        },
     },
     {
         path: "/surveys",
@@ -92,7 +94,7 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        }
+        },
     },
     {
         path: "/questions",
@@ -104,7 +106,20 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        }
+        },
+    },
+    {
+        path: "/answers",
+        name: "Answer",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Answer.vue").then(
+                (Answer) => {
+                    resolve(Answer.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/replies",
@@ -116,7 +131,7 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        }
+        },
     },
     {
         path: "/users",
@@ -128,7 +143,7 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        }
+        },
     },
      {
         path: "/images",
@@ -140,7 +155,7 @@ const routes = [
             ),
          meta: {
              requiresAuth: true,
-         }
+         },
     },
     {
         path: "/activities",
@@ -152,8 +167,93 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        }
+        },
     },
+    {
+        path: "/membresias",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Membresia.vue").then(
+                (Membresia) => {
+                    resolve(Membresia.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/quiz",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Quiz.vue").then(
+                (quiz) => {
+                    resolve(quiz.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/examen",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Examen.vue").then(
+                (examen) => {
+                    resolve(examen.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/respuesta",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Respuestas.vue").then(
+                (respuesta) => {
+                    resolve(respuesta.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/trofeos",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Trofeo.vue").then(
+                (trofeo) => {
+                    resolve(trofeo.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/resultado",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Resultados.vue").then(
+                (resultado) => {
+                    resolve(resultado.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/notificaciones",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Notification.vue").then(
+                (notificacion) => {
+                    resolve(notificacion.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        },
+    }
+
 ];
 
 export default routes;

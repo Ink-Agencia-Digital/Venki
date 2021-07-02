@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Description;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
@@ -17,7 +18,7 @@ class ProfileController extends ApiController
      */
     public function index()
     {
-        return $this->collectionResponse(ProfileResource::collection($this->getModel(new Profile, [])));
+        return $this->collectionResponse(ProfileResource::collection($this->getModel(new Profile, ['descriptions'])));
     }
 
     /**
@@ -41,6 +42,16 @@ class ProfileController extends ApiController
         $profile = new Profile;
         $profile->fill($request->all());
         $profile->saveOrFail();
+
+        if ($request->has('descriptions')) {
+            foreach ($request->descriptions as $descrip) {
+                $description = new Description([
+                    'profile_id' => $profile->id,
+                    'name' => $descrip['name'],
+                ]);
+                $description->save();
+            }
+        }
 
         return $this->api_success([
             'data' => new ProfileResource($profile),

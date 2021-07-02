@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Question;
 
+use App\Answer;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\QuestionResource;
 use App\Profile;
@@ -40,16 +41,26 @@ class QuestionController extends ApiController
     {
         $question = new Question;
         $question->fill($request->all());
+        $question->saveOrFail();
 
         if ($request->has("profile_id")) {
             $survey =  Profile::findOrFail($request->profile_id)->surveys()->first();
             $question->survey_id = $survey->id;
         }
 
-        $question->saveOrFail();
+        if ($request->has('answers')) {
+            foreach ($request->answers as $answer) {
+                $answer = new  Answer([
+                    'answer' => $answer['answer'],
+                    'point' => $answer['point'],
+                    'question_id' => $question->id,
+                ]);
+                $answer->save();
+            }
+        }
 
         return $this->api_success([
-            'data' => new QuestionResource($question),
+            'data' => new QuestionResource($question->load(['answers'])),
             'message' => __('pages.responses.created'),
             'code' => 201
         ], 201);

@@ -23,4 +23,14 @@ class Profile extends Model
     {
         return $this->hasMany(Survey::class);
     }
+
+    public function descriptions()
+    {
+        return $this->hasMany(Description::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(notification::class,'id_profile');
+    }
 }

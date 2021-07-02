@@ -20,14 +20,6 @@ class CreateMessagesTable extends Migration
             $table->string('message');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
-            $table->foreign('chat_id')
-                ->references('id')
-                ->on('chats')
-                ->onDelete('cascade');
         });
     }
 

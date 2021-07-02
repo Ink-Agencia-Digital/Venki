@@ -46,9 +46,9 @@ class ResourceController extends ApiController
             $resource->audio = $request->audio->store('resources');
         }
 
-        if ($request->has('document')) {
+        /*if ($request->has('document')) {
             $resource->document = $request->document->store('resources');
-        }
+        }*/
 
         $resource->saveOrFail();
 

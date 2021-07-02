@@ -10,9 +10,9 @@
         <b-container>
             <b-row>
                 <b-col md="12">
-                    <ListUser
-                        ref="users-list"
-                    />
+                        <ListUser
+                            ref="users-list"
+                        />
                 </b-col>
             </b-row>
         </b-container>
@@ -20,12 +20,14 @@
 </template>
 
 <script>
+
 export default {
+
     components: {
         ListUser: (resolve) => {
             import(
                 /* webpackChunkName: "components" */ "@/components/users/ListUser.vue"
-            ).then((ListUser) => {
+                ).then((ListUser) => {
                 resolve(ListUser.default);
             });
         },
@@ -43,7 +45,7 @@ export default {
             this.updateKey++;
             this.selectedUser = { ...user };
         },
-       
+
     },
 };
 </script>

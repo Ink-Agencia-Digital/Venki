@@ -18,7 +18,7 @@ class SurveyQuestionController extends ApiController
      */
     public function index(Survey $survey)
     {
-        return $this->collectionResponse(QuestionResource::collection($this->getModel(new Question, [], $survey->questions())));
+        return $this->collectionResponse(QuestionResource::collection($this->getModel(new Question, ['answers'], $survey->questions())));
     }
 
     /**

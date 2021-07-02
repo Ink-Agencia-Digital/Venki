@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Api\ApiController;
-
-use Illuminate\Http\File;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\PostResource;
 use App\Post;
@@ -50,11 +50,12 @@ class PostController extends ApiController
 
             foreach ($request->medias as $file) {
                 $postMedia = new PostMedia;
-                $image = $file;
-                $image = str_replace('data:image/jpeg;base64,', '', $image);
+                $image_64 = $file['image'];
+                $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
+                $image = str_replace('data:image/jpeg;base64,', '', $image_64);
                 $image = str_replace(' ', '+', $image);
-                $imageName = Str::random(10) . '.jpeg';
-                Storage::disk('medias')->put($imageName, base64_decode($image));
+                $imageName = Str::random(10).'.'.$extension;
+                Storage::disk("medias")->put($imageName, base64_decode($image));
                 $postMedia->media =  $imageName;
                 $postMedia->post_id = $post->id;
                 $postMedia->save();
@@ -122,7 +123,6 @@ class PostController extends ApiController
             'message'   => __('pages.responses.updated'),
             'code'      =>  200
         ], 200);
-
     }
 
     /**
@@ -136,7 +136,7 @@ class PostController extends ApiController
         $post->delete();
         return $this->api_success([
             'data' => new PostResource($post),
-            'message' => __('pages.responses.created'),
+            'message' => __('pages.responses.deleted'),
             'code' => 201
         ], 201);
     }

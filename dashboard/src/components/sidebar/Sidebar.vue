@@ -4,14 +4,15 @@
         <div
             id="sidebar"
             class="sidebar"
+            style="height:775px;overflow-y:scroll;"
             :class="{
                 'sidebar-transparent': pageOptions.pageSidebarTransparent,
             }"
             @mouseover="inSidebarMinify"
             @mouseleave="outSidebarMinify"
         >
-            <!-- begin sidebar scrollbar -->
-            <vue-custom-scrollbar class="height-full">
+            <!-- begin sidebar scrollbar class="height-full" -->
+            <vue-custom-scrollbar class="height-full" :settings="settings">
                 <!-- begin sidebar nav -->
                 <sidebar-nav
                     ref="sidebarNav"
@@ -84,6 +85,11 @@ export default {
     },
     data() {
         return {
+            settings: {
+                suppressScrollY: true,
+                suppressScrollX: false,
+                wheelPropagation: true
+            },
             scrollTop: "",
             pageOptions: PageOptions,
             floatSubmenu: false,
@@ -213,3 +219,10 @@ export default {
     },
 };
 </script>
+<style >
+.scroll-area {
+  position: relative;
+  margin: auto;
+  height: 400px;
+}
+</style>

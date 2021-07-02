@@ -17,7 +17,7 @@ class ProfileQuestionController extends ApiController
      */
     public function index(Profile $profile)
     {
-        return $this->collectionResponse(QuestionResource::collection($this->getModel(new Question, ['category'], $profile->questions())));
+        return $this->collectionResponse(QuestionResource::collection($this->getModel(new Question, ['category', 'answers'], $profile->questions())));
     }
 
     /**

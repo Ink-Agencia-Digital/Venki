@@ -16,7 +16,6 @@ class Lesson extends Model
         'duration'
     ];
 
-
     /** Relationships */
 
     public function resources()
@@ -33,4 +32,10 @@ class Lesson extends Model
     {
         return $this->hasOne(Exam::class);
     }
+
+    public function usercourseslessons()
+    {
+        return $this->belongsToMany(user_course_lesson::class,'id_lesson');
+    }
+    
 }

@@ -18,15 +18,14 @@
                             No hay informacion disponible
                         </div>
                         <template slot="table-row" slot-scope="props">
+                            <span v-if="props.column.field.type === null">
+                                <div>es nulo</div>
+                            </span>
+                        </template>
+                        <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'actions'">
                                 <span>
                                     <div class="text-center">
-                                        <a
-                                            class="btn btn-grey"
-                                            @click="selectImage(props.row)"
-                                        >
-                                            <i class="fas fa-edit fa-fw"></i>
-                                        </a>
                                         <a
                                             class="btn btn-danger"
                                             @click="confirmDelete(props.row.id)"
@@ -93,6 +92,14 @@ export default {
                     field: "name",
                 },
                 {
+                    label: "Descripcion",
+                    field: "description",
+                },
+                {
+                    label: "Ubicación",
+                    field: this.type,
+                },
+                {
                     label: "Imagen",
                     field: "url",
                 },
@@ -121,6 +128,17 @@ export default {
         };
     },
     methods: {
+        type(images){
+            if (images.type === 0) {
+                return "Académico"
+            } else if (images.type === 1) {
+                return "Deportivo"
+            } else if (images.type === 2) {
+                return "Inicio"
+            } else if (images.type === null) {
+                return "Almacén"
+            }
+        },
         confirmDelete(image_id) {
             this.$swal({
                 title: "Está seguro?",
@@ -135,12 +153,12 @@ export default {
                         url: "/api/images/" + image_id,
                     })
                         .then(() => {
+                            loader.hide();
                             this.$swal({
                                 title: "Hecho!",
                                 icon: "success",
                             }).then(() => {
                                 this.loadImages();
-                                loader.hide();
                             });
                         })
                         .catch((error) => {

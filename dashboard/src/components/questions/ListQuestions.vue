@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Panel ref="panelList" title="Tabla de cursos">
+        <Panel ref="panelList" title="Tabla de preguntas">
             <b-container>
                 <b-row class="m-t-10 m-b-10">
                     <b-col md="10" offset-md="1">
@@ -22,42 +22,64 @@
                             ></v-select>
                         </b-form-group>
                     </b-col>
+                    <b-col md="10" offset-md="1">
+                        <b-form-group
+                            class="row"
+                            label="Categoria"
+                            label-cols-md="3"
+                            label-for="category-list"
+                        >
+                            <v-select
+                                label="name"
+                                :options="categories"
+                                :placeholder="'Digite nombre de la categoria'"
+                                id="category-list"
+                                :clear-search-on-select="false"
+                                :filterable="false"
+                                @input="selectCategory"
+                                @search="searchCategory"
+                            ></v-select>
+                        </b-form-group>
+                    </b-col>
                 </b-row>
                 <div class="table-responsive" v-if="selectedProfile">
-                    <vue-good-table
-                        mode="remote"
-                        :rows="questions"
-                        :columns="columns"
-                        :sort-options="sort"
-                        :pagination-options="pagination_options"
-                        :totalRows="totalRecords"
-                        @on-page-change="onPageChange"
-                        @on-per-page-change="onPerPageChange"
-                        styleClass="table table-bordered m-b-0"
-                    >
-                        <div slot="emptystate">
-                            No hay informacion disponible
-                        </div>
-                        <template slot="table-row" slot-scope="props">
-                            <span v-if="props.column.field == 'actions'">
-                                <span>
-                                    <div class="text-center">
-                                        <a
-                                            class="btn btn-danger"
-                                            @click="confirmDelete(props.row.id)"
-                                        >
-                                            <i
-                                                class="fas fa-trash-alt fa-fw"
-                                            ></i>
-                                        </a>
-                                    </div>
+                    <div class="table-responsive" v-if="selectedCategory">
+                        <vue-good-table
+                            mode="remote"
+                            :rows="questions"
+                            :columns="columns"
+                            styleClass="table table-bordered m-b-0"
+                        >
+                            <div slot="emptystate">
+                                No hay informacion disponible
+                            </div>
+                            <template slot="table-row" slot-scope="props">
+                                <span v-if="props.column.field == 'actions'">
+                                    <span>
+                                        <div class="text-center">
+                                            <a
+                                                class="btn btn-grey"
+                                                @click="selectQuestion(props.row)"
+                                            >
+                                                <i class="fas fa-edit fa-fw"></i>
+                                            </a>
+                                            <a
+                                                class="btn btn-danger"
+                                                @click="confirmDelete(props.row.id)"
+                                            >
+                                                <i
+                                                    class="fas fa-trash-alt fa-fw"
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </span>
                                 </span>
-                            </span>
-                            <span v-else>{{
-                                props.formattedRow[props.column.field]
-                            }}</span>
-                        </template>
-                    </vue-good-table>
+                                <span v-else>{{
+                                    props.formattedRow[props.column.field]
+                                }}</span>
+                            </template>
+                        </vue-good-table>
+                    </div>
                 </div>
             </b-container>
         </Panel>
@@ -69,9 +91,6 @@ let searchTimer = null;
 export default {
     data() {
         return {
-            page: 1,
-            perPage: 10,
-            totalRecords: 0,
             questions: [],
             columns: [
                 {
@@ -83,31 +102,14 @@ export default {
                     field: "question",
                 },
                 {
-                    label: "Categoria",
-                    field: "category.name",
-                },
-                {
                     label: "Acciones",
                     field: "actions",
                 },
             ],
-            sort: {
-                enabled: false,
-            },
-            pagination_options: {
-                enabled: true,
-                mode: "pages",
-                nextLabel: "Sig",
-                prevLabel: "Ant",
-                rowsPerPageLabel: "Registros por pagina",
-                ofLabel: "de",
-                pageLabel: "Pagina", // for 'pages' mode
-                allLabel: "Todos",
-                perPageDropdown: [10, 30, 50],
-                dropdownAllowAll: false,
-            },
             profiles: [],
+            categories: [],
             selectedProfile: null,
+            selectedCategory: null,
         };
     },
     methods: {
@@ -153,19 +155,15 @@ export default {
             this.$emit("selectQuestion", question);
         },
         loadQuestions() {
-            if (this.selectedProfile) {
+            if (this.selectedProfile, this.selectedCategory) {
                 let loader = this.$loading.show();
                 this.$http({
                     method: "GET",
-                    url: "/api/profiles/" + this.selectedProfile + "/questions",
-                    params: {
-                        per_page: this.perPage,
-                        page: this.page,
-                    },
+                    url: "/api/surveys/" + this.selectedProfile + "/category/" + this.selectedCategory +"/questions",
                 })
                     .then((response) => {
                         this.questions = response.data.data;
-                        this.totalRecords = response.data.meta.total;
+                        console.log(this.questions)
                         loader.hide();
                     })
                     .catch(() => {
@@ -177,14 +175,6 @@ export default {
                         });
                     });
             }
-        },
-        onPageChange(params) {
-            this.page = params.currentPage;
-            this.loadQuestions();
-        },
-        onPerPageChange(params) {
-            this.perPage = params.currentPerPage;
-            this.loadQuestions();
         },
         seachProfile(value, loading) {
             loading(true);
@@ -213,13 +203,44 @@ export default {
                     });
             }, 300);
         },
+        searchCategory(value, loading) {
+            loading(true);
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                this.$http({
+                    method: "GET",
+                    url: "/api/categories",
+                    params: {
+                        ...(value
+                            ? {
+                                query: "name|like|" + value,
+                            }
+                            : null),
+                    },
+                })
+                    .then((response) => {
+                        loading(false);
+                        this.categories = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+            }, 300);
+        },
         selectProfile(profile) {
             this.selectedProfile = profile.id;
             this.loadQuestions();
         },
+        selectCategory(category) {
+          this.selectedCategory = category.id;
+          this.loadQuestions();
+        },
     },
     created() {
-        if (this.selectedProfile) {
+        if (this.selectedProfile, this.selectedCategory) {
             this.loadQuestions();
         }
     },

@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelRegister" title="Creacion de encuestas">
+    <panel ref="panelRegister" title="Creación de encuestas">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -47,6 +47,7 @@
                             id="quesition-question"
                             type="text"
                             v-model="newQuestion.question"
+                            required
                         ></b-form-input>
                     </b-form-group>
                 </b-col>
@@ -84,20 +85,28 @@ export default {
             categories: [],
         };
     },
+    mounted() {
+    },
     methods: {
         createQuestion() {
             let loader = this.$loading.show();
             this.$http({
                 method: "POST",
                 url: "/api/questions",
-                data: this.newQuestion,
+                data: {
+                    survey_id: this.newQuestion.profile_id,
+                    category_id: this.newQuestion.category_id,
+                    question: this.newQuestion.question,
+                }
             })
                 .then(() => {
+                    console.log(this.newQuestion, this.answers);
                     this.registrationSuccessful();
                     loader.hide();
                     this.$swal.fire("Exito!", "Registro exitoso", "success");
                 })
                 .catch((error) => {
+                    console.log(this.newQuestion, this.answers);
                     console.log(error);
                     loader.hide();
                     this.$swal

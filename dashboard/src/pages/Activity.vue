@@ -3,7 +3,7 @@
         <!-- begin page-header -->
         <h1 class="page-header">
             Actividades
-            <small>Admnistración de actividades</small>
+            <small>Admnistración de actividades diarias</small>
         </h1>
         <!-- end page-header -->
 
@@ -54,18 +54,18 @@
 <script>
 export default {
     components: {
-        CreateActivity: (resolve) => {
-            import(
-                /* webpackChunkName: "components" */ "@/components/activities/CreateActivity.vue"
-                ).then((CreateActivity) => {
-                resolve(CreateActivity.default);
-            });
-        },
         ListActivities: (resolve) => {
             import(
                 /* webpackChunkName: "components" */ "@/components/activities/ListActivities.vue"
             ).then((ListActivities) => {
                 resolve(ListActivities.default);
+            });
+        },
+        CreateActivity: (resolve) => {
+            import(
+                /* webpackChunkName: "components" */ "@/components/activities/CreateActivity.vue"
+                ).then((CreateActivity) => {
+                resolve(CreateActivity.default);
             });
         },
         UpdateActivity: (resolve) => {
@@ -92,13 +92,13 @@ export default {
         resetRegister() {
             this.registerKey++;
         },
-        registrationSuccessful() {
-            this.resetRegister();
-            this.$refs["activities-list"].loadActivities();
-        },
         resetUpdate() {
             this.selectedActivity = null;
             this.updateKey++;
+        },
+        registrationSuccessful() {
+            this.resetRegister();
+            this.$refs["activities-list"].loadActivities();
         },
         updateSuccess() {
             this.$refs["activities-list"].loadActivities();
@@ -108,6 +108,16 @@ export default {
 </script>
 
 <style scoped>
+.bounce-in-top {
+    -webkit-animation: bounce-in-top 1.1s both;
+    animation: bounce-in-top 1.1s both;
+}
+
+.bounce-out-bck {
+    -webkit-animation: bounce-out-bck 1.5s both;
+    animation: bounce-out-bck 1.5s both;
+}
+
 @-webkit-keyframes bounce-in-top {
     0% {
         -webkit-transform: translateY(-500px);

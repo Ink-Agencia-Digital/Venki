@@ -14,9 +14,9 @@ class AddColumsToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('institution')->unique()->nullable();
-            $table->string('status')->unique()->nullable();
-            $table->string('city')->unique()->nullable();
+            $table->string('institution')->nullable();
+            $table->string('status')->nullable();
+            $table->string('city')->nullable();
         });
     }
 

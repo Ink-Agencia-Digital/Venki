@@ -100,12 +100,11 @@ class DailyActivityController extends ApiController
         }
 
         $dailyActivity->saveOrFail();
-
         return $this->api_success([
-            'data'      =>  new DailyActivityResource($dailyActivity),
-            'message'   => __('pages.responses.updated'),
-            'code'      =>  201
-        ], 201);
+            'data' => new DailyActivityResource($dailyActivity),
+            'message' => __('pages.responses.updated'),
+            'code' => 200
+        ]);
     }
 
     /**
@@ -116,12 +115,12 @@ class DailyActivityController extends ApiController
      */
     public function destroy($id)
     {
-        $dailyActivity = DailyActivity::find($id);
+        $dailyActivity = DailyActivity::findOrFail($id);
         $dailyActivity->delete();
         return $this->api_success([
             'data' => new DailyActivityResource($dailyActivity),
             'message' => __('pages.responses.deleted'),
-            'code' => 204
-        ], 204);
+            'code' => 200
+        ]);
     }
 }

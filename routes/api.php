@@ -15,13 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/register/verify/{code}', 'GuestController@verify');
-Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
-Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
-
+Route::post('password/email', 'Auth\ForgotPasswordController@forgot');
+Route::post('password/reset', 'Auth\ForgotPasswordController@reset');
 Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
+Route::post('users', 'User\UserController@store');
 
 Route::middleware('auth:api')->group(function () {
-
     /**
      * User Auth
      */
@@ -32,9 +31,10 @@ Route::middleware('auth:api')->group(function () {
     /**
      * Users
      */
-
-    Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]);
+    Route::resource('users', 'User\UserController', ['except' => ['create', 'edit', 'store']]);
     Route::resource('users.courses', 'User\UserCourseController', ['except' => ['create', 'edit']]);
+    Route::get('users/{iduser}/course/{idcourse}','User\UserCourseLessonController@index');
+    Route::post('users/course/lesson','User\UserCourseLessonController@store');
     Route::resource('users.scores', 'User\UserScoreController', ['except' => ['create', 'edit']]);
     Route::resource('users.devices', 'User\UserDeviceController', ['except' => ['create', 'edit']]);
     Route::resource('users.chats', 'User\UserChatController', ['except' => ['create', 'edit']]);
@@ -43,6 +43,9 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('users.recomendations', 'User\UserRecomendationController', ['only' => ['index']]);
     Route::resource('users.timelines', 'User\UserTimelineController', ['only' => ['index']]);
     Route::resource('users.achievements', 'User\UserAchievementController', ['only' => ['index']]);
+    Route::resource('users.feelings', 'User\UserFeelingController', ['only' => ['index']]);
+    Route::resource('users.coins', 'User\UserCoinController', ['only' => ['index']]);
+    Route::resource('users.competences', 'User\UserCompetenceController', ['only' => ['index']]);
     /**
      * Courses
      */
@@ -63,6 +66,7 @@ Route::middleware('auth:api')->group(function () {
      */
     Route::resource('categories', 'Category\CategoryController', ['except' => ['create', 'edit']]);
     Route::resource('categories.courses', 'Category\CategoryCourseController', ['only' => ['index']]);
+    Route::resource('categoriesChildren', 'Category\CategoryChildrenController', ['only' => ['index']]);
     /**
      * Scores
      */
@@ -98,6 +102,7 @@ Route::middleware('auth:api')->group(function () {
      */
     Route::resource('surveys', 'Survey\SurveyController', ['except' => ['create', 'edit']]);
     Route::resource('surveys.questions', 'Survey\SurveyQuestionController', ['except' => ['create', 'edit']]);
+    Route::resource('surveys.category.questions', 'Survey\SurveyCategoryQuestionController', ['only' => ['index']]);
     /**
      * Reply
      */
@@ -106,6 +111,11 @@ Route::middleware('auth:api')->group(function () {
      * Question
      */
     Route::resource('questions', 'Question\QuestionController', ['except' => ['create', 'edit']]);
+    Route::resource('questions.answers', 'Question\QuestionAnswerController', ['only' => ['index']]);
+    /**
+     * Answer
+     */
+    Route::resource('answers', 'Answer\AnswerController', ['except' => ['create', 'edit']]);
     /**
      * Examen
      */
@@ -123,9 +133,47 @@ Route::middleware('auth:api')->group(function () {
      */
     Route::resource('achievements', 'Achievement\AchievementController', ['except' => ['create', 'edit']]);
     /**
-     * Image
+     * Feelings
+     */
+    Route::resource('feelings', 'Feeling\FeelingController', ['except' => ['create', 'edit']]);
+    /**
+     * Coins
+     */
+    Route::resource('coins', 'Coin\CoinController', ['except' => ['create', 'edit']]);
+    /**
+     * Competences
+     */
+    Route::resource('competences', 'Competence\CompetenceController', ['except' => ['create', 'edit']]);
+    /**
+     * Images
      */
     Route::resource('images', 'Image\ImageController', ['except' => [ 'edit']]);
+    /**
+     * Membresias
+     */
+    Route::resource('membresias','Membresias\MembresiasController',['except' => ['create', 'edit']]);
+    /**
+     * Quiz
+     */
+    Route::resource('quiz','quiz\quizController',['except' => ['create', 'edit']]);
+    Route::resource('user.quiz','quiz\quizuserController',['only'=>['index']]);
+    /**
+     * Examen
+     */
+    Route::resource('examen','Examen\examenController',['except'=>['create','edit']]);
+    Route::resource('preguntaexamen','Examen\preguntaexamenController',['except'=>['create','edit']]);
+    Route::get('examen/{idexamen}/preguntas','Examen\examenpreguntasController@index');
+    Route::get('examen/{idcourse}/course','Examen\examenController@index');
+    Route::post('respuesta/examen','Examen\respuestaExamenController@store');
+    Route::get('respuestas/user/{iduser}/examen/{idexamen}','Examen\respuestaExamenController@index');
+    Route::post('examen/calificacion','Examen\respuestaExamenController@update');
+    Route::get('examen/resultados/user/{iduser}','Examen\resultadoExamenController@index');
+    /**
+     * Trofeos
+     */
+    Route::resource('trofeos','Trofeo\trofeoController',['except'=>['create','edit']]);
+    /**
+     * Notifications push
+     */
+    Route::resource('notifications','Notification\notificationController',['except'=>['create','edit']]);
 });
-
-

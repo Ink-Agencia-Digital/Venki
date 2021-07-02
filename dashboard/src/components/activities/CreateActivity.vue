@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelRegister" title="Creacion de actividades">
+    <panel ref="panelRegister" title="Creacion de actividades diarias">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -7,10 +7,10 @@
                         class="row"
                         label="Nombre"
                         label-cols-md="3"
-                        label-for="activities-activity"
+                        label-for="activity-activity"
                     >
                         <b-form-input
-                            id="activities-activity"
+                            id="activity-name"
                             v-model="newActivity.activity"
                             required
                         ></b-form-input>
@@ -23,9 +23,9 @@
                         <b-col col sm="6" md="4" offset-md="0">
                             <b-button
                                 variant="outline-primary"
-                                @click="resetRegister"
-                            >Limpiar</b-button
-                            >
+                                @click="resetRegister">
+                                Limpiar
+                            </b-button>
                         </b-col>
                         <b-col col sm="6" md="4" offset-md="1">
                             <b-button variant="warning" @click="createActivity"
@@ -40,12 +40,13 @@
 </template>
 
 <script>
-
 export default {
     data() {
         return {
             busy: false,
-            newActivity: {},
+            newActivity: {
+                activity: null
+            },
         };
     },
     methods: {
@@ -58,7 +59,7 @@ export default {
                 .then(() => {
                     this.$swal.fire(
                         "Registrado!",
-                        "Actividad registrada",
+                        "Actividad diaria registrada",
                         "success"
                     );
                     this.registrationSuccessful();
@@ -76,8 +77,5 @@ export default {
             this.$emit("registrationSuccessful");
         },
     },
-}
-
-
+};
 </script>
-

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Panel ref="panelList" title="Tabla de cursos">
+        <Panel ref="panelList" title="Tabla de Lecciones">
             <b-container>
                 <b-row class="m-t-10 m-b-10">
                     <b-col md="10" offset-md="1">

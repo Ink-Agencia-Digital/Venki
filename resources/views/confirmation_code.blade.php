@@ -11,5 +11,6 @@
     <a href="{{ url('api/register/verify/' . $confirmation_code) }}">
         Clic para confirmar tu email
     </a>
+
 </body>
 </html>

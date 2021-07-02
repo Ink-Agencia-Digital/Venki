@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelRegister" title="Creacion de categorias">
+    <panel ref="panelRegister" title="Creacion de componentes">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -26,6 +26,24 @@
                             type="text"
                             v-model="newCategory.description"
                         ></b-form-textarea>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Componente"
+                        label-cols-md="3"
+                        label-for="categories"
+                    >
+                        <v-select
+                            label="name"
+                            :options="categories"
+                            :placeholder="'Seleccione componente si depende de este'"
+                            id="categories"
+                            :clear-search-on-select="false"
+                            :filterable="false"
+                            @input="selectCategory"
+                            @search="searchCategory"
+                            v-model="newCategory.category_id"
+                        ></v-select>
                     </b-form-group>
                     <b-form-group
                         class="row"
@@ -82,11 +100,13 @@
 import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
+let searchTimer = null;
 export default {
     data() {
         return {
             busy: false,
             newCategory: {},
+            categories: [],
             dropzoneOptions: {
                 url: "/api/categories",
                 thumbnailWidth: 150,
@@ -95,6 +115,9 @@ export default {
                 autoProcessQueue: false,
                 paramName: "photo",
                 maxFiles: 1,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
             },
             loading: null,
         };
@@ -127,6 +150,37 @@ export default {
         registrationSuccessful() {
             this.$emit("registrationSuccessful");
             this.resetRegister();
+        },
+        searchCategory(value, loading) {
+            loading(true);
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                this.$http({
+                    method: "GET",
+                    url: "/api/categoriesChildren/",
+                    params: {
+                        ...(value
+                            ? {
+                                query: "name|like|" + value,
+                            }
+                            : null),
+                    },
+                })
+                    .then((response) => {
+                        loading(false);
+                        this.categories = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+            }, 300);
+        },
+        selectCategory(category) {
+            this.selectedCategory = category.id;
+            this.newCategory.category_id = this.selectedCategory;
         },
     },
 };

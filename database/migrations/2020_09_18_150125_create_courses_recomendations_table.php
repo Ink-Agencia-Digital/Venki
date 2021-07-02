@@ -16,14 +16,6 @@ class CreateCoursesRecomendationsTable extends Migration
         Schema::create('courses_recomendations', function (Blueprint $table) {
             $table->unsignedBigInteger('recomendation_id');
             $table->unsignedBigInteger('course_id');
-            $table->foreign('recomendation_id')
-                ->references('id')
-                ->on('recomendations')
-                ->onDelete('cascade');
-            $table->foreign('course_id')
-                ->references('id')
-                ->on('courses')
-                ->onDelete('cascade');
         });
     }
 

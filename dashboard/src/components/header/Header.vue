@@ -5,7 +5,7 @@
             <!-- begin navbar-header -->
             <div class="navbar-header">
                 <router-link to="/home" class="navbar-brand">
-                    <b>Venki</b> Dashboard
+                    <b>Venki </b> Dashboard
                 </router-link>
                 <button
                     type="button"
@@ -28,7 +28,7 @@
                     no-caret
                 >
                     <template slot="button-content" v-if="isLoggedIn">
-                        <span class="profile-header-img">{{ $store.state.user.email }}</span>
+                        <span class="">{{ this.$store.state.user.email }}</span>
                         <div class="image image-icon bg-black text-grey-darker">
                             <i class="fa fa-user"></i>
                         </div>
@@ -48,7 +48,8 @@
                         >Setting</b-dropdown-item
                     >
                     <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item @click="logout"
+                    <b-dropdown-item href="javascript:;"
+                                     @click="logout"
                         >Log Out</b-dropdown-item
                     >
                 </b-nav-item-dropdown>
@@ -70,9 +71,9 @@ export default {
         };
     },
     computed: {
-        isLoggedIn: function (){
-            return this.$store.getters.isLoggedIn
-        }
+      isLoggedIn: function () {
+          return this.$store.getters.isLoggedIn
+      }
     },
     methods: {
         toggleMobileSidebar() {
@@ -104,11 +105,11 @@ export default {
             this.$router.push({ path: "/extra/search" });
         },
         logout: function () {
-            this.$store.dispatch('logout')
-                .then(() => {
-                    this.$router.push('/');
-            })
-        }
+          this.$store.dispatch('logout')
+          .then(() => {
+              this.$router.push('/');
+          })
+        },
     },
 };
 </script>

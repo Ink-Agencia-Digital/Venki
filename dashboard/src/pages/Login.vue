@@ -20,8 +20,10 @@
                 <!-- begin login-content -->
                 <div class="login-content">
                     <div class="form-group m-b-20">
+                        <label for="email">Email</label>
                         <input
                             id="email"
+                            name="email"
                             v-model="user.email"
                             type="email"
                             class="form-control form-control-lg inverse-mode"
@@ -30,18 +32,16 @@
                         />
                     </div>
                     <div class="form-group m-b-20">
+                        <label for="password">Password</label>
                         <input
                             id="password"
+                            name="password"
                             v-model="user.password"
                             type="password"
-                            class="form-control form-control-lg inverse-mode"
+                            class="form-control"
                             placeholder="Password"
                             required
                         />
-                    </div>
-                    <div class="checkbox checkbox-css m-b-20">
-                        <input type="checkbox" id="remember_checkbox" />
-                        <label for="remember_checkbox">Remember Me</label>
                     </div>
                     <div class="login-buttons">
                         <button
@@ -66,6 +66,7 @@
 import PageOptions from "../config/PageOptions.vue";
 
 export default {
+    name: "login",
     created() {
         PageOptions.pageEmpty = true;
     },
@@ -75,23 +76,28 @@ export default {
     },
 
     data: () => ({
-        user: {
-            email: "",
-            password: "",
-        }
+       user: {
+           email: "",
+           password: ""
+       }
     }),
+
     methods: {
         login: function () {
-            this.$store.dispatch('login', {
-                email: this.user.email,
-                password: this.user.password
-            })
-            .then(() => {
-                this.$router.replace('/home');
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+            let loader = this.$loading.show();
+            this.$store
+                 .dispatch('login', {
+                    email: this.user.email,
+                    password: this.user.password
+                })
+                .then(() => {
+                    this.$router.replace("/home");
+                    loader.hide();
+                })
+                .catch((error) => {
+                    loader.hide();
+                    console.trace(error);
+                });
         },
     },
 };

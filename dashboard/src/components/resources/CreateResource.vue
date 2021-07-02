@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelRegister" title="Creacion de cursos">
+    <panel ref="panelRegister" title="Creación de recursos">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -30,7 +30,7 @@
                         <v-select
                             label="name"
                             :options="lessons"
-                            :placeholder="'Digite nombre de la leccion'"
+                            :placeholder="'Digite nombre de la lección'"
                             id="lessons"
                             :clear-search-on-select="false"
                             :filterable="false"
@@ -59,7 +59,7 @@
                     >
                         <v-select
                             id="resource-type"
-                            :options="['audio', 'video', 'document']"
+                            :options="['audio', 'video', 'document','quiz']"
                             :value="selectedType"
                             @input="selectType"
                             :clearable="false"
@@ -70,7 +70,7 @@
                         label="Recurso"
                         label-cols-md="3"
                         label-for="resource"
-                        v-if="selectedType != 'video'"
+                        v-if="selectedType == 'audio'"
                     >
                         <vue-dropzone
                             id="resource"
@@ -108,6 +108,56 @@
                             required
                         ></b-form-input>
                     </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Document"
+                        label-cols-md="3"
+                        v-if="selectedType == 'document'"
+                        label-for="resource-document"
+                    >
+                    <b-form-textarea
+                        id="resource-document"
+                        v-model="newResource.document"
+                        rows="3"
+                        max-rows="6"
+                        required
+                    ></b-form-textarea>
+                    </b-form-group>
+                    <b-form-group 
+                        class="row"
+                        label="Pregunta"
+                        label-cols-md="3"
+                        v-if="selectedType=='quiz'"
+                        label-for="resource-quiz">
+                        <b-form-input 
+                            id="resource-quiz" 
+                            v-model="newResource.quiz"
+                            placeholder="Escribe la pregunta y selecciona el tipo de respuesta"
+                            required>
+                        </b-form-input>
+                        <v-select
+                            id="AnswerType"
+                            :options="['Abierta', 'Numérica', 'Multiple']"
+                            v-model="newResource.tiporespuesta"
+                            @input="selectAnswer"
+                            :clearable="false"
+                        ></v-select>
+                        <b-form
+                            class="row"
+                            v-if="newResource.tiporespuesta=='Multiple'">
+                            <b-row>
+                                <b-form-input id="quiz-answer" class="col-md-6" placeholder="respuesta" v-model="optionanswer"></b-form-input>
+                                <v-button type="button" class="btn btn-circle btn-primary col-md-2" @click="insertAnswer" v-if="edit==false"><i class="fa fa-plus"></i></v-button>
+                                <v-button type="button" class="btn btn-circle btn-warning col-md-2" @click="saveAnswer" v-if="edit==true"><i class="fa fa-edit"></i></v-button>
+                                <v-button type="button" class="btn btn-circle btn-danger col-md-2" @click="deleteAnswer" v-if="edit==true"><i class="fa fa-trash"></i></v-button>
+                            </b-row>
+                        </b-form>
+                        <b-row>
+                            <b-list-group v-if="quiz_answers.length>0">
+                                <b-list-group-item v-for="(item,index) in quiz_answers" v-bind:key="item"><a @click="editar(item,index)">{{item}}</a></b-list-group-item>
+                            </b-list-group>
+                        </b-row>
+                    </b-form-group> 
                 </b-col>
             </b-row>
             <b-row>
@@ -143,9 +193,14 @@ export default {
             loading: null,
             courses: [],
             lessons: [],
+            quiz_answers:[],
+            optionanswer:'',
             selectedCourse: null,
             keyDrop: 0,
             selectedType: "audio",
+            selectedAnswer:"Abierta",
+            edit:false,
+            editindex:0,
             dropzoneOptions: {
                 url: "/api/resources",
                 thumbnailWidth: 150,
@@ -154,6 +209,9 @@ export default {
                 acceptedFiles: "audio/*",
                 paramName: "audio",
                 maxFiles: 1,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
             },
         };
     },
@@ -165,9 +223,10 @@ export default {
             this.selectedType = type;
             if (type == "audio") {
                 this.dropzoneOptions.acceptedFiles = "audio/*";
-            } else if (type == "document") {
-                this.dropzoneOptions.acceptedFiles = ".doc,.docx,.pdf";
-            }
+            } 
+            //else if (type == "document") {
+              //  this.dropzoneOptions.acceptedFiles = ".doc,.docx,.pdf";
+            //}
             this.dropzoneOptions.paramName = type;
             delete this.newResource.video;
             this.resetDropzone();
@@ -238,7 +297,8 @@ export default {
             this.$swal.fire("Exito!", "Registro exitoso", "success");
         },
         createResource() {
-            if (this.selectedType == "video") {
+            this.newResource.optionanswer=this.quiz_answers.join();
+            if (this.selectedType != "audio") {
                 this.$http({
                     method: "POST",
                     url: "/api/resources",
@@ -273,6 +333,30 @@ export default {
         resetDropzone() {
             this.keyDrop++;
         },
+        insertAnswer(){
+            if(this.quiz_answers.length==10){
+                this.$swal.fire("Advertencia!","Máximo 10 respuestas.","warning");
+                return;
+            }
+            //var opciones = {option:this.optionanswer};
+            this.quiz_answers.push(this.optionanswer);
+            this.optionanswer='';
+        },
+        editar(item,index){
+            this.edit=true;
+            this.editindex=index;
+            this.optionanswer=item.option;
+        },
+        saveAnswer(){
+            this.quiz_answers[this.editindex]=this.optionanswer;
+            this.edit=false;
+            this.optionanswer='';
+        },
+        deleteAnswer(){
+            this.quiz_answers.splice(this.editindex,1);
+            this.edit=false;
+            this.optionanswer='';
+        }
     },
 };
 </script>

@@ -6,6 +6,7 @@ use App\Achievement;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AchievementResource;
+use App\User;
 use Illuminate\Http\Request;
 
 class AchievementController extends ApiController
@@ -38,13 +39,28 @@ class AchievementController extends ApiController
      */
     public function store(Request $request)
     {
-        $achievement = new Achievement;
-        $achievement->fill($request->all());
-        $achievement->saveOrFail();
+        $user = User::with('achievements')->findOrFail($request->user_id);
+        $user->achievements()->delete();
+
+        if ($request->has('objectives')) {
+            foreach ($request->objectives as $objective) {
+                $achievement = new Achievement([
+                    'achievement' => $objective['achievement'],
+                    'priority' => $objective['priority'],
+                    'date' => $objective['date'],
+                    'user_id' => $request->user_id
+                ]);
+                $achievement->save();
+            }
+        } else {
+            return $this->errorResponse(
+                'Se debe especificar al menos un objetivo',
+                422
+            );
+        }
 
         return $this->api_success([
-            'data'      =>  new AchievementResource($achievement),
-            'message'   => __('pages.responses.created'),
+            'message'   => 'objetivos agregados correctamente!',
             'code'      =>  201
         ], 201);
     }
@@ -80,8 +96,16 @@ class AchievementController extends ApiController
      */
     public function update(Request $request, Achievement $achievement)
     {
-        if ($request->has("achievement")) {
+        if ($request->has('achievement')) {
             $achievement->achievement = $request->achievement;
+        }
+
+        if ($request->has('priority')) {
+            $achievement->priority = $request->priority;
+        }
+
+        if ($request->has('date')) {
+            $achievement->date = $request->date;
         }
 
         if (!$achievement->isDirty()) {
@@ -96,8 +120,8 @@ class AchievementController extends ApiController
         return $this->api_success([
             'data'      =>  new AchievementResource($achievement),
             'message'   => __('pages.responses.updated'),
-            'code'      =>  201
-        ], 201);
+            'code'      =>  200
+        ], 200);
     }
 
     /**

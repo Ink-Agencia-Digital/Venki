@@ -3,7 +3,7 @@
         <!-- begin page-header -->
         <h1 class="page-header">
             Preguntas
-            <small>Admnistracion de Preguntas</small>
+            <small>Admnistración de Preguntas</small>
         </h1>
         <!-- end page-header -->
 
@@ -30,7 +30,22 @@
                         @selectQuestion="selectQuestion"
                     />
                 </b-col>
-                <b-col md="12"> </b-col>
+                <b-col md="12">
+                    <transition
+                        name="my-swing"
+                        enter-active-class="bounce-in-top"
+                        leave-active-class="bounce-out-bck"
+                        mode="out-in"
+                    >
+                        <UpdateQuestion
+                            v-if="selectedQuestion"
+                            :initialQuestion="selectedQuestion"
+                            :key="updateKey"
+                            @resetUpdate="resetUpdate"
+                            @updateSuccess="updateSuccess"
+                        />
+                    </transition>
+                </b-col>
             </b-row>
         </b-container>
     </div>
@@ -51,6 +66,13 @@ export default {
                 /* webpackChunkName: "components" */ "@/components/questions/ListQuestions.vue"
             ).then((ListQuestions) => {
                 resolve(ListQuestions.default);
+            });
+        },
+        UpdateQuestion: (resolve) => {
+            import(
+                /* webpackChunkName: "components" */ "@/components/questions/UpdateQuestion.vue"
+                ).then((UpdateQuestion) => {
+                resolve(UpdateQuestion.default);
             });
         },
     },

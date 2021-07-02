@@ -13,7 +13,8 @@ class Score extends Model
         "course_id",
         "user_id",
         "comment",
-        "score"
+        "score",
+        "active",
     ];
 
     /** Relationship */

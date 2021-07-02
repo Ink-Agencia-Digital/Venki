@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Panel ref="panelList" title="Tabla de categorias">
+        <Panel ref="panelList" title="Tabla de componentes">
             <b-container>
                 <div class="table-responsive">
                     <vue-good-table
@@ -95,6 +95,10 @@ export default {
                 {
                     label: "Descripcion",
                     field: "description",
+                },
+                {
+                    label: "Subcomponente",
+                    field: this.subcategories,
                 },
                 {
                     label: "Foto",
@@ -200,6 +204,19 @@ export default {
         onPerPageChange(params) {
             this.perPage = params.currentPerPage;
             this.loadCategories();
+        },
+        subcategories(categories) {
+            let child = categories.children_categories;
+            let categoryname = child.map(function (category) {
+                return category.name;
+            });
+            if (categoryname.length !== 0) {
+                return categoryname.join(', ');
+            } else if (categoryname.length === 0) {
+                return "-----"
+            }
+            // return categoryname.join(', ');
+
         },
     },
     created() {

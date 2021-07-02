@@ -127,7 +127,7 @@ class ApiController extends Controller
         }
 
         $order_by = ($this->modelHasColumn($this->order_by, $model->getFillable())) ? $this->order_by : $model->getTable() . '.id';
-        $builder = ($this->direction === 'asc') ? $builder->orderBy($order_by) : $builder->orderByDesc($order_by);
+        $builder = ($this->direction === 'desc') ? $builder->orderBy($order_by) : $builder->orderByDesc($order_by);
         if ($this->query && $this->queryHasNotPipe($this->query)) {
             foreach ($model->getFillable() as $column) {
                 $builder->orWhere($column, 'LIKE', '%' . $this->query . '%');
@@ -152,3 +152,4 @@ class ApiController extends Controller
         return $collection;
     }
 }
+

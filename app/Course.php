@@ -48,4 +48,12 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class, 'users_courses');
     }
+    public function userscourses()
+    {
+        return $this->hasMany(user_course_lesson::class,'id_course');
+    }
+    public function examen()
+    {
+        return $this->hasOne(examen::class,'id_course');
+    }
 }

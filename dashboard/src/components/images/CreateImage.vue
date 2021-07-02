@@ -15,7 +15,31 @@
                             required
                         ></b-form-input>
                     </b-form-group>
-                
+                    <b-form-group
+                        class="row"
+                        label="Descripcion"
+                        label-cols-md="3"
+                        label-for="image-description"
+                    >
+                        <b-form-input
+                            id="image-description"
+                            v-model="newImage.description"
+                            required
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Ubicación"
+                        label-cols-md="3"
+                        label-for="image-type"
+                    >
+                        <b-form-select
+                            id="image-type"
+                            v-model="newImage.type"
+                            :options="options"
+                            required
+                        ></b-form-select>
+                    </b-form-group>
                     <b-form-group
                         class="row"
                         label="Imagen"
@@ -37,7 +61,7 @@
                                     Arrastra y suelta para subir contenido!
                                 </h3>
                                 <div class="subtitle">
-                                    ...o da click para seleccionar un arricho de
+                                    ...o da click para seleccionar un archivo de
                                     tu computadora
                                 </div>
                             </div>
@@ -75,7 +99,9 @@ export default {
     data() {
         return {
             busy: false,
-            newImage: {},
+            newImage: {
+                type: null,
+            },
             dropzoneOptions: {
                 url: "/api/images",
                 thumbnailWidth: 150,
@@ -84,8 +110,17 @@ export default {
                 autoProcessQueue: false,
                 paramName: "url",
                 maxFiles: 1,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
             },
             loading: null,
+            options: [
+                { value: null, text: 'Selecciona una opción' },
+                { value: 0, text: 'Académico' },
+                { value: 1, text: 'Deportivo' },
+                { value: 2, text: 'Inicio' },
+            ]
         };
     },
     components: {
@@ -93,6 +128,7 @@ export default {
     },
     methods: {
         sendingEvent(file, xhr, formData) {
+            console.log(this.newImage);
             Object.keys(this.newImage).forEach((key) => {
                 formData.append(key, this.newImage[key]);
             });

@@ -61,9 +61,9 @@ class ReplyController extends ApiController
         foreach($average as $skill){
             switch ($skill) {
                 case 'value':
-                   
+
                     break;
-                
+
             }
         }
 

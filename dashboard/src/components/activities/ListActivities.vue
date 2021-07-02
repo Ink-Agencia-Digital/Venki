@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Panel ref="panelList" title="Tabla Actividades">
+        <Panel ref="panelList" title="Tabla de actividades">
             <b-container>
                 <div class="table-responsive">
                     <vue-good-table
@@ -17,9 +17,8 @@
                         <div slot="emptystate">
                             No hay informacion disponible
                         </div>
-
                         <template slot="table-row" slot-scope="props">
-                            <span v-if="props.column.field === 'actions'">
+                            <span v-if="props.column.field == 'actions'">
                                 <span>
                                     <div class="text-center">
                                         <a
@@ -51,7 +50,6 @@
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -70,7 +68,7 @@ export default {
                 },
                 {
                     label: "Fecha",
-                    field: "last_done",
+                    field: "created_at",
                 },
                 {
                     label: "Acciones",
@@ -94,44 +92,7 @@ export default {
             },
         };
     },
-    created() {
-        this.loadActivities();
-    },
     methods: {
-        loadActivities() {
-            let loader = this.$loading.show();
-            this.$http({
-                method: "GET",
-                url:
-                    "/api/dailyactivities?per_page=" +
-                    this.perPage +
-                    "&page=" +
-                    this.page,
-            })
-                .then((response) => {
-                    console.log(response);
-                    this.activities = response.data.data;
-                    console.log(this.activities);
-                    this.totalRecords = response.data.meta.total;
-                    loader.hide();
-                })
-                .catch(() => {
-                    loader.hide();
-                    this.$swal({
-                        title: "Error",
-                        text: "Error cargando los datos",
-                        icon: "error",
-                    });
-                });
-        },
-        onPageChange(params) {
-            this.page = params.currentPage;
-            this.loadActivities();
-        },
-        onPerPageChange(params) {
-            this.perPage = params.currentPerPage;
-            this.loadActivities();
-        },
         confirmDelete(activity_id) {
             this.$swal({
                 title: "Está seguro?",
@@ -169,11 +130,89 @@ export default {
         selectActivity(activity) {
             this.$emit("selectActivity", activity);
         },
+        loadActivities() {
+            let loader = this.$loading.show();
+            this.$http({
+                method: "GET",
+                url: "/api/dailyactivities",
+                params: {
+                    per_page: this.perPage,
+                    page: this.page,
+                },
+            })
+                .then((response) => {
+                    this.activities = response.data.data;
+                    this.totalRecords = response.data.meta.total;
+                    loader.hide();
+                })
+                .catch(() => {
+                    loader.hide();
+                    this.$swal({
+                        title: "Error",
+                        text: "Error cargando los datos",
+                        icon: "error",
+                    });
+                });
+        },
+        onPageChange(params) {
+            this.page = params.currentPage;
+            this.loadActivities();
+        },
+        onPerPageChange(params) {
+            this.perPage = params.currentPerPage;
+            this.loadActivities();
+        },
+    },
+    created() {
+        this.loadActivities();
     },
 };
 </script>
 
 <style scoped>
+.img-category {
+    max-height: 100px;
+    max-width: 150px;
+    height: auto;
+    width: auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.img-category:hover {
+    opacity: 0.7;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    margin-top: 10%;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content,
+#caption {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
 
 @keyframes zoom {
     from {

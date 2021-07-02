@@ -19,10 +19,6 @@ class CreateExamsTable extends Migration
             $table->unsignedBigInteger('lesson_id');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('lesson_id')
-                ->references('id')
-                ->on('lessons')
-                ->onDelete('cascade');
         });
     }
 

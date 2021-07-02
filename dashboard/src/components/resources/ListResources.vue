@@ -56,6 +56,7 @@
                         <div slot="emptystate">
                             No hay informacion disponible
                         </div>
+
                         <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'resource'">
                                 <span v-if="props.row.document">

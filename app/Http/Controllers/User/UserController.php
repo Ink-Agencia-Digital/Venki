@@ -43,18 +43,33 @@ class UserController extends ApiController
         $user = new User;
         $user->fill($request->all());
 	    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
-
+        // Output: 54esmdr0qf
         $user->confirmation_code=substr(str_shuffle($permitted_chars), 0, 10);
         if ($request->hasFile('photo')) {
             $user->photo = $request->photo->store('images');
         }
 
-        $user->saveOrFail();
-        $data=['email' => $user->email,'name' => $user->name,'confirmation_code' => $user->confirmation_code];
-        Mail::send('confirmation_code', $data, function($message) use ($data) {
-            $message->to($data['email'], $data['name'])
-                ->subject('Por favor confirma tu correo');
-        });
+        if ($request->register_social == 'true') {
+
+            $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $password_social = substr(str_shuffle($permitted_chars), 0, 8);
+            $user->password = $password_social;
+            $user->register_social = 1;
+            $user->saveOrFail();
+
+            $data=['email' => $user->email,'name' => $user->name,'confirmation_code' => $user->confirmation_code, 'password_social' => $password_social];
+            Mail::send('confirmation_code_social', $data, function($message) use ($data) {
+                $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
+            });
+
+        } else {
+            $user->saveOrFail();
+            $data=['email' => $user->email,'name' => $user->name,'confirmation_code' => $user->confirmation_code];
+            Mail::send('confirmation_code', $data, function($message) use ($data) {
+                $message->to($data['email'], $data['name'])->subject('Por favor confirma tu correo');
+            });
+        }
+
         return $this->api_success([
             'data' => new UserResource($user),
             'message' => __('pages.responses.created'),
@@ -102,9 +117,6 @@ class UserController extends ApiController
         if ($request->has("lastname")) {
             $user->lastname = $request->lastname;
         }
-        if ($request->has("address")) {
-            $user->address = $request->address;
-        }
         if ($request->has("birthday")) {
             $user->birthday = $request->birthday;
         }
@@ -140,16 +152,101 @@ class UserController extends ApiController
 
         if ($request->has("profile_id")) {
             $user->profile_id = $request->profile_id;
+            $user->surveyed = 0;
         }
 
         if ($request->has("surveyed")) {
             $user->surveyed = $request->surveyed;
         }
+
         if ($request->has("premium")) {
             $user->premium = $request->premium;
         }
 
+        if ($request->has("cognitivo")) {
+            $user->cognitivo = $request->cognitivo;
+        }
 
+        if ($request->has("emocional")) {
+            $user->emocional = $request->emocional;
+        }
+
+        if ($request->has("conductual")) {
+            $user->conductual = $request->conductual;
+        }
+
+        if ($request->has("fortaleza_mental")) {
+            $user->fortaleza_mental = $request->fortaleza_mental;
+        }
+
+        if($request->has("placeOfBirth")){
+            $user->placeOfBirth = $request ->placeOfBirth;
+        }
+
+        if($request->has("height")){
+            $user->height = $request ->height;
+        }
+        if($request->has("weight")){
+            $user->weight = $request ->weight;
+        }
+        if($request->has("dominantFoot")){
+            $user->dominantFoot = $request ->dominantFoot;
+        }
+        if($request->has("dominantHand")){
+            $user->dominantHand = $request ->dominantHand;
+        }
+
+        if($request->has("graduationYear")){
+            $user->graduationYear = $request ->graduationYear;
+        }
+        if($request->has("highSchoolAverage")){
+            $user->highSchoolAverage = $request ->highSchoolAverage;
+        }
+        if($request->has("gpa")){
+            $user->gpa = $request ->gpa;
+        }
+        if($request->has("sat")){
+            $user->sat = $request ->sat;
+        }
+        if($request->has("toef")){
+            $user->toef = $request ->toef;
+        }
+        if($request->has("mainSport")){
+            $user->mainSport = $request ->mainSport;
+        }
+        if($request->has("playingPosition")){
+            $user->playingPosition = $request ->playingPosition;
+        }
+        if($request->has("events")){
+            $user->events = $request ->events;
+        }
+        if($request->has("time")){
+            $user->time = $request ->time;
+        }
+        if($request->has("records")){
+            $user->records = $request ->records;
+        }
+        if($request->has("route")){
+            $user->route = $request ->route;
+        }
+        if($request->has("rankings")){
+            $user->rankings = $request ->rankings;
+        }
+        if($request->has("recognitions")){
+            $user->recognitions = $request ->recognitions;
+        }
+        if($request->has("press")){
+            $user->press = $request ->press;
+        }
+        if($request->has("differences")){
+            $user->differences = $request ->differences;
+        }
+        if($request->has("competencies")){
+            $user->competencies = $request ->competencies;
+        }
+        if($request->has("goals")){
+            $user->goals = $request ->goals;
+        }
         if (!$user->isDirty()) {
             return $this->errorResponse(
                 'Se debe especificar al menos un valor diferente para actualizar',

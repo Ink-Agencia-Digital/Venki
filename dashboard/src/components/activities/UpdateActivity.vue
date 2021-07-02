@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelUpdate" title="Modificacion de actividades">
+    <panel ref="panelUpdate" title="Modificacion de actividades diarias">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -40,7 +40,6 @@
 </template>
 
 <script>
-
 export default {
     props: {
         initialActivity: Object,
@@ -53,22 +52,22 @@ export default {
     methods: {
         updateActivity() {
             this.$http({
-                method: "PUT",
-                url: "/api/dailyactivities/" + this.activity.id,
-                data: this.activity,
-            })
-                .then((response) => {
-                    this.activity = response.data.data;
-                    this.$swal
-                        .fire("Exito!", "Cambio exitoso", "success")
-                        .then(() => {
-                            this.updateSuccess();
-                        });
+                    method: "PUT",
+                    url: "/api/dailyactivities/" + this.activity.id,
+                    data: this.activity,
                 })
-                .catch((error) => {
-                    console.log(error);
-                    this.$swal.fire("Error!", "Cambio fallido", "error");
-                });
+                    .then((response) => {
+                        this.activity = response.data.data;
+                        this.$swal
+                            .fire("Exito!", "Cambio exitoso", "success")
+                            .then(() => {
+                                this.updateSuccess();
+                            });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$swal.fire("Error!", "Cambio fallido", "error");
+                    });
         },
         resetUpdate() {
             this.$emit("resetUpdate");
@@ -77,8 +76,28 @@ export default {
             this.$emit("updateSuccess");
         },
     },
-}
-
-
+};
 </script>
 
+<style scoped>
+.dropzone-custom-content {
+    position: inherit;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+}
+
+.dropzone-custom-title {
+    margin-top: 0;
+    color: #00b782;
+}
+
+.subtitle {
+    color: #314b5f;
+    font-size: medium;
+}
+
+img {
+    max-width: 200px;
+}
+</style>
