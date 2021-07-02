@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelRegister" title="Creacion de perfiles">
+    <panel ref="panelRegister" title="Creación de perfiles">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -12,6 +12,42 @@
                         <b-form-input
                             id="course-name"
                             v-model="newProfile.name"
+                            required
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Descripción 1"
+                        label-cols-md="3"
+                        label-for="description1-name"
+                    >
+                        <b-form-input
+                            id="description1-name"
+                            v-model="description1"
+                            required
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Descripción 2"
+                        label-cols-md="3"
+                        label-for="description2-name"
+                    >
+                        <b-form-input
+                            id="description2-name"
+                            v-model="description2"
+                            required
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="Descripcion3"
+                        label-cols-md="3"
+                        label-for="description3-name"
+                    >
+                        <b-form-input
+                            id="description3-name"
+                            v-model="description3"
                             required
                         ></b-form-input>
                     </b-form-group>
@@ -45,10 +81,18 @@ export default {
         return {
             busy: false,
             newProfile: {},
+            description1:'',
+            description2:'',
+            description3:'',
+            descriptions:[]
         };
     },
     methods: {
         createcourse() {
+            this.descriptions.push({'name':this.description1});
+            this.descriptions.push({'name':this.description2});
+            this.descriptions.push({'name':this.description3});
+            this.newProfile.descriptions=this.descriptions;
             this.$http({
                 method: "POST",
                 url: "/api/profiles",

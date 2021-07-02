@@ -17,7 +17,7 @@
                         <div slot="emptystate">
                             No hay informacion disponible
                         </div>
-                        <template slot="table-row" slot-scope="props">
+                       <template slot="table-row" slot-scope="props">
                             <span v-if="props.column.field == 'actions'">
                                 <span>
                                     <div class="text-center">
@@ -36,6 +36,7 @@
                                 props.formattedRow[props.column.field]
                             }}</span>
                         </template>
+
                     </vue-good-table>
                 </div>
             </b-container>

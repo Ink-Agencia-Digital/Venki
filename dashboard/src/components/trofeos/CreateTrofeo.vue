@@ -1,5 +1,6 @@
 <template>
     <panel ref="panelRegister" title="Creación de trofeos">
+        <span>Los rangos de los trofeos deben completar de 0 hasta 100</span>
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
