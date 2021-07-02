@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         
+        
         DB::table('users')->insert([
             'profile_id'=>1,
             'name'=>'Super',
