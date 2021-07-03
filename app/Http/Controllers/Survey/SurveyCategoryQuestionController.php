@@ -16,12 +16,9 @@ class SurveyCategoryQuestionController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Survey $survey, Category $category)
+    public function index($idsurvey, $idcategory)
     {
-
-        $questions = $survey->questions()->with(['answers'])
-            ->where('category_id', '=', $category->id)
-            ->get();
+        $questions = Question::where('survey_id','=',$idsurvey)->where('category_id', '=', $idcategory)->get();
         //return $this->collectionResponse(QuestionResource::collection($this->getModel(new Question, ['answers'], $questions))->all());
         return $this->showAll($questions);
     }
