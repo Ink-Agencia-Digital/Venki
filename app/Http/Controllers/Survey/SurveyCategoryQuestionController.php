@@ -18,9 +18,11 @@ class SurveyCategoryQuestionController extends ApiController
      */
     public function index($idsurvey, $idcategory)
     {
-        $questions = Question::join('answers','answers.question_id','=','questions.id')->where('survey_id','=',$idsurvey)->where('category_id', '=', $idcategory)->get();
+        $questions = Question::where('survey_id','=',$idsurvey)->where('category_id', '=', $idcategory)->with('answers')->get();
         //return $this->collectionResponse(QuestionResource::collection($this->getModel(new Question, ['answers'], $questions))->all());
-        return $this->showAll($questions);
+        return response()->json([
+            'data'=>$questions
+        ]);
     }
 
     /**
