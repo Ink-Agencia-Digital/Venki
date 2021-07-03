@@ -20,10 +20,6 @@ class CreateResourcesTable extends Migration
             $table->string('video')->nullable();
             $table->string('document')->nullable();
             $table->timestamps();
-            $table->foreign('lesson_id')
-                ->references('id')
-                ->on('lessons')
-                ->onDelete('cascade');
         });
     }
 

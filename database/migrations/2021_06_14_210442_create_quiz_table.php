@@ -16,9 +16,7 @@ class CreateQuizTable extends Migration
         Schema::create('quiz', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
             $table->unsignedBigInteger('id_resource');
-            $table->foreign('id_resource')->references('id')->on('resources');
             $table->string('pregunta',255);
             $table->string('respuesta',255);
             $table->timestamps();

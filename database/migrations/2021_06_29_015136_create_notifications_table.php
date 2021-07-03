@@ -18,7 +18,6 @@ class CreateNotificationsTable extends Migration
             $table->string('titulo',255);
             $table->string('mensaje',255);
             $table->unsignedBigInteger('id_profile');
-            $table->foreign('id_profile')->references('id')->on('profiles');
             $table->timestamps();
         });
     }

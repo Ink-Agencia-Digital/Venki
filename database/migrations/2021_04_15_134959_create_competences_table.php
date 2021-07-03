@@ -18,10 +18,6 @@ class CreateCompetencesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('comment');
             $table->integer('type');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

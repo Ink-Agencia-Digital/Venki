@@ -18,15 +18,6 @@ class CreateUsersCoursesTable extends Migration
             $table->unsignedBigInteger('course_id');
             $table->integer('progress')->default(0);
             $table->boolean('complete')->default(false);
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
-
-            $table->foreign('course_id')
-                ->references('id')
-                ->on('courses')
-                ->onDelete('cascade');
             $table->timestamps();
         });
     }

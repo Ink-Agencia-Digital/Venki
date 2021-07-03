@@ -15,7 +15,6 @@ class AddSubcategoryIdToQuestions extends Migration
     {
         Schema::table('questions', function (Blueprint $table) {
             $table->unsignedBigInteger('subcategory_id')->nullable()->after('category_id');
-            $table->foreign('subcategory_id')->references('id')->on('categories');
         });
     }
 

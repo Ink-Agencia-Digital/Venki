@@ -20,10 +20,6 @@ class CreateAnswersTable extends Migration
             $table->integer('point')->unsigned();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('question_id')
-                ->references('id')
-                ->on('questions')
-                ->onDelete('cascade');
         });
     }
 

@@ -15,7 +15,6 @@ class AddCategoryIdToCategories extends Migration
     {
         Schema::table('categories', function (Blueprint $table) {
             $table->unsignedBigInteger('category_id')->nullable()->after('id');
-            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

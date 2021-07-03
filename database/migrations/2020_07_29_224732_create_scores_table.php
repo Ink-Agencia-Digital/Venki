@@ -21,14 +21,6 @@ class CreateScoresTable extends Migration
             $table->integer('score');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('course_id')
-                ->references('id')
-                ->on('courses')
-                ->onDelete('cascade');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 

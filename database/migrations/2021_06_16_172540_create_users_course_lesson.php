@@ -18,9 +18,6 @@ class CreateUsersCourseLesson extends Migration
             $table->unsignedBigInteger('id_course');
             $table->unsignedBigInteger('id_lesson');
             $table->string('estado',25);
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('id_course')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('id_lesson')->references('id')->on('lessons')->onDelete('cascade');
             $table->timestamps();
         });
     }

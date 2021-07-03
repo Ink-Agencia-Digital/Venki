@@ -14,7 +14,7 @@ class AddRegisterSocialToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('register_social')->default(false)->after('gender');
+            $table->boolean('register_social')->default(false);
         });
     }
 

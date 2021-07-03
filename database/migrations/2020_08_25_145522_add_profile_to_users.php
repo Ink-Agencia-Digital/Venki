@@ -15,11 +15,6 @@ class AddProfileToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('profile_id')->nullable();
-
-            $table->foreign('profile_id')
-                ->references('id')
-                ->on('profiles')
-                ->onDelete('cascade');
         });
     }
 
@@ -31,7 +26,6 @@ class AddProfileToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['profile_id']);
             $table->dropColumn('profile_id');
         });
     }

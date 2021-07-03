@@ -21,10 +21,6 @@ class CreateLessonsTable extends Migration
             $table->integer('duration');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('course_id')
-                ->references('id')
-                ->on('courses')
-                ->onDelete('cascade');
         });
     }
 

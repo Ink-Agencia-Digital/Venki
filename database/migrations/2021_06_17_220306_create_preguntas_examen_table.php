@@ -16,7 +16,6 @@ class CreatePreguntasExamenTable extends Migration
         Schema::create('preguntas_examen', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_examen');
-            $table->foreign('id_examen')->references('id')->on('examenes');
             $table->string('pregunta',255);
             $table->string('tiporespuesta',50);
             $table->string('opciones',255)->nullable();

@@ -18,10 +18,6 @@ class CreatePostMediaTable extends Migration
             $table->unsignedBigInteger('post_id');
             $table->string('media');
             $table->timestamps();
-            $table->foreign('post_id')
-                ->references('id')
-                ->on('posts')
-                ->onDelete('cascade');
         });
     }
 

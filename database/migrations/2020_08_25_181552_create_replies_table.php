@@ -21,14 +21,6 @@ class CreateRepliesTable extends Migration
             $table->boolean('scored')->default(false);
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('survey_id')
-                ->references('id')
-                ->on('surveys')
-                ->onDelete('cascade');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 

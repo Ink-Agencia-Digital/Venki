@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Traits\ApiResponser;
+use Carbon\Carbon;
 
 class LoginController extends ApiController
 {
@@ -76,4 +77,36 @@ class LoginController extends ApiController
 
 
     }
+
+public function login(Request $request)
+    {
+
+        $credentials = array(
+            'email' =>$request->username,
+            'password' => $request->password
+        );
+	
+	//return response()->json(['message' =>  $credentials],401);		
+
+        if (!Auth::attempt($credentials)) {
+            return response()->json(['message' => 'Este es otro mensaje'], 401);
+        }
+
+        $user = $request->user();
+	
+        $tokenResult = $user->createToken('Personal Access Token');
+
+        $token = $tokenResult->token;
+
+        $token->save();
+
+        return response()->json([
+            'access_token' => $tokenResult->accessToken,
+            'token_type'   => 'Bearer',
+            'expires_at'   => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
+            'user'         => $request->user()
+        ], 200);
+    }
+
+
 }

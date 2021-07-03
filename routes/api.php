@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/register/verify/{code}', 'GuestController@verify');
 Route::post('password/email', 'Auth\ForgotPasswordController@forgot');
 Route::post('password/reset', 'Auth\ForgotPasswordController@reset');
-Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
+Route::post('oauth/token', 'Auth\LoginController@login');
 Route::post('users', 'User\UserController@store');
 
 Route::middleware('auth:api')->group(function () {

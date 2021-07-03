@@ -16,7 +16,6 @@ class CreateExamenesTable extends Migration
         Schema::create('examenes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_course');
-            $table->foreign('id_course')->references('id')->on('courses');
             $table->string('descripcion');
             $table->timestamps();
         });

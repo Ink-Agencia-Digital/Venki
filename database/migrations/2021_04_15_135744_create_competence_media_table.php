@@ -18,10 +18,6 @@ class CreateCompetenceMediaTable extends Migration
             $table->unsignedBigInteger('competence_id');
             $table->string('media');
             $table->timestamps();
-            $table->foreign('competence_id')
-                ->references('id')
-                ->on('competences')
-                ->onDelete('cascade');
         });
     }
 

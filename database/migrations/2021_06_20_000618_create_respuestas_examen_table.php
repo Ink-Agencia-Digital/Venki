@@ -21,8 +21,6 @@ class CreateRespuestasExamenTable extends Migration
             $table->string('respuesta',255)->nullable();
             $table->decimal('valor',8,2);
             $table->boolean('correcto')->default(false);
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->foreign('id_examen')->references('id')->on('examenes');
             $table->timestamps();
         });
     }
