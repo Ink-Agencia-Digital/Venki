@@ -48,7 +48,7 @@ class AddFieldsUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropcolumn('palceOfBirth');
+            $table->dropcolumn('placeOfBirth');
             $table->dropcolumn('height');
             $table->dropcolumn('weight');
             $table->dropcolumn('dominantFoot');
