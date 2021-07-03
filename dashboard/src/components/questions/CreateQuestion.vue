@@ -39,6 +39,22 @@
                     </b-form-group>
                     <b-form-group
                         class="row"
+                        label="Sub-Categorias"
+                        label-cols-md="3"
+                        label-for="subcategories"
+                    >
+                        <v-select
+                            label="name"
+                            :options="childrencategories"
+                            :placeholder="'Digite nombre de la subcategoria'"
+                            id="subcategories"
+                            :clear-search-on-select="false"
+                            :filterable="false"
+                            @input="selectSubCategory"
+                        ></v-select>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
                         label="Pregunta"
                         label-cols-md="3"
                         label-for="quesition-question"
@@ -83,6 +99,7 @@ export default {
             loading: null,
             profiles: [],
             categories: [],
+            childrencategories:[]
         };
     },
     mounted() {
@@ -96,6 +113,7 @@ export default {
                 data: {
                     survey_id: this.newQuestion.profile_id,
                     category_id: this.newQuestion.category_id,
+                    subcategory_id:this.newQuestion.subcategory_id,
                     question: this.newQuestion.question,
                 }
             })
@@ -182,7 +200,11 @@ export default {
         },
         selectCategory(category) {
             this.newQuestion.category_id = category.id;
+            this.childrencategories = category.children_categories;
         },
+        selectSubCategory(subcategory){
+            this.newQuestion.subcategory_id=subcategory.id;
+        }
     },
 };
 </script>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = ['question', 'survey_id', 'category_id'];
+    protected $fillable = ['question', 'survey_id', 'category_id','subcategory_id'];
 
     /**  Relationships */
 
