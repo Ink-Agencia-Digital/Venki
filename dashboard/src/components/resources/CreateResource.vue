@@ -206,7 +206,7 @@ export default {
                 thumbnailWidth: 150,
                 addRemoveLinks: true,
                 autoProcessQueue: false,
-                acceptedFiles: "audio/*",
+                acceptedFiles: ".mp3,.mp4,.mwa1,.mpeg",
                 paramName: "audio",
                 maxFiles: 1,
                 headers: {
@@ -222,11 +222,8 @@ export default {
         selectType(type) {
             this.selectedType = type;
             if (type == "audio") {
-                this.dropzoneOptions.acceptedFiles = "audio/*";
+                this.dropzoneOptions.acceptedFiles = ".mp3,.mp4,.mwa1,.mpeg";
             } 
-            //else if (type == "document") {
-              //  this.dropzoneOptions.acceptedFiles = ".doc,.docx,.pdf";
-            //}
             this.dropzoneOptions.paramName = type;
             delete this.newResource.video;
             this.resetDropzone();
