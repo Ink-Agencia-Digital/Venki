@@ -13,9 +13,9 @@ class AddFieldsUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users ', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
-            $table->string('palceOfBirth',191)->nullable()->after('confirmation_code');
+            $table->string('placeOfBirth',191)->nullable()->after('confirmation_code');
             $table->string('height',191)->nullable();
             $table->string('weight',191)->nullable();
             $table->string('dominantFoot',191)->nullable();
