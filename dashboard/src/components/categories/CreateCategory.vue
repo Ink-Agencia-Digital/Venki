@@ -157,7 +157,7 @@ export default {
             searchTimer = setTimeout(() => {
                 this.$http({
                     method: "GET",
-                    url: "/api/categoriesChildren/",
+                    url: "/api/categoriesChildren",
                     params: {
                         ...(value
                             ? {
