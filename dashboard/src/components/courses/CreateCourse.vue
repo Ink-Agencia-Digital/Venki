@@ -141,6 +141,9 @@ export default {
                 autoProcessQueue: false,
                 paramName: "photo",
                 maxFiles: 1,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
             },
             loading: null,
             categories: [],
