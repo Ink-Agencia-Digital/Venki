@@ -29,6 +29,18 @@
                     </b-form-group>
                     <b-form-group
                         class="row"
+                        label="video"
+                        label-cols-md="3"
+                        label-for="category-video"
+                    > 
+                        <b-form-input
+                            id="category-video"
+                            type="text"
+                            v-model="category.video"
+                        ></b-form-input>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
                         label="Imagen Actual"
                         label-cols-md="3"
                         label-for="actual-photo"
@@ -55,6 +67,48 @@
                             @vdropzone-success="sendSuccess"
                             @vdropzone-error="sendError"
                             @vdropzone-sending="sendingEvent"
+                            :useCustomSlot="true"
+                        >
+                            <div class="dropzone-custom-content">
+                                <h3 class="dropzone-custom-title">
+                                    Arrastra y suelta para subir contenido!
+                                </h3>
+                                <div class="subtitle">
+                                    ...o da click para seleccionar un archivo de
+                                    tu computadora
+                                </div>
+                            </div>
+                        </vue-dropzone>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
+                        label="PDF Actual"
+                        label-cols-md="3"
+                        label-for="actual-pdf"
+                    >
+                        <div class="text-center">
+                            <img
+                                class="img-category"
+                                loading="lazy"
+                                :src="'/' + category.pdf"
+                            />
+                        </div>
+                    </b-form-group>
+                     <b-form-group
+                        class="row"
+                        label="PDF"
+                        label-cols-md="3"
+                        label-for="pdf"
+                    >
+                        <vue-dropzone
+                            id="pdf"
+                            ref="dropzone_pdf"
+                            :options="dropzoneOptionspdf"
+                            @vdropzone-max-files-exceeded="deletePdf"
+                            @vdropzone-success="sendSuccess"
+                            @vdropzone-error="sendError"
+                            @vdropzone-sending="sendingEvent"
+                            @vdropzone-file-added="pdfadded"
                             :useCustomSlot="true"
                         >
                             <div class="dropzone-custom-content">
@@ -115,6 +169,18 @@ export default {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
             },
+            dropzoneOptionspdf: {
+                url: "/api/categories",
+                thumbnailWidth: 150,
+                acceptedFiles: ".pdf",
+                addRemoveLinks: true,
+                autoProcessQueue: false,
+                paramName: "pdf",
+                maxFiles: 1,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+            },
             loading: null,
         };
     },
@@ -131,6 +197,12 @@ export default {
         deletePicture(file) {
             this.$refs.dropzone_picture.removeFile(file);
         },
+        deletePdf(file) {
+            this.$refs.dropzone_pdf.removeFile(file);
+        },
+        pdfadded(file){
+            this.category.pdf=file;
+        },
         sendSuccess(file, response) {
             this.category = response.data;
             this.$refs.dropzone_picture.removeAllFiles();
@@ -141,8 +213,12 @@ export default {
         updateCategory() {
             if (this.$refs.dropzone_picture.dropzone.files.length > 0) {
                 this.$refs.dropzone_picture.processQueue();
-            } else {
-                this.$http({
+            }
+            else
+                if(this.$refs.dropzone_pdf.dropzone.files.length>0) 
+                    this.$refs.dropzone_pdf.processQueue();
+                else{
+                    this.$http({
                     method: "PUT",
                     url: "/api/categories/" + this.category.id,
                     data: {
@@ -162,10 +238,12 @@ export default {
                         console.log(error);
                         this.$swal.fire("Error!", "Cambio fallido", "error");
                     });
-            }
+                }
+            } 
         },
-        sendError() {
-            this.$swal.fire("Error!", "Cambio fallido", "error");
+        sendError(message) {
+            if(message.status!="canceled")
+               this.$swal.fire("Error!", "Cambio fallido", "error");
         },
         resetUpdate() {
             this.$emit("resetUpdate");
@@ -173,7 +251,6 @@ export default {
         updateSuccess() {
             this.$emit("updateSuccess");
         },
-    },
 };
 </script>
 

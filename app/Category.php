@@ -15,6 +15,8 @@ class Category extends Model
         'photo',
         'description',
         'category_id',
+        'pdf',
+        'video'
     ];
 
     /** Relationships */

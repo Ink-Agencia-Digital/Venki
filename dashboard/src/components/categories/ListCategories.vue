@@ -105,6 +105,14 @@ export default {
                     field: "photo",
                 },
                 {
+                    label:"PDF",
+                    field:"pdf"
+                },
+                {
+                    label:"Video",
+                    field:"video"
+                },
+                {
                     label: "Acciones",
                     field: "actions",
                 },

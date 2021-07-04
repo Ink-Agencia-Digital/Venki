@@ -45,6 +45,9 @@ class CategoryController extends ApiController
         if ($request->hasFile('photo')) {
             $category->photo = $request->photo->store('images');
         }
+        if($request->hasFile('pdf')){
+            $category->pdf = $request->pdf->store('resources');
+        }
         $category->saveOrFail();
 
         return $this->api_success([
@@ -91,11 +94,17 @@ class CategoryController extends ApiController
         if ($request->has("description")) {
             $category->description = $request->description;
         }
+        if($request->has("video")){
+            $category->video = $request->video;
+        }
         if ($request->has("photo")) {
             Storage::delete($category->photo);
             $category->photo = $request->photo->store('images');
         }
-
+        if($request->has('pdf')){
+            Storage::delete($category->pdf);
+            $category->pdf = $request->pdf->store('resources');
+        }
 
         if (!$category->isDirty()) {
             return $this->errorResponse(
