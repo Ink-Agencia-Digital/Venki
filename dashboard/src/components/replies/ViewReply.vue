@@ -149,6 +149,7 @@
     </div>
 </template>
 
+
 <script>
 let searchTimer = null;
 export default {

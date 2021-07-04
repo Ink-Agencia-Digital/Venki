@@ -125,6 +125,7 @@ export default {
             this.$emit("selectReply", reply_id);
         },
     },
+    
     filters: {
         formatMoment(value) {
             /*global moment*/

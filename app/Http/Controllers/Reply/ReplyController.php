@@ -89,6 +89,7 @@ class ReplyController extends ApiController
     {
         $replies = collect($reply->reply)->groupBy('ct');
 
+        
         $average = array();
         $replies->each(function ($item, $key) use (&$average) {
             $category = Category::findOrFail($key);
