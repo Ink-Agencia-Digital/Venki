@@ -45,6 +45,7 @@ class ReplyController extends ApiController
         $reply->fill($request->all());
         $reply->saveOrFail();
 
+        
         $replies = collect($reply->reply)->groupBy('ct');
 
         $average = array();
