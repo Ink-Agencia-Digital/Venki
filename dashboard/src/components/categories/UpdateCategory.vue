@@ -170,7 +170,7 @@ export default {
                 },
             },
             dropzoneOptionspdf: {
-                url: "/api/categories",
+                url: "/api/categories/"+this.initialCategory.id,
                 thumbnailWidth: 150,
                 acceptedFiles: ".pdf",
                 addRemoveLinks: true,
@@ -224,6 +224,7 @@ export default {
                     data: {
                         name: this.category.name,
                         description: this.category.description,
+                        video:this.category.video
                     },
                 })
                     .then((response) => {

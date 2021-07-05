@@ -97,11 +97,11 @@ class CategoryController extends ApiController
         if($request->has("video")){
             $category->video = $request->video;
         }
-        if ($request->has("photo")) {
+        if ($request->hasFile("photo")) {
             Storage::delete($category->photo);
             $category->photo = $request->photo->store('images');
         }
-        if($request->has('pdf')){
+        if($request->hasFile('pdf')){
             Storage::delete($category->pdf);
             $category->pdf = $request->pdf->store('resources');
         }
