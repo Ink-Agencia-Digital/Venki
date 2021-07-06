@@ -89,8 +89,6 @@ class ReplyController extends ApiController
     public function show(Reply $reply)
     {
         $replies = collect($reply->reply)->groupBy('ct');
-
-        
         $average = array();
         $replies->each(function ($item, $key) use (&$average) {
             $category = Category::findOrFail($key);
@@ -98,7 +96,7 @@ class ReplyController extends ApiController
                 return $carry + $item;
             })) / ($item->count()), 3);
         });
-        $reply = $reply->load(['user.courses', 'survey.profile'])->toArray();
+        $reply = $reply->load(['User.courses','Survey.profile'])->toArray();
         $reply["reply"] = $average;
         return $this->singleResponse(new ReplyResource($reply));
     }
