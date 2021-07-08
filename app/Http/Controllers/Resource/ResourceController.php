@@ -43,7 +43,7 @@ class ResourceController extends ApiController
         $resource->fill($request->all());
 
         if ($request->has('audio')) {
-            $resource->audio = $request->audio->store('resources');
+            $resource->audio = $request->audio->store('medias');
         }
 
         /*if ($request->has('document')) {
