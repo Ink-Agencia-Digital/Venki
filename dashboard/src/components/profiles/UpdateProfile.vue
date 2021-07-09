@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelRegister" title="Creación de perfiles">
+    <panel ref="panelRegister" title="Modificación de perfiles">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -11,7 +11,7 @@
                     >
                         <b-form-input
                             id="course-name"
-                            v-model="newProfile.name"
+                            v-model="profile.name"
                             required
                         ></b-form-input>
                     </b-form-group>
@@ -41,7 +41,7 @@
                     </b-form-group>
                     <b-form-group
                         class="row"
-                        label="Descripción3"
+                        label="Descripción 3"
                         label-cols-md="3"
                         label-for="description3-name"
                     >
@@ -64,7 +64,7 @@
                             >
                         </b-col>
                         <b-col col sm="6" md="4" offset-md="1">
-                            <b-button variant="warning" @click="createcourse"
+                            <b-button variant="warning" @click="updateprofile"
                                 >Registrar</b-button
                             >
                         </b-col>
@@ -77,10 +77,13 @@
 
 <script>
 export default {
+    props: {
+        initialProfile: Object,
+    },
     data() {
         return {
+            profile: { ...this.initialProfile },
             busy: false,
-            newProfile: {},
             description1:'',
             description2:'',
             description3:'',
@@ -88,15 +91,15 @@ export default {
         };
     },
     methods: {
-        createcourse() {
+        updateprofile() {
             this.descriptions.push({'name':this.description1});
             this.descriptions.push({'name':this.description2});
             this.descriptions.push({'name':this.description3});
-            this.newProfile.descriptions=this.descriptions;
+            this.profile.descriptions=this.descriptions;
             this.$http({
-                method: "POST",
-                url: "/api/profiles",
-                data: this.newProfile,
+                method: "PUT",
+                url: "/api/profiles/"+this.profile.id,
+                data: this.profile,
             })
                 .then(() => {
                     this.$swal.fire(
@@ -104,20 +107,24 @@ export default {
                         "Perfil registrado",
                         "success"
                     );
-                    this.registrationSuccessful();
+                    this.updateSuccess();
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch(() => {
                     this.$swal.fire("Error!", "No se pudo registrar", "error");
-                    this.resetRegister();
+                    this.resetUpdate();
                 });
         },
-        resetRegister() {
-            this.$emit("resetRegister");
+        resetUpdate() {
+            this.$emit("resetUpdate");
         },
-        registrationSuccessful() {
-            this.$emit("registrationSuccessful");
+        updateSuccess() {
+            this.$emit("updateSuccess");
         },
+    },
+    created() {
+        this.description1=this.profile.descriptions[0].name;
+        this.description2=this.profile.descriptions[1].name;
+        this.description3=this.profile.descriptions[2].name;
     },
 };
 </script>

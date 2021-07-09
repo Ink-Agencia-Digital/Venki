@@ -68,7 +68,7 @@ class ProfileController extends ApiController
      */
     public function show(Profile $profile)
     {
-        //
+        return $this->singleResponse(new ProfileResource($profile,['descriptions']));
     }
 
     /**
@@ -91,7 +91,27 @@ class ProfileController extends ApiController
      */
     public function update(Request $request, Profile $profile)
     {
-        //
+       if($request->has('name'))
+       {
+           $profile->name =$request->name;
+       }
+       if($request->has('descriptions'))
+       {
+           Description::where('profile_id','=',$profile->id)->delete();
+            foreach ($request->descriptions as $descrip) {
+                $description = new Description([
+                    'profile_id' => $profile->id,
+                    'name' => $descrip['name']
+                ]);
+                $description->saveOrFail();
+            }
+       }
+       $profile->saveOrFail();
+       return $this->api_success([
+            'data'      =>  new ProfileResource($profile),
+            'message'   => __('pages.responses.updated'),
+            'code'      =>  201
+        ], 201);
     }
 
     /**

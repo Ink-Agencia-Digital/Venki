@@ -85,10 +85,6 @@ export default {
             courses: [],
             columns: [
                 {
-                    label: "ID",
-                    field: "id",
-                },
-                {
                     label: "Nombre",
                     field: "name",
                 },

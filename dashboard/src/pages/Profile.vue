@@ -24,9 +24,24 @@
                     </transition>
                 </b-col>
                 <b-col md="12">
-                    <ListProfiles ref="profiles-list" />
+                    <ListProfiles ref="profiles-list" @selectProfile="selectProfile" />
                 </b-col>
-                <b-col md="12"> </b-col>
+                <b-col md="12">
+                    <transition
+                        name="my-swing"
+                        enter-active-class="bounce-in-top"
+                        leave-active-class="bounce-out-bck"
+                        mode="out-in"
+                    >
+                        <UpdateProfile
+                            v-if="selectedProfile"
+                            :initialProfile="selectedProfile"
+                            :key="updateKey"
+                            @resetUpdate="resetUpdate"
+                            @updateSuccess="updateSuccess"
+                        />
+                    </transition>
+                </b-col>
             </b-row>
         </b-container>
     </div>
@@ -49,20 +64,39 @@ export default {
                 resolve(ListProfiles.default);
             });
         },
+         UpdateProfile: (resolve) => {
+            import(
+                /* webpackChunkName: "components" */ "@/components/profiles/UpdateProfile.vue"
+            ).then((UpdateProfile) => {
+                resolve(UpdateProfile.default);
+            });
+        }
     },
     data() {
         return {
-            selected: null,
+            selectedProfile: null,
             registerKey: 1,
             listKey: 1,
         };
     },
     methods: {
+        selectProfile(profile) {
+            this.updateKey++;
+            this.selectedProfile = { ...profile };
+        },
         resetRegister() {
             this.registerKey++;
         },
         registrationSuccessful() {
             this.resetRegister();
+            this.$refs["profiles-list"].loadProfiles();
+        },
+        resetUpdate() {
+            this.selectedProfile = null;
+            this.updateKey++;
+        },
+        updateSuccess() {
+            this.resetUpdate();
             this.$refs["profiles-list"].loadProfiles();
         },
     },
