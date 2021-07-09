@@ -89,7 +89,7 @@ public function login(Request $request)
 	//return response()->json(['message' =>  $credentials],401);		
 
         if (!Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Este es otro mensaje'], 401);
+            return response()->json(['message' => 'Credenciales incorrectas'], 401);
         }
 
         $user = $request->user();

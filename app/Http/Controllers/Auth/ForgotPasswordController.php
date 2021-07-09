@@ -65,7 +65,8 @@ class ForgotPasswordController extends ApiController
         $sets[] = '23456789';
         $sets[]  = '~!@#$%^&*(){}[],./?';
 
-        $password = '';
+        $numrandom = rand(0,9);
+        $password = strval($numrandom);
 
         foreach ($sets as $set) {
             $password .= $set[array_rand(str_split($set))];
