@@ -45,7 +45,7 @@ class UserController extends ApiController
 	    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
         // Output: 54esmdr0qf
         $user->confirmation_code=substr(str_shuffle($permitted_chars), 0, 10);
-        $user->avatar='baseball';
+        $user->avatar='avatar-nuts1';
         if ($request->hasFile('photo')) {
             $user->photo = $request->photo->store('images');
         }
