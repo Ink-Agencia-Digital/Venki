@@ -250,7 +250,27 @@ const routes = [
             ),
         meta: {
             requiresAuth: true,
-        },
+        }
+    },
+    {
+        path:"/politica",
+        component:(resolve)=>
+            import(/*webpackChunkName: "pages" */ "@/pages/Politica.vue").then(
+                (politica)=>{
+                    resolve(politica.default);
+                }
+            ),
+            
+    },
+     {
+        path:"/terminos",
+        component:(resolve)=>
+            import(/*webpackChunkName: "pages" */ "@/pages/Terminos.vue").then(
+                (terminos)=>{
+                    resolve(terminos.default);
+                }
+            ),
+            
     }
 
 ];
