@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Reply;
 use App\Category;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Coin\CoinController;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\ReplyResource;
+use Carbon\Carbon;
 use App\Reply;
 use App\User;
+use App\Coin;
 use Illuminate\Http\Request;
 
 class ReplyController extends ApiController
@@ -73,6 +76,17 @@ class ReplyController extends ApiController
         $userController = new UserController;
         $userController->update($userRequest, $user);
 
+        $coin = Coin::where('user_id','=',$reply->user_id)->get();
+        if(($coin->count()>0) && ($coin[0]->user_id==$reply->user_id))
+        {
+            $magins=$coin[0]->magin+75;
+            Coin::where('user_id','=',$reply->user_id)->update(['magin'=>$magins,'updated_at'=>Carbon::now()]);
+        }
+        else
+        {
+            Coin::insert(['user_id'=>$reply->user_id,'magin'=>75,'created_at'=>Carbon::now()]);
+        }
+        //return $coin[0]->user_id;
         return $this->api_success([
             'data' => new ReplyResource($reply),
             'message' => __('pages.responses.created'),
