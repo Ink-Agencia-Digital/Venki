@@ -42,6 +42,14 @@ class UserController extends ApiController
     {
         $user = new User;
         $user->fill($request->all());
+        if(empty($request->birthday) || is_null($request->birthday))
+        {
+            $user->birthday='';    
+        }
+        if(empty($request->phone) || is_null($request->phone))
+        {
+            $user->phone='';
+        }
 	    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
         // Output: 54esmdr0qf
         $user->confirmation_code=substr(str_shuffle($permitted_chars), 0, 10);

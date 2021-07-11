@@ -34,7 +34,7 @@
                         </div>
                         <b class="caret"></b>
                     </template>
-                    <b-dropdown-item href="javascript:;"
+                   <!-- <b-dropdown-item href="javascript:;"
                         >Edit Profile</b-dropdown-item
                     >
                     <b-dropdown-item href="javascript:;">
@@ -47,7 +47,7 @@
                     <b-dropdown-item href="javascript:;"
                         >Setting</b-dropdown-item
                     >
-                    <b-dropdown-divider></b-dropdown-divider>
+                    <b-dropdown-divider></b-dropdown-divider>-->
                     <b-dropdown-item href="javascript:;"
                                      @click="logout"
                         >Log Out</b-dropdown-item
