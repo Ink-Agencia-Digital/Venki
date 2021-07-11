@@ -4,10 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\Course;
 use App\Http\Controllers\Api\ApiController;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseResource;
 use App\Http\Resources\UserResource;
 use App\User;
+use App\Coin;
 use Illuminate\Http\Request;
 
 class UserCourseController extends ApiController
@@ -47,7 +49,17 @@ class UserCourseController extends ApiController
     {
         $course = Course::findOrFail($request->course_id);
         $user->courses()->attach($course);
-
+        $coin = Coin::where('user_id','=',$user->id)->get();
+        //se asignan 50 coins al registrarse en un curso.
+        if(($coin->count()>0) && ($coin[0]->user_id==$user->id))
+        {
+            $magins=$coin[0]->magin+50;
+            Coin::where('user_id','=',$user->id)->update(['magin'=>$magins,'updated_at'=>Carbon::now()]);
+        }
+        else
+        {
+            Coin::insert(['user_id'=>$user->id,'magin'=>50,'created_at'=>Carbon::now()]);
+        }
         return $this->api_success([
             'data' => [
                 "user" => new UserResource($user),

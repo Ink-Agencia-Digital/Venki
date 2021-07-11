@@ -77,6 +77,7 @@ class ReplyController extends ApiController
         $userController->update($userRequest, $user);
 
         $coin = Coin::where('user_id','=',$reply->user_id)->get();
+        //se asignan 75 coins al terminar el diagnostico.
         if(($coin->count()>0) && ($coin[0]->user_id==$reply->user_id))
         {
             $magins=$coin[0]->magin+75;

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Message;
 
 use App\Events\ChatEvent;
 use App\Http\Controllers\Api\ApiController;
+use Carbon\Carbon;
 use App\Http\Resources\MessageResource;
 use App\Message;
+use App\Coin;
 use App\Traits\MessagePush;
 use Illuminate\Http\Request;
 
@@ -44,7 +46,17 @@ class MessageController extends ApiController
         $message = new Message;
         $message->fill($request->all());
         $message->saveOrFail();
-
+        $coin = Coin::where('user_id','=',$message->user_id)->get();
+        //se asignan 1 coin al responder mensaje.
+        if(($coin->count()>0) && ($coin[0]->user_id==$message->user_id))
+        {
+            $magins=$coin[0]->magin+1;
+            Coin::where('user_id','=',$message->user_id)->update(['magin'=>$magins,'updated_at'=>Carbon::now()]);
+        }
+        else
+        {
+            Coin::insert(['user_id'=>$message->user_id,'magin'=>1,'created_at'=>Carbon::now()]);
+        }
         return $this->api_success([
             'data' => new MessageResource($message),
             'message' => __('pages.responses.created'),
