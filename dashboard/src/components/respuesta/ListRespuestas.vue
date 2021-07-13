@@ -30,12 +30,11 @@
                             <v-select
                                 label="name"
                                 :options="courses"
-                                :placeholder="'Digite nombre del curso'"
+                                :placeholder="'Seleccione el curso'"
                                 id="list-courses"
                                 :clear-search-on-select="false"
                                 :filterable="false"
                                 @input="selectCourse"
-                                @search="searchCourse"
                             ></v-select>
                         </b-form-group>
                     </b-col>
@@ -287,7 +286,25 @@ export default {
                         title:"Error!"
                     })
                 })
+        },
+        getCourses(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/courses",
+                })
+                    .then((response) => {
+                        this.courses = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
         }
+    },
+    mounted(){
+        this.getCourses();
     },
     created() {
         if (this.id_examen) {

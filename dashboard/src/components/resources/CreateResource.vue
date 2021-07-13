@@ -12,12 +12,12 @@
                         <v-select
                             label="name"
                             :options="courses"
-                            :placeholder="'Digite nombre del curso'"
+                            :placeholder="'Seleccione el curso'"
                             id="courses"
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectCourse"
-                            @search="searchCourse"
+                            
                         ></v-select>
                     </b-form-group>
                     <b-form-group
@@ -30,12 +30,11 @@
                         <v-select
                             label="name"
                             :options="lessons"
-                            :placeholder="'Digite nombre de la lección'"
+                            :placeholder="'Seleccione la lección'"
                             id="lessons"
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectLesson"
-                            @search="searchLesson"
                         ></v-select>
                     </b-form-group>
                       <b-form-group
@@ -257,6 +256,7 @@ export default {
         },
         selectCourse(course) {
             this.selectedCourse = course.id;
+            this.getLessons();
         },
         searchLesson(value, loading) {
             loading(true);
@@ -353,8 +353,44 @@ export default {
             this.quiz_answers.splice(this.editindex,1);
             this.edit=false;
             this.optionanswer='';
+        },
+        getCourses(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/courses",
+                })
+                    .then((response) => {
+                        this.courses = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        },
+        getLessons(){
+            this.$http({
+                    method: "GET",
+                    url:
+                        "/api/courses/" +
+                        this.selectedCourse +
+                        "/lessons",
+                })
+                    .then((response) => {
+                        this.lessons = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
         }
     },
+    mounted(){
+        this.getCourses();
+    }
 };
 </script>
 

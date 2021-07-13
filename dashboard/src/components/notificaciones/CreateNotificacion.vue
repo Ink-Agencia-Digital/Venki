@@ -40,8 +40,6 @@
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectProfile"
-                            @search="searchProfile"
-                            v-model="newNotificacion.id_profile"
                         ></v-select>
                     </b-form-group>
                 </b-col>
@@ -147,7 +145,26 @@ export default {
             this.selectedProfile = profile.id;
             this.newNotificacion.id_profile = this.selectedProfile;
         },
+        getProfiles(){
+            this.$http({
+                method: "GET",
+                url: "/api/profiles",
+                
+            })
+                .then((response) => {
+                    this.profiles = response.data.data;
+                })
+                .catch(() => {
+                    this.$swal({
+                        icon: "error",
+                        title: "Error!",
+                    });
+                });
+        }
     },
+    mounted(){
+        this.getProfiles();
+    }
 };
 </script>
 

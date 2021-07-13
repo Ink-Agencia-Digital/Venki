@@ -96,7 +96,6 @@
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectCategory"
-                            @search="searchCategories"
                             :multiple="true"
                         ></v-select>
                     </b-form-group>
@@ -205,7 +204,25 @@ export default {
                 return category.id;
             });
         },
+        getCategory(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/categories",
+                })
+                    .then((response) => {
+                        this.categories = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        }
     },
+    mounted(){
+        this.getCategory();
+    }
 };
 </script>
 

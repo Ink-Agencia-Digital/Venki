@@ -245,6 +245,7 @@ export default {
         },
         selectCourse(course) {
             this.selectedCourse = course.id;
+            this.getLessons();
         },
         searchLesson(value, loading) {
             loading(true);
@@ -275,6 +276,42 @@ export default {
             this.selectedLesson = lesson.id;
             this.loadResources();
         },
+        getCourses(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/courses",
+                })
+                    .then((response) => {
+                        this.courses = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        },
+        getLessons(){
+            this.$http({
+                    method: "GET",
+                    url:
+                        "/api/courses/" +
+                        this.selectedCourse +
+                        "/lessons",
+                })
+                    .then((response) => {
+                        this.lessons = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        }
+    },
+    mounted(){
+        this.getCourses();
     },
     created() {
         if (this.selectedLesson) {

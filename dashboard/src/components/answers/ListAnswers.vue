@@ -17,7 +17,6 @@
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectProfile"
-                            @search="searchProfile"
                         ></v-select>
                     </b-form-group>
                 </b-col>
@@ -36,7 +35,6 @@
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectCategory"
-                            @search="searchCategory"
                         ></v-select>
                     </b-form-group>
                 </b-col>
@@ -55,7 +53,6 @@
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectQuestion"
-                            @search="searchQuestion"
                         ></v-select>
                     </b-form-group>
                 </b-col>
@@ -310,20 +307,69 @@ export default {
         },
         selectProfile(profile) {
             this.selectedProfile = profile.id;
+            this.getCategory();
         },
         selectCategory(category) {
             this.selectedCategory = category.id;
+            this.getQuestion();
         },
         selectQuestion(question) {
             this.selectedQuestion = question.id;
             this.loadAnswers();
         },
-        created() {
-            if (this.selectedProfile, this.selectedCategory, this.selectedQuestion) {
+        getProfiles()
+        {
+            this.$http({
+                    method: "GET",
+                    url: "/api/profiles"
+                })
+                    .then((response) => {
+                        this.profiles = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        },
+        getCategory(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/categories"
+                })
+                    .then((response) => {
+                        this.categories = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        },
+        getQuestion(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/surveys/" + this.selectedProfile + "/category/" + this.selectedCategory + "/questions"
+                })
+                    .then((response) => {
+                        this.questions = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        }
+    },
+    mounted() {
+        this.getProfiles();
+        if (this.selectedProfile, this.selectedCategory, this.selectedQuestion) {
                 this.loadAnswers();
             }
-        },
-    },
+    }
 }
 </script>
 

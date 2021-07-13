@@ -66,7 +66,6 @@
                             :filterable="false"
                             :value="initialCourse.categories"
                             @input="selectCategory"
-                            @search="searchCategories"
                             :multiple="true"
                         ></v-select>
                     </b-form-group>
@@ -315,8 +314,24 @@ export default {
                 });
             }
         },
+        getCategory(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/categories"
+                })
+                    .then((response) => {
+                        this.categories = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        }
     },
     mounted() {
+        this.getCategory();
         this.loadScores();
     },
 };

@@ -17,7 +17,6 @@
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectCourse"
-                            @search="searchCourse"
                         ></v-select>
                     </b-form-group>
                     <b-form-group
@@ -144,7 +143,25 @@ export default {
         selectCourse(course) {
             this.newLesson.course_id = course.id;
         },
+        getCourse(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/courses",
+                })
+                    .then((response) => {
+                        this.courses = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        }
     },
+    mounted(){
+        this.getCourse();
+    }
 };
 </script>
 

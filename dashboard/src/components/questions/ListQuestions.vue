@@ -18,7 +18,6 @@
                                 :clear-search-on-select="false"
                                 :filterable="false"
                                 @input="selectProfile"
-                                @search="seachProfile"
                             ></v-select>
                         </b-form-group>
                     </b-col>
@@ -37,7 +36,6 @@
                                 :clear-search-on-select="false"
                                 :filterable="false"
                                 @input="selectCategory"
-                                @search="searchCategory"
                             ></v-select>
                         </b-form-group>
                     </b-col>
@@ -238,6 +236,40 @@ export default {
           this.selectedCategory = category.id;
           this.loadQuestions();
         },
+        getProfiles(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/profiles"
+                })
+                    .then((response) => {
+                        this.profiles = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        },
+        getCategory(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/categories"
+                })
+                    .then((response) => {
+                        this.categories = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        }
+    },
+    mounted() {
+        this.getProfiles();
+        this.getCategory();
     },
     created() {
         if (this.selectedProfile, this.selectedCategory) {

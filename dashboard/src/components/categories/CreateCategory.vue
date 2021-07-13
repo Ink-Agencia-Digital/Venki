@@ -53,7 +53,6 @@
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectCategory"
-                            @search="searchCategory"
                             v-model="newCategory.category_id"
                         ></v-select>
                     </b-form-group>
@@ -245,7 +244,25 @@ export default {
             this.selectedCategory = category.id;
             this.newCategory.category_id = this.selectedCategory;
         },
+        getCategory(){
+             this.$http({
+                    method: "GET",
+                    url: "/api/categoriesChildren"
+                })
+                    .then((response) => {
+                        this.categories = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        }
     },
+    mounted(){
+        this.getCategory();
+    }
 };
 </script>
 

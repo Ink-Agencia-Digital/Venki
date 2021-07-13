@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelRegister" title="Creacion de encuestas">
+    <panel ref="panelRegister" title="Creación de encuestas">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -12,12 +12,11 @@
                         <v-select
                             label="name"
                             :options="profiles"
-                            :placeholder="'Digite nombre del perfl'"
+                            :placeholder="'Seleccione el perfil'"
                             id="profiles"
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectProfile"
-                            @search="seachProfile"
                         ></v-select>
                     </b-form-group>
                 </b-col>
@@ -114,7 +113,25 @@ export default {
         selectProfile(profile) {
             this.newSurvey.profile_id = profile.id;
         },
+        getProfiles(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/profiles"
+                })
+                    .then((response) => {
+                        this.profiles = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        }
     },
+    mounted(){
+        this.getProfiles();
+    }
 };
 </script>
 

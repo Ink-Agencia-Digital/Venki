@@ -12,12 +12,11 @@
                         <v-select
                             label="name"
                             :options="profiles"
-                            :placeholder="'Digite nombre del perfl'"
+                            :placeholder="'Seleccione el perfil'"
                             id="profiles"
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectProfile"
-                            @search="seachProfile"
                         ></v-select>
                     </b-form-group>
                     <b-form-group
@@ -29,12 +28,11 @@
                         <v-select
                             label="name"
                             :options="categories"
-                            :placeholder="'Digite nombre de la categoria'"
+                            :placeholder="'Seleccione la categoria'"
                             id="categories"
                             :clear-search-on-select="false"
                             :filterable="false"
                             @input="selectCategory"
-                            @search="searchCategory"
                         ></v-select>
                     </b-form-group>
                     <b-form-group
@@ -101,8 +99,6 @@ export default {
             categories: [],
             childrencategories:[]
         };
-    },
-    mounted() {
     },
     methods: {
         createQuestion() {
@@ -204,8 +200,43 @@ export default {
         },
         selectSubCategory(subcategory){
             this.newQuestion.subcategory_id=subcategory.id;
+        },
+        getProfiles(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/profiles"
+                })
+                    .then((response) => {
+                        this.profiles = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        },
+        getCategory(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/categories"
+                    
+                })
+                    .then((response) => {
+                        this.categories = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
         }
     },
+    mounted(){
+        this.getProfiles();
+        this.getCategory();
+    }
 };
 </script>
 

@@ -12,13 +12,11 @@
                         <v-select
                             label="name"
                             :options="courses"
-                            v-model="selectedCourse"
-                            :placeholder="'Digite nombre del curso'"
+                            :placeholder="'Seleccione el curso'"
                             id="courses"
                             :clear-search-on-select="true"
                             :filterable="false"
                             @input="selectCourse"
-                            @search="searchCourse"
                         ></v-select>
                     </b-form-group>
                     <b-form-group
@@ -253,8 +251,26 @@ export default {
             this.quiz_answers.splice(this.editindex,1);
             this.edit=false;
             this.optionanswer='';
+        },
+        getCourses(){
+            this.$http({
+                method: "GET",
+                url: "/api/courses",
+            })
+                .then((response) => {
+                    this.courses = response.data.data;
+                })
+                .catch(() => {
+                    this.$swal({
+                        icon: "error",
+                        title: "Error!",
+                    });
+                });
         }
     },
+    mounted() {
+        this.getCourses();
+    }
 };
 </script>
 
