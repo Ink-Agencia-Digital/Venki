@@ -83,9 +83,9 @@ class ImageController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Image $image)
     {
-        $image = Image::find($id)->get();
+        //$image = Image::find($id)->get();
 
         if ($request->has('name')) {
             $image->name = $request->name;

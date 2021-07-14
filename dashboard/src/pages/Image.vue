@@ -3,7 +3,7 @@
         <!-- begin page-header -->
         <h1 class="page-header">
             Imagenes del dia
-            <small>Admnistración de imagenes</small>
+            <small>Admnistración de imágenes</small>
         </h1>
         <!-- end page-header -->
 
@@ -30,6 +30,22 @@
                         @selectImage="selectImage"
                     />
                 </b-col>
+                <b-col md="12">
+                    <transition
+                        name="my-swing"
+                        enter-active-class="bounce-in-top"
+                        leave-active-class="bounce-out-bck"
+                        mode="out-in"
+                    >
+                        <UpdateImage
+                            v-if="selectedImage"
+                            :initialImage="selectedImage"
+                            :key="updateKey"
+                            @resetUpdate="resetUpdate"
+                            @updateSuccess="updateSuccess"
+                        />
+                    </transition>
+                </b-col>
             </b-row>
         </b-container>
     </div>
@@ -53,16 +69,25 @@ export default {
                 resolve(ListImage.default);
             });
         },
+        UpdateImage: (resolve) => {
+            import(
+                /* webpackChunkName: "components" */ "@/components/images/UpdateImage.vue"
+            ).then((UpdateImage) => {
+                resolve(UpdateImage.default);
+            });
+        },
     },
     data() {
         return {
             selectedImage: null,
             registerKey: 1,
             listKey: 1,
+            updateKey: 1,
         };
     },
     methods: {
         selectImage(image) {
+            
             this.updateKey++;
             this.selectedImage= { ...image };
         },

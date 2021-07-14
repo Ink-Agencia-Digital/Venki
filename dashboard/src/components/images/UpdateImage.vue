@@ -11,7 +11,7 @@
                     >
                         <b-form-input
                             id="image-name"
-                            v-model="newImage.name"
+                            v-model="Image.name"
                             required
                         ></b-form-input>
                     </b-form-group>
@@ -23,7 +23,7 @@
                     >
                         <b-form-input
                             id="image-description"
-                            v-model="newImage.description"
+                            v-model="Image.description"
                             required
                         ></b-form-input>
                     </b-form-group>
@@ -35,10 +35,24 @@
                     >
                         <b-form-select
                             id="image-type"
-                            v-model="newImage.type"
+                            v-model="Image.type"
                             :options="options"
                             required
                         ></b-form-select>
+                    </b-form-group>
+                     <b-form-group
+                        class="row"
+                        label="Imagen Actual"
+                        label-cols-md="3"
+                        label-for="actual-photo"
+                    >
+                        <div class="text-center">
+                            <img
+                                class="img-category"
+                                loading="lazy"
+                                :src="'/' + Image.url"
+                            />
+                        </div>
                     </b-form-group>
                     <b-form-group
                         class="row"
@@ -80,7 +94,7 @@
                             >
                         </b-col>
                         <b-col col sm="6" md="4" offset-md="1">
-                            <b-button variant="warning" @click="createImage"
+                            <b-button variant="warning" @click="updateImage"
                                 >Registrar</b-button
                             >
                         </b-col>
@@ -96,14 +110,15 @@ import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
 export default {
+    props: {
+        initialImage: Object,
+    },
     data() {
         return {
             busy: false,
-            newImage: {
-                type: null,
-            },
+            Image: { ...this.initialImage },
             dropzoneOptions: {
-                url: "/api/images",
+                url: "/api/images/"+this.initialImage.id,
                 thumbnailWidth: 150,
                 acceptedFiles: "image/*",
                 addRemoveLinks: true,
@@ -128,30 +143,57 @@ export default {
     },
     methods: {
         sendingEvent(file, xhr, formData) {
-            console.log(this.newImage);
-            Object.keys(this.newImage).forEach((key) => {
-                formData.append(key, this.newImage[key]);
+            Object.keys(this.Image).forEach((key) => {
+                formData.append(key, this.Image[key]);
             });
+            formData.append("_method", "PUT");
         },
         deletePicture(file) {
             this.$refs.dropzone_picture.removeFile(file);
         },
-        sendSuccess() {
-            this.registrationSuccessful();
-            this.$swal.fire("Exito!", "Registro exitoso", "success");
+        sendSuccess(file, response) {
+            this.Image = response.data;
+            this.$refs.dropzone_picture.removeAllFiles();
+            this.$swal.fire("Exito!", "Cambio exitoso", "success").then(() => {
+                this.updateSuccess();
+            });
         },
-        createImage() {
-            this.$refs.dropzone_picture.processQueue();
+        updateImage() {
+            if (this.$refs.dropzone_picture.dropzone.files.length > 0) {
+                this.$refs.dropzone_picture.processQueue();
+            } else {
+                this.$http({
+                    method: "PUT",
+                    url: "/api/images/" + this.Image.id,
+                    data: {
+                        name: this.Image.name,
+                        description: this.Image.description,
+                        type: this.Image.type
+                    },
+                })
+                    .then((response) => {
+                        this.Image = response.data.data;
+                        this.$swal
+                            .fire("Exito!", "Cambio exitoso", "success")
+                            .then(() => {
+                                this.updateSuccess();
+                            });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$swal.fire("Error!", "Cambio fallido", "error");
+                    });
+            }
+
         },
         sendError() {
             this.$swal.fire("Error!", "Registro fallido", "error");
         },
-        resetRegister() {
-            this.$emit("resetRegister");
+        resetUpdate() {
+            this.$emit("resetUpdate");
         },
-        registrationSuccessful() {
-            this.$emit("registrationSuccessful");
-            this.resetRegister();
+        updateSuccess() {
+            this.$emit("updateSuccess");
         },
     },
 };

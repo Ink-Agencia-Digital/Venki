@@ -26,6 +26,12 @@
                             <span v-if="props.column.field == 'actions'">
                                 <span>
                                     <div class="text-center">
+                                         <a
+                                            class="btn btn-grey"
+                                            @click="selectImage(props.row)"
+                                        >
+                                            <i class="fas fa-edit fa-fw"></i>
+                                        </a>
                                         <a
                                             class="btn btn-danger"
                                             @click="confirmDelete(props.row.id)"
@@ -174,6 +180,7 @@ export default {
             });
         },
         selectImage(image) {
+            
             this.$emit("selectImage", image);
         },
         selectUrl(url) {
