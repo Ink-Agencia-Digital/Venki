@@ -107,7 +107,6 @@
                                                 :clear-search-on-select="false"
                                                 :filterable="false"
                                                 @input="selectCourse"
-                                                @search="searchCourse"
                                             ></v-select>
                                         </b-col>
                                         <b-col md="4">
@@ -264,7 +263,25 @@ export default {
                     loader.hide();
                 });
         },
+        getCourse(){
+            this.$http({
+                    method: "GET",
+                    url: "/api/courses",
+                })
+                    .then((response) => {
+                        this.courses = response.data.data;
+                    })
+                    .catch(() => {
+                        this.$swal({
+                            icon: "error",
+                            title: "Error!",
+                        });
+                    });
+        }
     },
+    mounted(){
+        this.getCourse();
+    }
 };
 </script>
 
