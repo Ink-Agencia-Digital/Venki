@@ -19,7 +19,8 @@ const sidebarMenu = [
     { path:"/respuesta", icon:"fa fa-folder", title:"Calificación de Examen"},
     { path:"/trofeos", icon:"fa fa-trophy", title:"Creación de Trofeos"},
     { path:"/resultado", icon:"fa fa-box",title:"Consulta Resultados Examen"},
-    { path:"/notificaciones", icon:"fa fa-folder", title:"Notificaciones Push"}
+    { path:"/notificaciones", icon:"fa fa-folder", title:"Notificaciones Push"},
+    { path:"/scores", icon:"fa fa-folder", title:"Aprobación Comentarios"}
 ];
 
 export default sidebarMenu;

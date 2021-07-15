@@ -71,6 +71,7 @@ Route::middleware('auth:api')->group(function () {
      * Scores
      */
     Route::resource('scores', 'Score\ScoreController', ['except' => ['create', 'edit']]);
+    Route::post('scores/aprobacion','Score\ScoreController@update');
     /**
      * Devices
      */

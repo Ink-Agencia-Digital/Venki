@@ -271,7 +271,19 @@ const routes = [
                 }
             ),
             
-    }
+    },
+    {
+        path: "/scores",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/Scores.vue").then(
+                (scores) => {
+                    resolve(scores.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        }
+    }    
 
 ];
 

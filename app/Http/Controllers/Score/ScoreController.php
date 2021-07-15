@@ -18,7 +18,7 @@ class ScoreController extends ApiController
      */
     public function index()
     {
-        //
+        return $this->collectionResponse(ScoreResource::collection($this->getModel(new Score,['user','course'])));
     }
 
     /**
@@ -81,7 +81,13 @@ class ScoreController extends ApiController
      */
     public function update(Request $request, Score $score)
     {
-        //
+        foreach($request->all() as $item)
+        {
+            Score::where('id','=',$item['id'])->update(['active'=>1]);
+        }
+        return response()->json([
+            'data'=>$request
+        ]);
     }
 
     /**
