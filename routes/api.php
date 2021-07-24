@@ -18,6 +18,7 @@ Route::get('/register/verify/{code}', 'GuestController@verify');
 Route::post('password/email', 'Auth\ForgotPasswordController@forgot');
 Route::post('password/reset', 'Auth\ForgotPasswordController@reset');
 Route::post('oauth/token', 'Auth\LoginController@login');
+Route::post('oauth/tokenweb', 'Auth\LoginController@LoginWeb');
 Route::post('users', 'User\UserController@store');
 
 Route::middleware('auth:api')->group(function () {
@@ -46,6 +47,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('users.feelings', 'User\UserFeelingController', ['only' => ['index']]);
     Route::resource('users.coins', 'User\UserCoinController', ['only' => ['index']]);
     Route::resource('users.competences', 'User\UserCompetenceController', ['only' => ['index']]);
+    Route::resource('useradmin','User\user_adminController',['except'=>['create','edit','destroy']]);
     /**
      * Courses
      */

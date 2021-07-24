@@ -273,7 +273,7 @@ const routes = [
             
     },
     {
-        path: "/scores",
+        path: "Configuracion/scores",
         component: (resolve) =>
             import(/* webpackChunkName: "pages" */ "@/pages/Scores.vue").then(
                 (scores) => {
@@ -283,7 +283,19 @@ const routes = [
         meta: {
             requiresAuth: true,
         }
-    }    
+    },
+    {
+        path: "/usersadmin",
+        component: (resolve) =>
+            import(/* webpackChunkName: "pages" */ "@/pages/UsersAdmin.vue").then(
+                (usersadmin) => {
+                    resolve(usersadmin.default);
+                }
+            ),
+        meta: {
+            requiresAuth: true,
+        }
+    }        
 
 ];
 

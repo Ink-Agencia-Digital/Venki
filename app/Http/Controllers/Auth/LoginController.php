@@ -8,6 +8,8 @@ use App\LinkedSocialAccount;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use App\Traits\ApiResponser;
 use Carbon\Carbon;
@@ -78,28 +80,21 @@ class LoginController extends ApiController
 
     }
 
-public function login(Request $request)
+    public function login(Request $request)
     {
-
         $credentials = array(
             'email' =>$request->username,
             'password' => $request->password
         );
-	
-	//return response()->json(['message' =>  $credentials],401);		
-
-        if (!Auth::attempt($credentials)) {
+        if (!Auth::attempt($credentials)) 
+        {
             return response()->json(['message' => 'Credenciales incorrectas'], 401);
         }
-
+        //return response()->json(['message' =>  $credentials],401);		
         $user = $request->user();
-	
         $tokenResult = $user->createToken('Personal Access Token');
-
         $token = $tokenResult->token;
-
         $token->save();
-
         return response()->json([
             'access_token' => $tokenResult->accessToken,
             'token_type'   => 'Bearer',
@@ -108,5 +103,44 @@ public function login(Request $request)
         ], 200);
     }
 
-
+    public function LoginWeb(Request $request )
+    {
+        $usuario=User::where('email','=',$request->username)->first();
+        if($usuario->role_id!=null)
+        {
+            $credentials = array(
+                'email' =>$request->username,
+                'password' => $request->password
+            );
+            if(Auth::attempt($credentials))
+            {
+                $tokenResult = $usuario->createToken('Personal Access Token');
+        
+                $token = $tokenResult->token;
+        
+                $token->save();
+                return response()->json([
+                    'access_token' => $tokenResult->accessToken,
+                    'token_type'   => 'Bearer',
+                    'expires_at'   => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
+                    'user'         => $usuario
+                ], 200);
+            }
+            else
+            {
+                return response()->json(['message' => 'Credenciales incorrectas'], 401);
+            }
+            /*return response()->json([
+                'data'=>,
+                'password'=>$request->password,
+                'hash'=>Hash::make($request->password)
+            ]);*/
+        }
+        else
+        {
+            return response()->json([
+                'message'=>'No es un usuario administrador.'
+            ],401);
+        }
+    }
 }

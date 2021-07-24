@@ -70,7 +70,8 @@ class User extends Authenticatable
         'press',
         'differences',
         'competencies',
-        'goals'
+        'goals',
+        'role_id'
     ];
 
     /**
@@ -210,5 +211,9 @@ class User extends Authenticatable
     public function resultados_examen()
     {
         return $this->hasMany(resultado_examen::class,'id_user');
+    }
+
+    public function roles(){
+        return $this->belongsTo(roles::class);
     }
 }

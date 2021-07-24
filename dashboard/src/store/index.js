@@ -29,12 +29,13 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        //
         async login({ dispatch }, user) {
-            await Axios.post("/api/oauth/token",{
+            await Axios.post("/api/oauth/tokenweb",{
                     username: user.email,
                     password: user.password,
-                    client_secret: process.env.VUE_APP_CLIENT_SECRET,
-                    client_id: process.env.VUE_APP_CLIENT_ID,
+                    client_secret: "gRkm3DmM8DNwhDS5l7UYkUMkJiFa4tgRYgviMRVf",
+                    client_id: "90ef3f03-b692-496e-9240-c6486e4c8c51",
                     grant_type: "password",
             }).then((response) => {
                 localStorage.setItem(
@@ -44,6 +45,21 @@ export default new Vuex.Store({
                 return dispatch("getUser");
             })
         },
+        /*async loginweb({ dispatch }, user) {
+            await Axios.post("/api/oauth/tokenweb",{
+                    username: user.email,
+                    password: user.password,
+                    client_secret: "gRkm3DmM8DNwhDS5l7UYkUMkJiFa4tgRYgviMRVf",
+                    client_id: "90ef3f03-b692-496e-9240-c6486e4c8c51",
+                    grant_type: "password",
+            }).then((response) => {
+                localStorage.setItem(
+                    'token',
+                    response.data.access_token,
+                )
+                return dispatch("getUser");
+            })
+        },*/
         async getUser({ commit }) {
             await Axios
                 .get("/api/user", {
