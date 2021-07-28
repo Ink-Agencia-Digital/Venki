@@ -179,4 +179,12 @@ Route::middleware('auth:api')->group(function () {
      * Notifications push
      */
     Route::resource('notifications','Notification\notificationController',['except'=>['create','edit']]);
+    /**
+     * Graficos
+     */
+    Route::get('Gusers','Graficos\graficosController@users');
+    Route::get('Gfreepremium','Graficos\graficosController@premiumusers');
+    Route::get('Gprofileuser','Graficos\graficosController@usersprofile');
+
+
 });
