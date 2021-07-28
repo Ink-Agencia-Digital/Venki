@@ -130,11 +130,6 @@ class LoginController extends ApiController
             {
                 return response()->json(['message' => 'Credenciales incorrectas'], 401);
             }
-            /*return response()->json([
-                'data'=>,
-                'password'=>$request->password,
-                'hash'=>Hash::make($request->password)
-            ]);*/
         }
         else
         {
