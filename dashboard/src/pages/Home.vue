@@ -82,8 +82,6 @@ export default {
                     this.chartdata.labels.push(item.labels==1?'Free':'Premium');
                     this.chartdata.datasets.push({'data':[item.datasets],'background':'#00FFBF','label':''});
                 })
-                
-                console.log(this.chartdata);
                 this.loaded=true;
             } );
         },

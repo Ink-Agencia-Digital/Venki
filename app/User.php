@@ -216,4 +216,8 @@ class User extends Authenticatable
     public function roles(){
         return $this->belongsTo(roles::class);
     }
+
+    public function Pagos(){
+        return $this->hasMany(pago::class,'user_id');
+    }
 }

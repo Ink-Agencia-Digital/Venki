@@ -90,9 +90,18 @@ export default {
                     email: this.user.email,
                     password: this.user.password
                 })
-                .then(() => {
-                    this.$router.replace("/home");
-                    loader.hide();
+                .then((response) => {
+                    console.log(response);
+                    /*if(response.message)
+                    {
+                        this.$swal.fire("Error!", response.message, "error");
+                         loader.hide();
+                    }
+                    else{*/
+                        this.$router.replace("/home");
+                        loader.hide();
+                    //}*/
+                    
                 })
                 .catch((error) => {
                     loader.hide();

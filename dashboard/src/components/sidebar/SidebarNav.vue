@@ -70,6 +70,7 @@ export default {
                 .pageSidebarMinified;
         },
         handleSidebarFilter: function (e) {
+            console.log(this.menus);
             var value = e.target.value;
             value = value.toLowerCase();
 

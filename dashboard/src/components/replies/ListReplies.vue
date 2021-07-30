@@ -58,8 +58,12 @@ export default {
                     field: "id",
                 },
                 {
-                    label: "Usuario",
-                    field: "user.email",
+                    label: "Nombre",
+                    field: "user.name",
+                },
+                {
+                    label: "Apellido",
+                    field: "user.lastname",
                 },
                 {
                     label: "Creacion",

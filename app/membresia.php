@@ -16,4 +16,8 @@ class membresia extends Model
         'precio',
         'duracion'
     ];
+
+    public function pagos(){
+        return $this->hasMany(pago::class,'membresia_id');
+    }
 }

@@ -273,7 +273,7 @@ const routes = [
             
     },
     {
-        path: "Configuracion/scores",
+        path: "/scores",
         component: (resolve) =>
             import(/* webpackChunkName: "pages" */ "@/pages/Scores.vue").then(
                 (scores) => {
