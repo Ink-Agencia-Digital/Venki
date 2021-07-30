@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Graficos;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\User;
+use App\UserCourse;
 
 class graficosController extends ApiController
 {
@@ -33,4 +34,15 @@ class graficosController extends ApiController
             'data'=>$userprofile
         ]);
     }
+
+    public function courseusers()
+    {
+        $courseuser = UserCourse::select('courses.name as labels',UserCourse::raw('COUNT(users_courses.user_id) as datasets'))
+                        ->join('courses','courses.id','=','users_courses.course_id')->groupBy('users_courses.course_id')->get();
+        return response()->json([
+            'data'=>$courseuser
+        ]);
+    }
+    
+
 }

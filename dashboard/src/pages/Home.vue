@@ -15,6 +15,7 @@
             <b-button variant="success" @click="usuariosaplicacion">Usuarios Aplicación</b-button>
             <b-button variant="success" @click="usuariosfree">Usuarios Free vs Premium</b-button>
             <b-button variant="success" @click="usuariosPerfil">Usuarios por Perfil</b-button>
+            <b-button variant="success" @click="usuariosCurso">Usuarios por Curso</b-button>
         </b-row>
         <!-- end page-header -->
        <div class="container">
@@ -108,7 +109,32 @@ export default {
                 console.log(this.chartdata);
                 this.loaded=true;
             } );
+        },
+        usuariosCurso(){
+            this.chartdata= {
+                    labels:[],
+                    datasets:[{
+
+                    }]
+            }
+            this.data=[]
+            this.loaded=false
+            this.$http({
+                method:'GET',
+                url:'/api/Guserscourse'
+            })
+            .then((response)=>{
+                response.data.data.forEach((item)=>{
+                    console.log(item.labels);
+                    console.log(item.datasets);
+                    this.chartdata.labels.push(item.labels);
+                    this.chartdata.datasets.push({'data':[item.datasets],'background':'#00FFBF','label':''});
+                })
+                console.log(this.chartdata);
+                this.loaded=true;
+            } );
         }
+
 
     },
     mounted () {
