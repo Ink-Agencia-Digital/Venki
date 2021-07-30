@@ -47,6 +47,7 @@ import "bootstrap-social/bootstrap-social.css";
 
 import App from "./App.vue";
 import store from "./store";
+import JsonExcel from "vue-json-excel";
 
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
@@ -81,7 +82,7 @@ Vue.component("input-tag", VueInputTag);
 Vue.component("vue-slider", VueSlider);
 Vue.component("vue-custom-scrollbar", VueCustomScrollbar);
 Vue.component(VueCountdown.name, VueCountdown);
-
+Vue.component("downloadExcel", JsonExcel);
 Vue.prototype.$http = Axios;
 const token = localStorage.getItem('token')
 if (token) {

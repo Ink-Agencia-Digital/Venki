@@ -1,5 +1,11 @@
 <template>
     <div>
+        <div>
+            <download-excel :data="json_data">
+            Descargar Información
+                <i class="fa fa-download"></i>
+            </download-excel>
+        </div>
         <Panel ref="panelList" title="Tabla de usuarios">
             <b-container>
                 <div class="table-responsive">
@@ -52,14 +58,26 @@ export default {
                     label: "Fecha de nacimiento",
                     field: "birthday",
                 },
-                {
-                    label: "Telefono",
-                    field: "phone",
-                },
                  {
                     label: "Correo",
                     field: "email",
                 },
+                {
+                    label: "Tipo Usuario",
+                    field: "premium",
+                },
+                {
+                    label: "Membresia",
+                    field: "nombre",
+                },
+                {
+                    label: "Precio",
+                    field: "precio",
+                },
+                {
+                    label: "Fecha Pago",
+                    field: "fecha_pago",
+                }
             ],
             sort: {
                 enabled: false,
@@ -78,6 +96,7 @@ export default {
             },
             selectedPhoto: null,
             isOpen: "none",
+            json_data:[]
         };
     },
     mounted() {
@@ -87,7 +106,7 @@ export default {
         loadUsers() {
             let loader = this.$loading.show();
                 Axios
-                 .get("/api/users?per_page=" +
+                 .get("/api/Pagos?per_page=" +
                     this.perPage +
                     "&page=" +
                     this.page, {
@@ -99,8 +118,20 @@ export default {
                 .then((response) => {
                     console.log(response);
                     this.users = response.data.data;
-                    console.log(this.users);
-                    this.totalRecords = response.data.meta.total;
+                    this.users.forEach(item =>{
+                        switch(item.premium)
+                        {
+                            case 1:
+                                item.premium = 'Pago'          
+                                break
+                            case 0:
+                                item.premium = 'Free'
+                                break
+                        }
+                    })
+                    this.json_data=this.users;
+                    //console.log(this.users);
+                    //this.totalRecords = response.data.meta.total;
                     loader.hide();
                 })
                 .catch(() => {
