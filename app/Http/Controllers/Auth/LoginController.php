@@ -90,8 +90,20 @@ class LoginController extends ApiController
         {
             return response()->json(['message' => 'Credenciales incorrectas'], 401);
         }
-        //return response()->json(['message' =>  $credentials],401);		
         $user = $request->user();
+        $fechamembresia = User::select('pagos.x_transaction_date as fecha','membresias.duracion')
+                        ->join('pagos','pagos.user_id','=','users.id')
+                        ->join('membresias','pagos.membresia_id','=','membresias.id')
+                        ->where('users.id','=',$user->id)->where('pagos.x_transaction_date','!=','null')->first();
+        
+        $fecha = new Carbon($fechamembresia->fecha);
+        $fechavencimiento=$fecha->addDays($fechamembresia->duracion);
+        $fechaactual = Carbon::now();
+        if($fechaactual>$fechavencimiento)
+        {
+            User::where('id','=',$user->id)->update(['premium'=>'0']);
+            $user=User::where('id','=',$user->id)->first();
+        }
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         $token->save();
@@ -99,7 +111,7 @@ class LoginController extends ApiController
             'access_token' => $tokenResult->accessToken,
             'token_type'   => 'Bearer',
             'expires_at'   => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
-            'user'         => $request->user()
+            'user'         => $user
         ], 200);
     }
 
