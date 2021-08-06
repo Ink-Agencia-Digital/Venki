@@ -1,5 +1,5 @@
 <template>
-    <panel ref="panelUpdate" title="Modificación de membresias">
+    <panel ref="panelUpdate" title="Modificación de usuarios Administradores">
         <b-container>
             <b-row class="m-t-10 m-b-10">
                 <b-col md="10" offset-md="1">
@@ -41,7 +41,7 @@
                     </b-form-group>
                     <b-form-group
                         class="row"
-                        label="Email"
+                        label="Password"
                         label-cols-md="3"
                         label-for="user-password"
                     >
@@ -84,6 +84,7 @@ export default {
         return {
             User: { ...this.initialUser },
             loading: null,
+            roles:[]
         };
     },
     methods: {
@@ -106,7 +107,8 @@ export default {
                 data: {
                     name: this.User.user_name,
                     lastname: this.User.user_lastname,
-                    password:this.User.user_password
+                    password:this.User.user_password,
+                    role_id:this.User.role_id
                 },
             })
                 .then((response) => {
@@ -123,6 +125,18 @@ export default {
                 });
             
         },
+        /*cargarRoles(){
+            this.$http({
+                method:"GET",
+                url:"/api/Roles"
+            })
+            .then((response)=>{
+                this.roles=response.data.data;
+            })
+        },
+        selectRol(Rol){
+            this.User.role_id=Rol.id;
+        },*/
         sendError() {
             this.$swal.fire("Error!", "Cambio fallido", "error");
         },
@@ -133,6 +147,9 @@ export default {
             this.$emit("updateSuccess");
         },
     },
+    /*mounted(){
+        this.cargarRoles();
+    }*/
 };
 </script>
 

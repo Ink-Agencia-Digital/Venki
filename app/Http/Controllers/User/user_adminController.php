@@ -18,13 +18,13 @@ class user_adminController extends ApiController
     public function index()
     {
         $users=User::select('users.id as user_id','users.name as user_name','users.lastname as user_lastname','users.email as user_email','users.password as user_password','roles.id as role_id','roles.name as role_name')
-                    ->join('roles','roles.id','=','users.role_id')->where('roles.name','=','admin')->get();
+                    ->join('roles','roles.id','=','users.role_id')->where('roles.name','!=','super-admin')->where('users.role_id','!=','null')->get();
         return response()->json([
             'data'=>$users,
         ]);
     }
 
-    /**
+    /**                                                   
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -44,7 +44,6 @@ class user_adminController extends ApiController
     {
         $user = new User();
         $user->fill($request->all());
-        $user->role_id=1;
         $user->saveOrFail();
         return $this->api_success([
             'data' => $request->password,

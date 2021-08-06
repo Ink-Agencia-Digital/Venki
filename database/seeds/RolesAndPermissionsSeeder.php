@@ -26,7 +26,19 @@ class RolesAndPermissionsSeeder extends Seeder
         // create roles and assign created permissions
 
         // or may be done by chaining
-        $role = Role::create(['name' => 'admin', 'guard_name' => 'api'])
+        $role = Role::create(['name' => 'admin', 'guard_name' => 'api','opcmenu'=>'1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22'])
+            ->givePermissionTo([
+                'create users',
+                'delete users',
+                'update users'
+            ]);
+            $role = Role::create(['name' => 'Financiero', 'guard_name' => 'api','opcmenu'=>'1,2,4'])
+            ->givePermissionTo([
+                'create users',
+                'delete users',
+                'update users'
+            ]);
+            $role = Role::create(['name' => 'Contenidos', 'guard_name' => 'api','opcmenu'=>'5,10,11,12,13,14,16,18'])
             ->givePermissionTo([
                 'create users',
                 'delete users',
@@ -37,10 +49,12 @@ class RolesAndPermissionsSeeder extends Seeder
         $role->givePermissionTo(Permission::all());
 
         $user = User::create([
+            'profile_id'=>1,
             'name'=>'Super',
             'lastname'=>'Admin',
             'email'=>'Superadmin@gmail.com',
             'password'=>bcrypt('admin'),
+            'role_id'=>1
         ]);
 
         $user->assignRole('super-admin');

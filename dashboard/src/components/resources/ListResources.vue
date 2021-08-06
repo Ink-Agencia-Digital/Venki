@@ -78,6 +78,9 @@
                                         >Link Vimeo</a
                                     >
                                 </span>
+                                 <span v-else-if="props.row.quiz">
+                                    Quiz
+                                </span>
                             </span>
                             <span v-if="props.column.field == 'actions'">
                                 <span>
@@ -202,6 +205,7 @@ export default {
                 })
                     .then((response) => {
                         this.resources = response.data.data;
+                        console.log(this.resources);
                         this.totalRecords = response.data.meta.total;
                         loader.hide();
                     })

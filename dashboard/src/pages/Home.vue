@@ -60,7 +60,6 @@ export default {
                     this.data.push(item.datasets);
                 })
                 this.chartdata.datasets.push({'data':this.data,'background':'#f87979','label':'datos'});
-                console.log(this.chartdata);
                 this.loaded=true;
             } );
         },
@@ -79,7 +78,6 @@ export default {
             })
             .then((response)=>{
                 response.data.data.forEach((item)=>{
-                    console.log(item.labels);
                     this.chartdata.labels.push(item.labels==1?'Free':'Premium');
                     this.chartdata.datasets.push({'data':[item.datasets],'background':'#00FFBF','label':''});
                 })
@@ -101,12 +99,9 @@ export default {
             })
             .then((response)=>{
                 response.data.data.forEach((item)=>{
-                    console.log(item.labels);
-                    console.log(item.datasets);
                     this.chartdata.labels.push(item.labels);
                     this.chartdata.datasets.push({'data':[item.datasets],'background':'#00FFBF','label':''});
                 })
-                console.log(this.chartdata);
                 this.loaded=true;
             } );
         },
@@ -125,12 +120,9 @@ export default {
             })
             .then((response)=>{
                 response.data.data.forEach((item)=>{
-                    console.log(item.labels);
-                    console.log(item.datasets);
                     this.chartdata.labels.push(item.labels);
                     this.chartdata.datasets.push({'data':[item.datasets],'background':'#00FFBF','label':''});
                 })
-                console.log(this.chartdata);
                 this.loaded=true;
             } );
         }

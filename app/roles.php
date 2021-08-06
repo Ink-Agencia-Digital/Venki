@@ -10,7 +10,8 @@ class roles extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'guard_name'
+        'guard_name',
+        'opcmenu'
     ];
 
     public function users()

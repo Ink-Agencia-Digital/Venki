@@ -57,12 +57,12 @@
             </template>
         </ul>
     </li>
-
+<!---->
     <!-- menu without submenu -->
     <router-link
         v-else
         v-bind:to="menu.path"
-        v-bind:class="{ 'd-none': this.stat == 'hide' }"
+        v-bind:class="{ 'd-none': this.stat == 'hide' }"   
         active-class="active"
         tag="li"
         v-on:click.native="collapseOther()"

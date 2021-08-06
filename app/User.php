@@ -214,7 +214,7 @@ class User extends Authenticatable
     }
 
     public function roles(){
-        return $this->belongsTo(roles::class);
+        return $this->belongsTo(roles::class,'role_id');
     }
 
     public function Pagos(){

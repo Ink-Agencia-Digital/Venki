@@ -65,6 +65,10 @@ export default {
                     field: "user_email",
                 },
                 {
+                    label: "Rol",
+                    field: "role_name",
+                },
+                {
                     label:"Acciones",
                     field:"actions"
                 }
@@ -93,7 +97,6 @@ export default {
     },
     methods: {
         selectUser(user) {
-            console.log(user);
             this.$emit("selectUser", user);
         },
         loadUsers() {
@@ -109,9 +112,7 @@ export default {
                     }
                 })
                 .then((response) => {
-                    console.log(response);
                     this.users = response.data.data;
-                    console.log(this.users);
                     //this.totalRecords = response.data.meta.total;
                     loader.hide();
                 })

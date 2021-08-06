@@ -13,12 +13,11 @@
                             <v-select
                                 label="email"
                                 :options="users"
-                                :placeholder="'Digite nombre del usuario'"
+                                :placeholder="' Seleccione el usuario'"
                                 id="list-users"
                                 :clear-search-on-select="false"
                                 :filterable="false"
                                 @input="selectUser"
-                                @search="searchUser"
                             ></v-select>
                         </b-form-group>
                         <b-form-group
@@ -231,25 +230,20 @@ export default {
                     });
             }, 300);
         },
-        searchUser(value, loading) {
-            loading(true);
-            clearTimeout(searchTimer);
-            searchTimer = setTimeout(() => {
-                this.$http({
-                    method: "GET",
-                    url: "/api/users?query=name|LIKE|%" + value + "%",
+        searchUser() {
+            this.$http({
+                method: "GET",
+                url: "/api/users",
+            })
+                .then((response) => {
+                    this.users = response.data.data;
                 })
-                    .then((response) => {
-                        loading(false);
-                        this.users = response.data.data;
-                    })
-                    .catch(() => {
-                        this.$swal({
-                            icon: "error",
-                            title: "Error!",
-                        });
+                .catch(() => {
+                    this.$swal({
+                        icon: "error",
+                        title: "Error!",
                     });
-            }, 300);
+                });
         },
         selectCourse(course) {
             this.selectedCourse = course.id;
@@ -305,6 +299,7 @@ export default {
     },
     mounted(){
         this.getCourses();
+        this.searchUser();
     },
     created() {
         if (this.id_examen) {

@@ -20,6 +20,7 @@ class UserAdminSeeder extends Seeder
             'lastname'=>'Admin',
             'email'=>'Superadmin@gmail.com',
             'password'=>bcrypt('admin'),
+            'role_id'=>1
         ]);
     }
 }

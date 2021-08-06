@@ -190,4 +190,8 @@ Route::middleware('auth:api')->group(function () {
      * Pagos
      */
     Route::resource('Pagos','Pagos\pagoController',['only'=>['index']]);
+    /**
+     * Roles
+     */
+    Route::get('Roles','User\useradminroleController@index');
 });

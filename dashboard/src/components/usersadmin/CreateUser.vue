@@ -40,6 +40,22 @@
                     </b-form-group>
                     <b-form-group
                         class="row"
+                        label="Rol"
+                        label-cols-md="3"
+                        label-for="user-rol"
+                    >
+                        <v-select
+                            label="name"
+                            :options="roles"
+                            :placeholder="'Seleccione un rol'"
+                            id="user-rol"
+                            :clear-search-on-select="false"
+                            :filterable="false"
+                            @input="selectRol"
+                        ></v-select>
+                    </b-form-group>
+                    <b-form-group
+                        class="row"
                         label="Password"
                         label-cols-md="3"
                         label-for="user-password"
@@ -93,12 +109,12 @@ export default {
             busy: false,
             newUser: {},
             loading: null,
-            confirmpass:''
+            confirmpass:'',
+            roles:[]
         };
     },
     methods: {
         sendingEvent(file, xhr, formData) {
-            console.log(this.newUser);
             Object.keys(this.newUser).forEach((key) => {
                 formData.append(key, this.newUser[key]);
             });
@@ -110,6 +126,7 @@ export default {
         createUser() {
             if(this.validarPassword())
             {
+                console.log(this.newUser);
                 this.$http({
                 method:"POST",
                 url:"/api/useradmin",
@@ -129,6 +146,18 @@ export default {
             }
             
         },
+        cargarRoles(){
+            this.$http({
+                method:"GET",
+                url:"/api/Roles"
+            })
+            .then((response)=>{
+                this.roles=response.data.data;
+            })
+        },
+        selectRol(Rol){
+            this.newUser.role_id=Rol.id;
+        },
         sendError() {
             this.$swal.fire("Error!", "Registro fallido", "error");
         },
@@ -146,6 +175,9 @@ export default {
                 return false;
         }
     },
+    mounted(){
+        this.cargarRoles();
+    }
 };
 </script>
 
