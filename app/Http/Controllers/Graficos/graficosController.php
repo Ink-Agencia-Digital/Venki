@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ApiController;
 use App\User;
 use App\UserCourse;
+use App\pago;
 
 class graficosController extends ApiController
 {
@@ -44,5 +45,26 @@ class graficosController extends ApiController
         ]);
     }
     
+    public function pagosmembresia()
+    {
+        $pagos = pago::select('membresias.nombre as labels',pago::raw('SUM(pagos.x_amount_base) as datasets'))
+                ->join('membresias','membresias.id','=','pagos.membresia_id')->where('pagos.x_response','=','Aceptada')
+                ->groupBy('pagos.membresia_id')->get();
+        return response()->json([
+            'data'=>$pagos
+        ]);
+    }
+
+    public function pagosmes()
+    {
+        $pagosmes = pago::select(pago::raw('MONTH(pagos.x_transaction_date) as labels'),pago::raw('SUM(pagos.x_amount_base) as datasets'))
+                    ->where('pagos.x_response','=','Aceptada')
+                    ->where('YEAR(pagos.x_transaction_date)','=','YEAR(NOW())')
+                    ->groupBy('labels')->get();
+        return response()->json([
+            'data'=>$pagosmes
+        ]);
+    }
+
 
 }

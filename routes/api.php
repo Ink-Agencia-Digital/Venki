@@ -186,6 +186,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('Gfreepremium','Graficos\graficosController@premiumusers');
     Route::get('Gprofileuser','Graficos\graficosController@usersprofile');
     Route::get('Guserscourse','Graficos\graficosController@courseusers');
+    Route::get('Pagosmembresia','Graficos\graficosController@pagosmembresia');
+    Route::get('Pagosmensual','Graficos\graficosController@pagosmes');
     /**
      * Pagos
      */
