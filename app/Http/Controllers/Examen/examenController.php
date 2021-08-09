@@ -49,7 +49,7 @@ class examenController extends ApiController
         $exam->saveOrFail();
 
         return $this->api_success([
-            'data' => new ExamenResource($exam),
+            'data' => new examenResource($exam),
             'message' => __('pages.responses.created'),
             'code' => 201
         ], 201);
