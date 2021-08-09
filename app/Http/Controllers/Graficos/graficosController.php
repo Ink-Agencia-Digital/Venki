@@ -57,6 +57,7 @@ class graficosController extends ApiController
 
     public function pagosmes()
     {
+        
         $pagosmes = pago::select(pago::raw('MONTH(pagos.x_transaction_date) as labels'),pago::raw('SUM(pagos.x_amount_base) as datasets'))
                     ->where('pagos.x_response','=','Aceptada')
                     ->where('YEAR(pagos.x_transaction_date)','=','YEAR(NOW())')

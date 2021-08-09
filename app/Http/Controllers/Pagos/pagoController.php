@@ -15,7 +15,9 @@ class pagoController extends ApiController
                                     'membresias.precio','membresias.duracion','pagos.x_id_factura as factura','pagos.x_amount_base as valor',
                                     'pagos.x_tax as iva','pagos.x_approval_code as aprobacion','pagos.x_transaction_date as fecha_pago',
                                     'pagos.x_cod_response as cod_respuesta','pagos.x_response as respuesta','pagos.x_response_reason_text as texto_respuesta')
-                                    ->leftJoin('pagos','users.id','=','pagos.user_id')->leftJoin('membresias','pagos.membresia_id','=','membresias.id')->get();
+                                    ->leftJoin('pagos','users.id','=','pagos.user_id')->leftJoin('membresias','pagos.membresia_id','=','membresias.id')
+                                    ->whereNull('users.role_id')->orderBy('pagos.x_transaction_date','desc')
+                                    ->get();
 
         //return $this->collectionResponse(PagoResource::collection($this->getModel(new pago,['users','membresias'])));
         return response()->json([
