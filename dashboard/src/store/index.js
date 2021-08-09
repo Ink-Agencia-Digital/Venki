@@ -38,11 +38,17 @@ export default new Vuex.Store({
                     client_id: "90ef3f03-b692-496e-9240-c6486e4c8c51",
                     grant_type: "password",
             }).then((response) => {
-                localStorage.setItem(
-                    'token',
-                    response.data.access_token,
-                )
-                return dispatch("getUser");
+                /*if(response.message){
+                    return dispatch(response);
+                }
+                else {*/
+                    localStorage.setItem(
+                        'token',
+                        response.data.access_token,
+                    )
+                    return dispatch("getUser");
+                //}
+                
             })
         },
         /*async loginweb({ dispatch }, user) {
@@ -69,6 +75,8 @@ export default new Vuex.Store({
                     }
                 })
                 .then(res => {
+                    console.log(res.data.roles.opcmenu);
+                    sessionStorage.setItem('opcmenu',res.data.roles.opcmenu);
                     commit("ser_user", res.data);
                 })
                 .catch(() => {
