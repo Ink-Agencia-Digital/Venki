@@ -23,7 +23,8 @@ class respuestaExamenController extends ApiController
      */
     public function index($iduser,$idexamen)
     {
-        $respuestas = respuesta_examen::where('id_user','=',$iduser)->where('id_examen','=',$idexamen)->get();
+        $intento=respuesta_examen::where('id_user','=',$iduser)->where('id_examen','=',$idexamen)->orderBy('intento','desc')->value('intento');
+        $respuestas = respuesta_examen::where('id_user','=',$iduser)->where('id_examen','=',$idexamen)->where('intento','=',$intento)->get();
         return response()->json([
             'data'=>$respuestas
         ]);
@@ -55,6 +56,7 @@ class respuestaExamenController extends ApiController
             $respuesta->pregunta = $item['pregunta'];
             $respuesta->respuesta = $item['respuesta'];
             $respuesta->valor=$item['valor'];
+            $respuesta->intento=$item['intento'];
             $respuesta->saveOrFail();
         }   
 
@@ -99,10 +101,12 @@ class respuestaExamenController extends ApiController
         $valorcorrecto =(float)0;
         $idexamen = null;
         $iduser=null;
+        $intento=null;
         foreach($request->all() as $item)
         {
             $idexamen =$item['id_examen'];
             $iduser = $item['id_user'];
+            $intento = $item['intento'];
             $valorcorrecto +=(float)$item['valor'];
             $respuesta=respuesta_examen::where('id','=',$item['id'])->update(['correcto'=>1]);
         }
@@ -114,12 +118,22 @@ class respuestaExamenController extends ApiController
         }
         $nota = ($valorcorrecto/(float)$totalexamen)*100;
         $trofeo = trofeo::select('id')->where('rangoini','<=',$nota)->where('rangofin','>=',$nota)->get();
+        //consultar el ultimo intento valido para definir cual es el mejor puntaje.
+        $intentos = resultado_examen::where('id_user','=',$iduser)->where('id_examen','=',$idexamen)->where('valido','=','1')->get();
+        $valido=false;
+        if($intentos[0]->nota<$nota)
+        {
+             $valido=true;
+             resultado_examen::where('id','=',$intentos[0]->id)->update(['valido'=>false]);
+        }
         $resultadoexamen = new resultado_examen();
         $resultadoexamen->id_user=$iduser;
         $resultadoexamen->id_examen=$idexamen;
         $resultadoexamen->id_trofeo=$trofeo[0]->id;
         $resultadoexamen->nota=$nota;
-        $resultadoexamen->save(); 
+        $resultadoexamen->valido=$valido;
+        $resultadoexamen->intento = $intento;
+        $resultadoexamen->save();
         return response()->json([
             'data'=>$resultadoexamen
         ]) ;

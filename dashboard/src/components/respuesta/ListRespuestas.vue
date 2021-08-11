@@ -110,6 +110,10 @@ export default {
                     label: "Correcto",
                     field: "correcto",
                 },
+                {
+                    label: "Intento #",
+                    field: "intento",
+                },
             ],
             sort: {
                 enabled: false,

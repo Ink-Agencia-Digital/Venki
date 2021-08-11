@@ -12,7 +12,9 @@ class resultado_examen extends Model
         'id_user',
         'id_examen',
         'id_trofeo',
-        'nota'
+        'nota',
+        'intento',
+        'valido'
     ];
 
     public function users()

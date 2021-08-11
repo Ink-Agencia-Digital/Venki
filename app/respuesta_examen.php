@@ -14,7 +14,8 @@ class respuesta_examen extends Model
         'pregunta',
         'respuesta',
         'valor',
-        'correcto'
+        'correcto',
+        'intento'
     ];
 
     public function Users()

@@ -65,6 +65,14 @@ export default {
                 {
                     label: "Nota",
                     field: "nota",
+                },
+                {
+                    label: "Intento #",
+                    field: "intento",
+                },
+                {
+                    label: "Valido",
+                    field: "valido",
                 }
             ],
             sort: {
