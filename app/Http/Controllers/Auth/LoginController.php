@@ -95,14 +95,15 @@ class LoginController extends ApiController
                         ->join('pagos','pagos.user_id','=','users.id')
                         ->join('membresias','pagos.membresia_id','=','membresias.id')
                         ->where('users.id','=',$user->id)->where('pagos.x_transaction_date','!=','null')->first();
-        
-        $fecha = new Carbon($fechamembresia->fecha);
-        $fechavencimiento=$fecha->addDays($fechamembresia->duracion);
-        $fechaactual = Carbon::now();
-        if($fechaactual>$fechavencimiento)
-        {
-            User::where('id','=',$user->id)->update(['premium'=>'0']);
-            $user=User::where('id','=',$user->id)->first();
+        if($fechamembresia){
+            $fecha = new Carbon($fechamembresia->fecha);
+            $fechavencimiento=$fecha->addDays($fechamembresia->duracion);
+            $fechaactual = Carbon::now();
+            if($fechaactual>$fechavencimiento)
+            {
+                User::where('id','=',$user->id)->update(['premium'=>'0']);
+                $user=User::where('id','=',$user->id)->first();
+            }
         }
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
