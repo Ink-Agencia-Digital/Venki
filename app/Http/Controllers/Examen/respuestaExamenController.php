@@ -30,6 +30,14 @@ class respuestaExamenController extends ApiController
         ]);
     }
 
+    public function intentos($iduser,$idexamen)
+    {
+        $intento=respuesta_examen::where('id_user','=',$iduser)->where('id_examen','=',$idexamen)->orderBy('intento','desc')->value('intento');
+        $respuestas = respuesta_examen::select('id_user','id_examen','intento')->where('id_user','=',$iduser)->where('id_examen','=',$idexamen)->where('intento','=',$intento)->groupBy('id_user','id_examen','intento')->get();
+        return response()->json([
+            'data'=>$respuestas
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *

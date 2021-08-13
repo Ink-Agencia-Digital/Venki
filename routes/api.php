@@ -171,6 +171,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('respuestas/user/{iduser}/examen/{idexamen}','Examen\respuestaExamenController@index');
     Route::post('examen/calificacion','Examen\respuestaExamenController@update');
     Route::get('examen/resultados/user/{iduser}','Examen\resultadoExamenController@index');
+    Route::get('intentos/user/{iduser}/examen/{idexamen}','Examen\respuestaExamenController@intentos');
     /**
      * Trofeos
      */
