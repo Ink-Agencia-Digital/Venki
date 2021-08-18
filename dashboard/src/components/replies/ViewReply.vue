@@ -225,7 +225,18 @@ export default {
         },
 
         selectCourse(course) {
-            this.selectedCourse = course.id;
+            console.log(this.reply.user.courses);
+            console.log(course.id);
+            this.reply.user.courses.forEach(item=>{
+                if(course.id==item.id)
+                {
+                    this.$swal.fire("Advertencia","El curso ya se encuentra asignado.","warning");
+                    return;
+                }
+                else{
+                    this.selectedCourse = course.id;
+                }
+            })
         },
         assingCourse() {
             if (this.selectedCourse) {
@@ -235,15 +246,15 @@ export default {
                     url: "/api/users/" + this.reply.user.id + "/courses",
                     data: { course_id: this.selectedCourse },
                 })
-                    .then(() => {
-                        this.$swal.fire("Hecho", "Curso asignado", "success");
-                        loader.hide();
-                        this.loadReply();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$swal.fire("Error", "Error actualizando", "error");
-                    });
+                .then(() => {
+                    this.$swal.fire("Hecho", "Curso asignado", "success");
+                    loader.hide();
+                    this.loadReply();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$swal.fire("Error", "Error actualizando", "error");
+                });
             } else {
                 this.$swal.fire("Error", "Seleccione curso", "error");
             }
