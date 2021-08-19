@@ -295,6 +295,16 @@ const routes = [
         meta: {
             requiresAuth: true,
         }
+    },
+     {
+        path:"/eliminacion",
+        component:(resolve)=>
+            import(/*webpackChunkName: "pages" */ "@/pages/Eliminacion.vue").then(
+                (eliminacion)=>{
+                    resolve(eliminacion.default);
+                }
+            ),
+            
     }
     
 ];
