@@ -33,7 +33,7 @@
 <h3>DE LOS TÉRMINOS Y CONDICIONES</h3>
 
 <p>El Usuario acepta expresamente los Términos y Condiciones, siendo condición esencial para la utilización de la aplicación. En el evento en que se encuentre en desacuerdo con estos Términos y Condiciones, solicitamos abandonar la aplicación inmediatamente. VENKI S.A.S podrá modificar los presentes términos y condiciones, avisando a los usuarios de la aplicación mediante publicación en la página web www.habilidadesvenki.com o mediante la difusión de las modificaciones por algún medio electrónico, redes sociales, SMS y/o correo electrónico, lo cual se entenderá aceptado por el usuario si éste continua con el uso de la aplicación.</p>
-<p><strong>Uso de Direcciones IP<strong></p>
+<p><strong>Uso de Direcciones IP</strong></p>
 
 <p>Una dirección de Protocolo de Internet (IP) es un conjunto de números que se asigna automáticamente a su o dispositivo móvil cuando usted accede a su proveedor de servicios de internet, o a través de la red de área local (LAN) de su organización o la red de área amplia (WAN). Los servidores web automáticamente identifican su dispositivo móvil por la dirección IP asignada a él durante su sesión en línea.</p>
 
