@@ -56,6 +56,15 @@ class respuestaExamenController extends ApiController
      */
     public function store(StorerespuestaExamenRequest $request)
     {
+        $datos = $request->all();
+        $iduser = $datos[0]['id_user'];
+        $idexamen = $datos[0]['id_examen'];
+        $ultintento=respuesta_examen::where('id_user','=',$iduser)->where('id_examen','=',$idexamen)->orderBy('intento','desc')->value('intento');
+        $nuevointento=1;
+        if($ultintento!=null)
+        {
+            $nuevointento = $ultintento+1;
+        }
         foreach($request->all() as $item)
         {
             $respuesta = new respuesta_examen();
@@ -64,10 +73,9 @@ class respuestaExamenController extends ApiController
             $respuesta->pregunta = $item['pregunta'];
             $respuesta->respuesta = $item['respuesta'];
             $respuesta->valor=$item['valor'];
-            $respuesta->intento=$item['intento'];
+            $respuesta->intento=$nuevointento;
             $respuesta->saveOrFail();
-        }   
-
+        }
         return $this->api_success([
             'data' => new respuestaExamenResource($respuesta),
             'message' => __('pages.responses.created'),
