@@ -39,7 +39,13 @@ export default {
             responsive: true,
             maintainAspectRatio: false
         },
-        data:[]
+        data:[],
+        colors:['rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(255, 159, 64, 0.2)']
     }),
     methods:{
         usuariosaplicacion(){
@@ -57,10 +63,11 @@ export default {
             })
             .then((response)=>{
                 response.data.data.forEach((item)=>{
+                    item.labels = item.labels.substring(0,10);
                     this.chartdata.labels.push(item.labels);
                     this.data.push(item.datasets);
                 })
-                this.chartdata.datasets.push({'data':this.data,'background':'#f87979','label':'datos'});
+                this.chartdata.datasets.push({'data':this.data,'backgroundColor':this.colors,'label':''});
                 this.loaded=true;
             } );
         },
@@ -80,8 +87,9 @@ export default {
             .then((response)=>{
                 response.data.data.forEach((item)=>{
                     this.chartdata.labels.push(item.labels==1?'Free':'Premium');
-                    this.chartdata.datasets.push({'data':[item.datasets],'background':'#00FFBF','label':''});
+                    this.data.push(item.datasets);
                 })
+                this.chartdata.datasets.push({'data':this.data,'backgroundColor':this.colors,'label':''});
                 this.loaded=true;
             } );
         },
@@ -101,8 +109,9 @@ export default {
             .then((response)=>{
                 response.data.data.forEach((item)=>{
                     this.chartdata.labels.push(item.labels);
-                    this.chartdata.datasets.push({'data':[item.datasets],'background':'#00FFBF','label':''});
+                    this.data.push(item.datasets);
                 })
+                this.chartdata.datasets.push({'data':this.data,'backgroundColor':this.colors,'label':''});
                 this.loaded=true;
             } );
         },
@@ -122,8 +131,9 @@ export default {
             .then((response)=>{
                 response.data.data.forEach((item)=>{
                     this.chartdata.labels.push(item.labels);
-                    this.chartdata.datasets.push({'data':[item.datasets],'background':'#00FFBF','label':''});
+                    this.data.push(item.datasets)
                 })
+                this.chartdata.datasets.push({'data':this.data,'backgroundColor':this.colors,'label':''});
                 this.loaded=true;
             } );
         },
@@ -143,8 +153,9 @@ export default {
             .then((response)=>{
                 response.data.data.forEach((item)=>{
                     this.chartdata.labels.push(item.labels);
-                    this.chartdata.datasets.push({'data':[item.datasets],'background':'#00FFBF','label':''});
+                    this.data.push(item.datasets);
                 })
+                this.chartdata.datasets.push({'data':this.data,'backgroundColor':this.colors,'label':''});
                 this.loaded=true;
             } );
         },
@@ -159,13 +170,14 @@ export default {
             this.loaded=false
             this.$http({
                 method:'GET',
-                url:'/api/Pagosmembresia'
+                url:'/api/pagosmes'
             })
             .then((response)=>{
                 response.data.data.forEach((item)=>{
                     this.chartdata.labels.push(item.labels);
-                    this.chartdata.datasets.push({'data':[item.datasets],'background':'#00FFBF','label':''});
+                    this.data.push(item.datasets);
                 })
+                this.chartdata.datasets.push({'data':this.data,'backgroundColor':this.colors,'label':''});
                 this.loaded=true;
             } );
         }

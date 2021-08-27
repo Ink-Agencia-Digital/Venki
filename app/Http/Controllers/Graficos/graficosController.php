@@ -7,12 +7,14 @@ use App\Http\Controllers\Api\ApiController;
 use App\User;
 use App\UserCourse;
 use App\pago;
+use Carbon\Carbon;
 
 class graficosController extends ApiController
 {
     public function users()
     {
-        $usuarios=User::select('created_at as labels',User::raw('COUNT(id) as datasets'))->groupBy('created_at')->get();
+        //
+        $usuarios=User::select('created_at as labels',User::raw('COUNT(id) as datasets'))->whereDate('created_at','>=',Carbon::now()->add(-6,'day')->format('Y-m-d'))->whereNull('role_id')->groupBy(User::raw("DATE_FORMAT(created_at,'%Y-%m-%d')"))->get();
         return response()->json([
             'data'=>$usuarios
         ]);
