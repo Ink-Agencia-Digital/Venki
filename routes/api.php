@@ -48,6 +48,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('users.coins', 'User\UserCoinController', ['only' => ['index']]);
     Route::resource('users.competences', 'User\UserCompetenceController', ['only' => ['index']]);
     Route::resource('useradmin','User\user_adminController',['except'=>['create','edit','destroy']]);
+    Route::post('users/{iduser}/premium/{premium}','User\UserUpdateMembresiaController@updateMembresia');
     /**
      * Courses
      */

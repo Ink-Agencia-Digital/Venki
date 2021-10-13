@@ -24,7 +24,21 @@
                             No hay informacion disponible
                         </div>
                         <template slot="table-row" slot-scope="props">
-                            <span >{{
+                           
+                            <span v-if="props.column.field == 'premium'">
+                                <span>
+                                    <div class="text-center">
+                                        <a
+                                            @click="updateUser(props.row)"
+                                        >
+
+                                            <i v-if="props.row.premium" class="fas fa-thumbs-up" tooltip="Premium"></i>
+                                            <i v-else class="fas fa-thumbs-down" tooltip="Free"></i>
+                                        </a>
+                                    </div>
+                                </span>
+                            </span>
+                             <span v-else >{{
                                 props.formattedRow[props.column.field]
                             }}</span>
                         </template>
@@ -118,17 +132,17 @@ export default {
                 .then((response) => {
                     console.log(response);
                     this.users = response.data.data;
-                    this.users.forEach(item =>{
-                        switch(item.premium)
-                        {
-                            case 1:
-                                item.premium = 'Pago'          
-                                break
-                            case 0:
-                                item.premium = 'Free'
-                                break
-                        }
-                    })
+                   // this.users.forEach(item =>{
+                   //     switch(item.premium)
+                   //     {
+                   //         case 1:
+                   //             item.premium = true;         
+                   //             break
+                   //         case 0:
+                   //             item.premium = false
+                   //             break
+                   //     }
+                    //})
                     this.json_data=this.users;
                     //console.log(this.users);
                     //this.totalRecords = response.data.meta.total;
@@ -141,6 +155,23 @@ export default {
                         text: "Error cargando los datos",
                         icon: "error",
                     });
+                });
+        },
+        updateUser(useredit) {
+            console.log(useredit)
+            var premium =0
+            if(useredit.premium==0)
+                premium = 1
+           this.$http({
+                method: "POST",
+                url: "/api/users/" + useredit.id+"/premium/"+premium,
+            })
+                .then(() => {
+                    this.loadUsers();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$swal.fire("Error!", "Cambio fallido", "error");
                 });
         },
         onPageChange(params) {

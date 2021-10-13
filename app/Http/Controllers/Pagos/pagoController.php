@@ -11,7 +11,7 @@ class pagoController extends ApiController
 {
     public function index()
     {
-        $usuarios = User::select('users.name','users.lastname','users.birthday','users.email','users.premium','membresias.nombre',
+        $usuarios = User::select('users.id','users.name','users.lastname','users.birthday','users.email','users.premium','membresias.nombre',
                                     'membresias.precio','membresias.duracion','pagos.x_id_factura as factura','pagos.x_amount_base as valor',
                                     'pagos.x_tax as iva','pagos.x_approval_code as aprobacion','pagos.x_transaction_date as fecha_pago',
                                     'pagos.x_cod_response as cod_respuesta','pagos.x_response as respuesta','pagos.x_response_reason_text as texto_respuesta')
