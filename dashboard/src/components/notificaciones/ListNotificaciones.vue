@@ -115,10 +115,9 @@ export default {
                             this.$swal({
                                 title: "Hecho!",
                                 icon: "success",
-                            }).then(() => {
-                                this.loadNotificaciones();
-                                loader.hide();
-                            });
+                            })
+                            this.loadNotificaciones();
+                            loader.hide();
                         })
                         .catch((error) => {
                             this.$swal({

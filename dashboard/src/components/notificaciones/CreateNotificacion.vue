@@ -103,11 +103,32 @@ export default {
             data: this.newNotificacion,
             })
             .then(()=>{
-                this.$swal.fire("Exito","Puede ingresar las preguntas","success");
-                this.sendSuccess();
+                this.sendNotificacion();
+                
             })
             .catch(()=>{
                 this.sendError();
+            })
+        },
+        sendNotificacion(){
+            this.$http({
+                method:"POST",
+                url:"https://onesignal.com/api/v1/notifications",
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic NzlkNDMzMGMtOWM3Zi00NjU3LTllOGMtMzMzYjA0ODJlNTdj'
+                },
+                data:{
+                    "app_id": "92a3f182-0b68-4f59-9112-4023f7098334",
+                    "included_segments": ["All"],
+                    "data": {"userId": "postman123"},
+                    "contents": {"en": this.newNotificacion.mensaje, "es":this.newNotificacion.mensaje},
+                    "headings":{"en": this.newNotificacion.titulo, "es":this.newNotificacion.titulo},
+                    "subtitle":{"en": "", "es":""}
+                }
+            })
+            .then(()=>{
+                this.sendSuccess();
             })
         },
         sendError() {
