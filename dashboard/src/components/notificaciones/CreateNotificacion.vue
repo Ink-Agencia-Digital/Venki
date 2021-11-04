@@ -103,14 +103,15 @@ export default {
             data: this.newNotificacion,
             })
             .then(()=>{
-                this.sendNotificacion();
+                this.sendSuccess();
+                //this.sendNotificacion();
                 
             })
             .catch(()=>{
                 this.sendError();
             })
         },
-        sendNotificacion(){
+        /*sendNotificacion(){
             this.$http({
                 method:"POST",
                 url:"https://onesignal.com/api/v1/notifications",
@@ -130,7 +131,7 @@ export default {
             .then(()=>{
                 this.sendSuccess();
             })
-        },
+        },*/
         sendError() {
             this.$swal.fire("Error!", "Registro fallido", "error");
         },

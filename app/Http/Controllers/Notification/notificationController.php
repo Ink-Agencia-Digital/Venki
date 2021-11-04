@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\NotificationResource;
 use App\Http\Requests\StoreNotificationRequest;
 use App\Http\Requests\UpdateNotificationRequest;
+use OneSignal;
+
 
 class notificationController extends ApiController
 {
@@ -39,7 +41,13 @@ class notificationController extends ApiController
         $notification = new notification;
         $notification->fill($request->all());
         $notification->saveOrFail();
-
+        OneSignal::sendNotificationToAll(
+            $notification->mensaje, 
+            $url = null, 
+            $data = null, 
+            $buttons = null, 
+            $schedule = null
+        );
         return $this->api_success([
             'data' => new NotificationResource($notification),
             'message' => __('pages.responses.created'),
