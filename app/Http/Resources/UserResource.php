@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             "email" => isset($this->email) ? $this->email : null,
             "lastname" => isset($this->lastname) ? $this->lastname : null,
             "birthday" => isset($this->birthday) ? $this->birthday : null,
+            "premium" => isset($this->premium) ? $this->premium:null,
             "phone" => isset($this->phone) ? $this->phone : null,
             "photo" => isset($this->photo) ? $this->photo : null,
             "avatar" => isset($this->avatar) ? $this->avatar : null,
